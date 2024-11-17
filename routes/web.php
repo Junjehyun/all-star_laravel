@@ -27,3 +27,27 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+/**
+ * NoticeController
+ *
+ * 공지사항 관련 라우트
+ */
+
+/**
+ * RefundController
+ *
+ * 환불&교환 관련 라우트
+ */
+
+/**
+ * QAController
+ *
+ * Q&A 관련 라우트
+ */
+
+/**
+ * ItemController
+ *
+ * 상품 관련 라우트
+ */
