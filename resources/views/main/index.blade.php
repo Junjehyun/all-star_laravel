@@ -20,7 +20,7 @@
     </div>
     <div class="bg-white shadow-lg rounded-lg p-6 w-full h-64 flex flex-col justify-between">
         <h1 class="text-center text-xl font-bold mb-6">공지사항</h1>
-        <a href="">
+        <a href="notice_index">
             <h2 class="text-right text-sm mt-10">more</h2>
         </a>
     </div>

@@ -12,4 +12,12 @@ use Illuminate\Http\Request;
 class NoticeController extends Controller
 {
     //
+    public function noticeIndex() {
+        return view('notice.index');
+    }
+
+    public function noticeCreate() {
+        return view('notice.create');
+
+    }
 }
