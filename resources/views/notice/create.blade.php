@@ -5,9 +5,13 @@
     <div class="flex justify-center">
         <form action="" method="POST" class="w-3/5 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
-            <div class="flex space-x-4 mb-4">
+            <div class="flex space-x-3 mb-4">
                 <label for="category" class="block text-gray-700 text-sm font-bold mb-2">카테고리</label>
-                <select name="category" id="category" placeholder="카테고리를 선택해주세요"></select>
+                <select name="category" id="category" class="shadow appearance-none border rounded w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">일반공지</option>
+                    <option value="">중요공지</option>
+                    <option value="">긴급공지</option>
+                </select>
             </div>
             <div class="flex space-x-4 mb-4">
                 <div class="flex-[3]">
@@ -17,10 +21,10 @@
                         placeholder="작성자">
                 </div>
                 <div class="flex-[7]">
-                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">제목</label>
-                <input type="text" id="title" name="title"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="제목">
+                    <label for="title" class="block text-gray-700 text-sm font-bold mb-2">제목</label>
+                    <input type="text" id="title" name="title"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="제목">
                 </div>
             </div>
             <div class="mb-6">
