@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('notices', function (Blueprint $table) {
             $table->id(); // Primary Key
+            $table->enum('category', ['low', 'common', 'high', 'emergency'])->default('common'); // 카테고리
             $table->string('title', 255); // 제목
             $table->text('content'); // 내용
             $table->string('author', 25); // 작성자

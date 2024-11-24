@@ -3,15 +3,19 @@
 @section('content')
     <h1 class="text-center text-2xl font-bold my-10">공지사항 작성</h1>
     <div class="flex justify-center">
-        <form action="" method="POST" class="w-3/5 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="{{ route('notice.store') }}" method="POST" class="w-6/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             <div class="flex space-x-3 mb-4">
-                <label for="category" class="block text-gray-700 text-sm font-bold mb-2">카테고리</label>
-                <select name="category" id="category" class="shadow appearance-none border rounded w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="">일반공지</option>
-                    <option value="">중요공지</option>
-                    <option value="">긴급공지</option>
-                </select>
+                <div class="flex-[7]">
+                    <label for="category" class="block text-gray-700 text-sm font-bold mb-2">카테고리</label>
+                    <select name="category" id="category"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="low">이용규약 관련</option>
+                        <option value="common" selected>일반 공지사항</option>
+                        <option value="high">중요 공지사항</option>
+                        <option value="emergency">긴급 공지사항</option>
+                    </select>
+                </div>
             </div>
             <div class="flex space-x-4 mb-4">
                 <div class="flex-[3]">
@@ -38,6 +42,9 @@
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     저장
                 </button>
+                <a href="/notice_index" class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    뒤로
+                </a>
             </div>
         </form>
     </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainPageController;
@@ -32,16 +33,43 @@ Route::middleware([
 Route::get('/main_index', [MainController::class, 'mainIndex']);
 
 /**
+ * ItemController
+ *
+ * 상품 관련 라우트
+ */
+Route::get('/item_index', [
+    ItemController::class, 'itemIndex']
+    )->name('item.index');
+
+/**
  * NoticeController
  *
  * 공지사항 관련 라우트
  */
+Route::get('/notice_index', [
+    NoticeController::class, 'noticeIndex']
+    )->name('notice.index');
 
-// 공지사항 메인 페이지
-Route::get('/notice_index', [NoticeController::class, 'noticeIndex']);
+Route::get('/notice_create', [
+    NoticeController::class, 'noticeCreate']
+    )->name('notice.create');
 
-// 공지사항 작성 페이지
-Route::get('/notice_create', [NoticeController::class, 'noticeCreate']);
+Route::post('/notice_store', [
+    NoticeController::class, 'noticeStore'
+    ])->name('notice.store');
+
+Route::get('/notice/{id}', [
+    NoticeController::class, 'noticeShow'
+    ])->name('notice.show');
+
+Route::get('/notice_edit/{id}', [
+    NoticeController::class, 'noticeEdit'
+    ])->name('notice.edit');
+
+Route::post('/notice_update/{id}', [
+    NoticeController::class, 'noticeUpdate'
+    ])->name('notice.update');
+
 
 /**
  * RefundController
@@ -55,8 +83,4 @@ Route::get('/notice_create', [NoticeController::class, 'noticeCreate']);
  * Q&A 관련 라우트
  */
 
-/**
- * ItemController
- *
- * 상품 관련 라우트
- */
+
