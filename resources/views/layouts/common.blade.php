@@ -20,9 +20,32 @@
     <body>
         @include('layouts.header')
 
+        @if(session('success'))
+            <div id="success-message" class="bg-green-500 text-white p-4 rounded-lg shadow-md mb-6">
+                {{ session('success') }}
+            </div>
+            @endif
+            @if ($errors->any())
+            <div id="error-message" class="bg-red-500 text-white p-4 rounded-lg shadow-md mb-6">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="flex-grow p-3">
             @yield('content')
         </div>
 
     </body>
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('#success-message').fadeOut('slow');
+                $('#error-message').fadeOut('slow');
+            }, 3000);
+        });
+    </script>
 </html>

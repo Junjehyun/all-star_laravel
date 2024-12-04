@@ -15,4 +15,8 @@ class ItemController extends Controller
     public function itemIndex() {
         return view('item.index');
     }
+
+    public function itemReg() {
+        return view('item.reg');
+    }
 }

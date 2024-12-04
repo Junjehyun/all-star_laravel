@@ -37,9 +37,15 @@ Route::get('/main_index', [MainController::class, 'mainIndex']);
  *
  * 상품 관련 라우트
  */
+// item main page
 Route::get('/item_index', [
     ItemController::class, 'itemIndex']
     )->name('item.index');
+
+// 상품 등록 페이지
+Route::get('/item_reg', [
+    ItemController::class, 'itemReg'
+])->name('item.reg');
 
 /**
  * NoticeController
