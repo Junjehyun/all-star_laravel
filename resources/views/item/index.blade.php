@@ -17,5 +17,6 @@
     </div>
     <div class="mt-60">
         <h1 class="text-center text-xl font-bold mb-6">Best Seller</h1>
+        <h2 class="text-center mt-60">나중에 여기는 멋진 상품 슬라이드 표시함</h2>
     </div>
 @endsection

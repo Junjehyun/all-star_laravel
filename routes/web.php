@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +77,14 @@ Route::post('/notice_update/{id}', [
     NoticeController::class, 'noticeUpdate'
     ])->name('notice.update');
 
+/**
+ * CommentController
+ *
+ * 댓글 관련 라우트
+ */
+Route::post('/comment/store',
+    [CommentController::class, 'store'
+    ])->name('comment.store');
 
 /**
  * RefundController

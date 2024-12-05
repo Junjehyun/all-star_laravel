@@ -14,6 +14,11 @@ class Notice extends Model
         'title',
         'content',
         'author',
+        'view',
         'category'
     ];
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

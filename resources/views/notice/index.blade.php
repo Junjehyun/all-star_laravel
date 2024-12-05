@@ -42,7 +42,7 @@
                 </td>
                 <td class="border border-gray-300 px-4 py-2 text-sm">{{ $notice->author }}</td>
                 <td class="border border-gray-300 px-4 py-2 text-sm">{{ $notice->created_at->format('Y/m/d') }}</td>
-                <td class="border border-gray-300 px-4 py-2 text-sm"></td>
+                <td class="border border-gray-300 px-4 py-2 text-sm">{{ $notice->view }}</td>
                 <td class="border border-gray-300 px-5 py-2 text-sm">
                     <a href="{{ route('notice.edit', $notice->id) }}">
                         <button class="bg-cyan-300 px-3 py-1 rounded">관리</button>

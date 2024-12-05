@@ -46,8 +46,11 @@ class NoticeController extends Controller
     }
 
     public function noticeShow($id) {
-        // ID로 공지사항 데이터 조회
-        $notice = Notice::findOrFail($id);
+        // ID로 공지사항 데이터 조회 & 댓글 테이블 조인
+        $notice = Notice::with('comments')->findOrFail($id);
+
+        // 조회수 increase
+        $notice->increment('view');
 
         // 뷰 반환
         return view('notice.show', compact('notice'));

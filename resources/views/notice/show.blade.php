@@ -51,4 +51,12 @@
             </div>
         </div>
     </div>
+    <div class="flex justify-center">
+        <form action="">
+            @csrf
+            <div class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                댓글
+            </div>
+        </form>
+    </div>
 @endsection
