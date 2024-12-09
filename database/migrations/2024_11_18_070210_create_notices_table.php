@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('category', ['low', 'common', 'high', 'emergency'])->default('common'); // 카테고리
             $table->string('title', 255); // 제목
             $table->text('content'); // 내용
-            $table->unsignedBigInteger('view')->default(0);
+            $table->unsignedBigInteger('view')->default(0); // 조회
             $table->string('author', 25); // 작성자
             $table->timestamps(); // created_at and updated_at
         });

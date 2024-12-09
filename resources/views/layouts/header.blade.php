@@ -12,9 +12,9 @@
     </div>
     나중에 만들 헤더.
 </header> --}}
-<header class="bg-blue-900 text-white p-4">
+<header class="bg-transparent shadow-sm text-gray-900 p-4">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="/main_index" class="text-xl font-bold">ショッピングモール</h1>
+        <a href="/main_index" class="text-xl font-bold">プログラミング開発: never give up</h1>
         <nav>
             <div class="flex space-x-4">
                 <a href="/main_index" class="">ホーム</a>

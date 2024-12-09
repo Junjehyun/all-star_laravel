@@ -14,7 +14,7 @@ class NoticeController extends Controller
     //
     public function noticeIndex() {
 
-        $notices = Notice::all();
+        $notices = Notice::withCount('comments')->get();
 
         return view('notice.index', compact('notices'));
     }
@@ -47,7 +47,10 @@ class NoticeController extends Controller
 
     public function noticeShow($id) {
         // ID로 공지사항 데이터 조회 & 댓글 테이블 조인
-        $notice = Notice::with('comments')->findOrFail($id);
+        // 부모댓글과 자식 댓글 가져오기
+        $notice = Notice::with(['comments' => function ($query) {
+            $query->whereNull('parent_id')->with('children');
+        }])->findOrFail($id);
 
         // 조회수 increase
         $notice->increment('view');
@@ -81,5 +84,57 @@ class NoticeController extends Controller
         ]);
 
         return redirect()->route('notice.index')->with('success', '공지사항이 수정되었습니다.');
+    }
+
+    public function noticeDelete($id) {
+        try {
+            // 게시글 조회
+            $notice = Notice::findOrFail($id);
+
+            // 게시글 삭제
+            $notice->delete();
+
+            // 성공 응답 반환
+            return response()->json([
+                'success' => true,
+                'message' => '게시글이 삭제되었습니다',
+            ]);
+        } catch (\Exception $e) {
+            // 실패 응답 반환
+            return response()->json([
+                'success' => false,
+                'message' => '게시글 삭제에 실패했습니다',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * 공지사항 추천 기능
+     *
+     * @return void
+     */
+    public function noticeLike($id) {
+        try {
+            // 게시글 조회
+            $notice = Notice::findOrFail($id);
+
+            // 추천 수 증가
+            $notice->increment('like');
+
+            // 성공 응답
+            return response()->json([
+                'success' => true,
+                'message' => '추천하셨습니다.',
+                'likes' => $notice->like,
+            ]);
+        } catch (\Exception $e) {
+            // 실패 응답
+            return response()->json([
+                'success' => false,
+                'message' => '처리 중 오류가 발생했습니다',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
