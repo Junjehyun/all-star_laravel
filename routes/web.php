@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainController;
@@ -49,6 +50,18 @@ Route::post('/item_reg',[ItemController::class, 'itemReg'])->name('item.reg');
 Route::get('/item/detail/{id}',[ItemController::class, 'itemDetail'])->name('item.detail');
 // 상의
 Route::get('/item_top',[ItemController::class,'itemTop'])->name('item.top');
+
+/**
+ *  CartController
+ *
+ * 장바구니 관련 라우트
+ */
+Route::get('/cart', [CartController::class, 'cartIndex'])->name('cart.index');
+Route::post('/cart/add',[CartController::class, 'cartAdd'])->name('cart.add');
+Route::post('/cart/delete/{id}',[CartController::class, 'cartDelete'])->name('cart.delete');
+Route::post('/cart/update/{id}',[CartController::class, 'cartUpdate'])->name('cart.update');
+
+
 
 /**
  * NoticeController

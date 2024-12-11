@@ -1,44 +1,44 @@
 @extends('layouts.common')
 @section('title', '공지사항 상세')
 @section('content')
-    <h1 class="text-center text-2xl font-bold my-10">공지사항 상세</h1>
+    <h1 class="text-center text-2xl font-bold my-10">お知らせの詳細</h1>
     <div class="flex justify-center">
         <div class="w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
-                <label for="category" class="block text-gray-700 text-sm font-bold mb-2">카테고리</label>
+                <label for="category" class="block text-gray-700 text-sm font-bold mb-2">カテゴリー</label>
                 <p class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
                     @switch($notice->category)
                         @case('low')
-                            이용규약 관련
+                            利用規約関連
                             @break
                         @case('common')
-                            일반 공지사항
+                            一般的なお知らせ
                             @break
                         @case('high')
-                            중요 공지사항
+                            重要なお知らせ
                             @break
                         @case('emergency')
-                            긴급 공지사항
+                            緊急なお知らせ
                             @break
                     @endswitch
                 </p>
             </div>
             <div class="flex flex-row space-x-3 mb-4">
                 <div class="w-3/12">
-                    <h2 class="text-gray-700 text-sm font-bold mb-2">작성자</h2>
+                    <h2 class="text-gray-700 text-sm font-bold mb-2">作成者</h2>
                     <p class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight">
                         {{ $notice->author }}
                     </p>
                 </div>
                 <div class="w-full">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">제목</label>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">タイトル</label>
                     <p class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight">
                         {{ $notice->title }}
                     </p>
                 </div>
             </div>
             <div class="my-12">
-                <h2 class="text-gray-700 text-sm font-bold mb-2">작성 내용</h2>
+                <h2 class="text-gray-700 text-sm font-bold mb-2">内容</h2>
                 <span class="w-full py-2 px-3 text-gray-700 leading-tight">{{ $notice->content }}
                 </span>
             </div>
@@ -55,7 +55,7 @@
     <div class="flex justify-center">
         <div class="w-1/2 bg-zinc-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @if($notice->comments->isEmpty())
-                <p>댓글이 없습니다. 첫 댓글을 작성해보세요!</p>
+                <p>コメントがありません！ 初コメントを作成しましょう</p>
             @else
             <ul>
                 @foreach($notice->comments as $comment)
@@ -109,14 +109,14 @@
                         <!-- 대댓글 입력폼 -->
                         <div class="mt-5">
                             <button onclick="toggleReplyForm({{ $comment->id }})" class="outline outline-gray-200 rounded py-2 px-2 text-gray-700 text-sm">
-                                답글달기
+                                返信
                             </button>
                             <form id="reply-form-{{ $comment->id }}" action="{{ route('comment.reply') }}" class="hidden mt-2" method="POST">
                                 @csrf
                                 <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                                 <input type="hidden" name="notice_id" value="{{ $notice->id }}">
-                                <input type="text" name="author" class="w-3/12 bg-zinc-50 px-3 py-2 border rounded mb-2" placeholder="작성자">
-                                <textarea name="content" rows="5" class="w-full bg-zinc-50 px-3 py-2 border rounded" placeholder="대댓글을 작성하세요"></textarea>
+                                <input type="text" name="author" class="w-3/12 bg-zinc-50 px-3 py-2 border rounded mb-2" placeholder="作成者">
+                                <textarea name="content" rows="5" class="w-full bg-zinc-50 px-3 py-2 border rounded" placeholder="返信を作成しましょう"></textarea>
                                 <div class="flex justify-end">
                                     <button type="button" onclick="submitReply({{ $comment->id }})" class="text-black px-3 py-2 rounded mt-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#000000"><path d="m421-298 283-283-46-45-237 237-120-120-45 45 165 166Zm59 218q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"/></svg>
@@ -136,16 +136,16 @@
             @csrf
             <input type="hidden" name="notice_id" value="{{ $notice->id }}">
             <div class="mb-4">
-                <label for="author" class="block text-gray-700 text-sm font-bold mb-2">작성자</label>
-                <input type="text" id="author" name="author" required placeholder="작성자" class="w-3/12 bg-zinc-50 px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <label for="author" class="block text-gray-700 text-sm font-bold mb-2">作成者</label>
+                <input type="text" id="author" name="author" required placeholder="作成者" class="w-3/12 bg-zinc-50 px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
             </div>
             <div class="mb-6">
-                <label for="content" class="block text-gray-700 text-sm font-bold mb-2">내용</label>
-                <textarea name="content" id="content" rows="3" placeholder="내용" class="w-full bg-zinc-50 px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                <label for="content" class="block text-gray-700 text-sm font-bold mb-2">内容</label>
+                <textarea name="content" id="content" rows="3" placeholder="内容" class="w-full bg-zinc-50 px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="outline outline-gray-200 py-2 px-3 rounded">
-                    작성{{-- <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#000000"><path d="m421-298 283-283-46-45-237 237-120-120-45 45 165 166Zm59 218q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"/></svg> --}}
+                    登録{{-- <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#000000"><path d="m421-298 283-283-46-45-237 237-120-120-45 45 165 166Zm59 218q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"/></svg> --}}
                 </button>
             </div>
         </form>
@@ -153,13 +153,13 @@
     <div class="flex justify-center">
         <div class="flex justify-end w-1/2 mt-2">
             <a href="{{ route('notice.index') }}" class="outline outline-gray-200 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                뒤로{{-- <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#000000"><path d="M240-240v-480h60v480h-60Zm447-3L453-477l234-234 43 43-191 191 191 191-43 43Z"/></svg> --}}
+                戻る{{-- <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#000000"><path d="M240-240v-480h60v480h-60Zm447-3L453-477l234-234 43 43-191 191 191 191-43 43Z"/></svg> --}}
             </a>
         </div>
     </div>
     <script>
         function deleteCommentBtn(commentId) {
-            if(!confirm('댓글을 삭제하시겠습니까?')) return;
+            if(!confirm('コメントを削除しますか?')) return;
 
             $.ajax({
                 url: `/comment/delete/${commentId}`,
@@ -173,12 +173,12 @@
                         location.reload();
                         alert(response.message);
                     } else {
-                        alert('댓글 삭제에 실패했습니다.');
+                        alert('コメント削除に失敗しました。');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('AJA Error:', error);
-                    alert('오류가 발생했습니다. 다시 시도해주세요.');
+                    alert('エラーが発生しました。もう一度やり直してください。');
                 }
             });
         }
@@ -209,12 +209,12 @@
                         alert(response.message);
                         location.reload();
                     } else {
-                        alert('댓글 수정에 실패했습니다.');
+                        alert('コメント修正に失敗しました。');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', error);
-                    alert('오류가 발생했습니다. 다시 시도해주세요.');
+                    alert('エラーが発生しました。もう一度やり直してください。');
                 }
             });
         }
@@ -256,19 +256,19 @@
                         alert(response.message);
                         location.reload();
                     } else {
-                        alert('대댓글 작성에 실패했습니다.');
+                        alert('作成に失敗しました。');
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error('AJAX Error:', error);
-                    alert('오류가 발생했습니다. 다시 시도해주세요!');
+                    alert('エラーが発生しました。もう一度やり直してください。');
                 }
             });
         }
 
         // 대댓글 삭제 ajax
         function deleteReply(replyId) {
-            if (!confirm('대댓글을 삭제하시겠습니까?'));
+            if (!confirm('返信を削除しますか?'));
 
             $.ajax({
                 url: `/reply/delete/${replyId}`,
@@ -282,12 +282,12 @@
                         $(`#reply-${replyId}`).remove();
                         alert(response.message);
                     } else {
-                        alert('대댓글 삭제에 실패했습니다');
+                        alert('返信削除に失敗しました。');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', error);
-                    alert('오류가 발생했습니다. 다시 시도해주세요!');
+                    alert('エラーが発生しました。もう一度やり直してください。');
                 }
             });
         }
@@ -306,12 +306,12 @@
                         alert(response.message);
                         location.reload();
                     } else {
-                        alert('추천에 실패했습니다');
+                        alert('オススメに失敗しました。');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', error);
-                    alert('오류가 발생했습니다. 다시 시도해주세요!');
+                    alert('エラーが発生しました。もう一度やり直してください。');
                 }
             });
         }

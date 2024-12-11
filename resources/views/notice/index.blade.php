@@ -6,13 +6,13 @@
 <div class="flex justify-center">
     <form action="" method="GET" class="w-3/5 flex justify-end space-x-1">
         <input type="text" placeholder="検索" class="border border-gray-300 rounded-l px-3 py-1 w-48 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-        <button type="submit" class="outline outline-gray-200 px-4 py-1">検索</button>
+        <button type="submit" class="outline outline-gray-200 px-3 py-1">検索</button>
     </form>
 </div>
 <div class="flex justify-center items-center mt-1">
-    <table class="table-auto border-collapse border border-gray-100 w-3/5 text-left">
+    <table class="w-3/5 table-auto border-collapse border border-gray-100 text-left">
         <thead>
-            <tr class="bg-gray-200">
+            <tr class="bg-zinc-50">
                 <th class="border border-gray-300 text-sm px-4 py-2 w-1/12">No</th>
                 <th class="border border-gray-300 text-sm px-4 py-2 w-1/12">オススメ!</th>
                 <th class="border border-gray-300 text-sm px-4 py-2 w-2/12">分類</th>
@@ -31,16 +31,16 @@
                 <td class="border border-gray-300 px-4 py-2 text-sm">
                     @switch($notice->category)
                         @case('low')
-                        이용규약 관련
+                        利用規約関連
                         @break
                         @case('common')
-                        일반 공지사항
+                        一般的なお知らせ
                         @break
                         @case('high')
-                        중요 공지사항
+                        重要なお知らせ
                         @break
                         @case('emergency')
-                        긴급 공지사항
+                        緊急なお知らせ
                         @break
                     @endswitch
                 </td>
@@ -64,7 +64,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="5" class="border border-gray-300 px-4 py-2 text-center">등록된 공지사항이 없습니다.</td>
+                <td colspan="5" class="border border-gray-300 px-4 py-2 text-center">現在、登録されたお知らせがありません。</td>
             </tr>
             @endforelse
         </tbody>
