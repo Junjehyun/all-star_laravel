@@ -1,4 +1,4 @@
-@extends('layouts.common')
+@extends('layouts.shop_common')
 @section('title', 'Shop Index')
 @section('content')
     <h1 class="text-center text-xl font-bold mb-5 mt-5">ショッピングモール</h1>

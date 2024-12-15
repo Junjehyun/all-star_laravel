@@ -1,4 +1,4 @@
-@extends('layouts.common')
+@extends('layouts.shop_common')
 @section('title', '상품 상세')
 @section('content')
 <div class="container mx-auto mt-10">

@@ -20,22 +20,34 @@ class CartController extends Controller
     }
 
     public function cartAdd(Request $request) {
+        try {
+            // 요청에서 item_id를 가져옴
+            $itemId = $request->input('item_id');
 
-        $validatedData = $request->validate([
-            'item_id' => 'required|exists:items,id',
-            'quantity' => 'required|integer|min:1',
-        ]);
+            // 아이템이 존재하는지 확인
+            $item = Item::find($itemId);
+            if (!$item) {
+                return response()->json(['success' => false, 'message' => '商品がございません。'], 404);
+            }
 
-        $cart = Cart::where('item_id', $validatedData['item_id'])->first();
+            // 이미 장바구니에 있는지 확인
+            $cartItem = Cart::where('item_id', $itemId)->first();
+            if ($cartItem) {
+                // 기존 수량 증가
+                $cartItem->quantity += 1;
+                $cartItem->save();
+            } else {
+                // 새로 추가
+                Cart::create([
+                    'item_id' => $itemId,
+                    'quantity' => 1,
+                ]);
+            }
 
-        if($cart) {
-            $cart->quantity += $validatedData['quantity'];
-            $cart->save();
-        } else {
-            Cart::create($validatedData);
+            return response()->json(['success' => true, 'message' => '商品がカートに追加されました。']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'カートに追加ができませんした。もう一度やり直してください。'], 500);
         }
-
-        return redirect()->route('cart.index')->with('success', '상품이 장바구니에 추가되었습니다.');
     }
 
     // cart delete
@@ -43,7 +55,7 @@ class CartController extends Controller
         $cart = Cart::findOrFail($id);
         $cart->delete();
 
-        return redirect()->route('cart.index')->with('success', '장바구니에서 삭제되었습니다.');
+        return redirect()->route('cart.index')->with('success', 'カートから削除されました。');
     }
 
     public function cartUpdate(Request $request, $id) {
@@ -55,6 +67,6 @@ class CartController extends Controller
         $cart->quantity = $validatedData['quantity'];
         $cart->save();
 
-        return redirect()->route('cart.index')->with('success', '장바구니 수량이 업데이트 되었습니다');
+        return redirect()->route('cart.index')->with('success', '数量がアップデートされました。');
     }
 }

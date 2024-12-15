@@ -1,4 +1,4 @@
-@extends('layouts.common')
+@extends('layouts.shop_common')
 @section('title', '상의')
 @section('content')
 <div class="container mx-auto mt-10">
@@ -29,7 +29,7 @@
                     <div class="mt-3 flex justify-between items-center">
                         <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-gray-200 rounded-xl">詳細</a>
                         <div class="space-x-1">
-                            <button class="px-3 py-1 outline outline-gray-200 rounded-xl">カート</button>
+                            <button onclick="addToCart({{ $item->id }})" class="px-3 py-1 outline outline-gray-200 rounded-xl">カート</button>
                             <button class="px-3 py-1 outline outline-gray-200 rounded-xl">購入</button>
                         </div>
                     </div>
@@ -42,4 +42,28 @@
         @endforelse
     </div>
 </div>
+<script>
+    function addToCart(itemId) {
+        $.ajax({
+            url: '/cart/add',
+            type: 'POST',
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: {
+                item_id: itemId,
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('商品がカートに追加されました。');
+                } else {
+                    alert ('カートに追加ができませんした。もう一度やり直してください。');
+                }
+            },
+            error: function(xhr) {
+                alert('エラーが発生しました。管理者にお問い合わせください。')
+            }
+        });
+    }
+</script>
 @endsection
