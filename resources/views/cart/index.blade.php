@@ -43,6 +43,9 @@
     </table>
     <div class="mt-6 text-right">
         <p class="text-xl font-bold">総計: {{ number_format($carts->sum(fn($cart) => $cart->item->price * $cart->quantity)) }} 円</p>
+        <button class="outline outline-gray-200 rounded-xl px-3 py-2 mt-5">
+            <a href="/item_index">戻る</a>
+        </button>
     </div>
     @endif
 </div>

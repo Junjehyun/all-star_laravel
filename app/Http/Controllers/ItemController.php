@@ -18,8 +18,8 @@ class ItemController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function itemIndex() {
-
-        return view('item.index');
+        $items = Item::all();
+        return view('item.index', compact('items'));
 
     }
 
@@ -72,9 +72,20 @@ class ItemController extends Controller
      */
     public function itemTop() {
 
-        $items = Item::all();
+        //$items = Item::all();
+        $items = Item::where('category', '상의')->get();
 
         return view('item.top', compact('items'));
+    }
+
+    public function itemBottom() {
+        $items = Item::where('category', '하의')->get();
+        return view('item.bottom', compact('items'));
+    }
+
+    public function itemShoes() {
+        $items = Item::where('category', '신발')->get();
+        return view('item.shoes', compact('items'));
     }
 
     /**
@@ -90,5 +101,33 @@ class ItemController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['error' => '상품 정보를 가져오는데 실패했습니다.']);
         }
+    }
+
+    public function getItemsByAjaxCategory($category) {
+        //$items = Item::where('category', $category)->get();
+        if ($category === 'ALL') {
+            // get all data
+            $items = Item::all();
+        } else {
+            // selected data
+            $items = Item::where('category', $category)->get();
+        }
+        return response()->json($items);
+    }
+
+    public function itemSearch(Request $request) {
+        // 폼에서 전달된 검색 키워드 추출
+        $keyword = $request->input('keyword');
+        // Item 모델 기반으로 쿼리 시작
+        $query = Item::query();
+        // 키워드가 있으면 상품명 또는 설명에 해당 키워드가 포함된 항목 검색
+        if (!empty($keyword)) {
+            $query->where('name', 'like', '%' . $keyword . '%');
+                    //->orWhere('description', 'like', '%' . $keyword . '%');
+        }
+        // 조건에 맞는 상품들 가져오기
+        $items = $query->get();
+        // 검색 결과와 키워드를 뷰에 전달
+        return view('item.index', compact('items', 'keyword'));
     }
 }

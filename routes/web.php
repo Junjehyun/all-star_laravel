@@ -41,16 +41,15 @@ Route::get('/main_index', [MainController::class, 'mainIndex']);
  * 상품 관련 라우트
  *
  */
-// item main page
 Route::get('/item_index', [ItemController::class, 'itemIndex'])->name('item.index');
-// 상품 등록 페이지 & 등록 처리
 Route::get('/item_regIndex', [ItemController::class, 'itemRegIndex'])->name('item.regIndex');
 Route::post('/item_reg',[ItemController::class, 'itemReg'])->name('item.reg');
-// 상품 상세보기
 Route::get('/item/detail/{id}',[ItemController::class, 'itemDetail'])->name('item.detail');
-// 상의
 Route::get('/item_top',[ItemController::class,'itemTop'])->name('item.top');
-
+Route::get('/item_bottom', [ItemController::class, 'itemBottom'])->name('item.bottom');
+Route::get('/item_shoes', [ItemController::class, 'itemShoes'])->name('item.shoes');
+Route::get('/item/ajax_category/{category}', [ItemController::class, 'getItemsByAjaxCategory'])->name('item.ajax_category');
+Route::get('/item_search', [ItemController::class, 'itemSearch'])->name('item.search');
 /**
  *  CartController
  *
