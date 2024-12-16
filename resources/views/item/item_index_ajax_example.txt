@@ -1,0 +1,84 @@
+// item ajax 문
+$(document).ready(function() {
+    // 카테고리 버튼 클릭 이벤트
+    $('.category-btn').on('click', function() {
+        const category = $(this).data('category'); // 버튼의 data-category값
+        console.log(category);
+        //ajax 요청
+        $.ajax({
+            url: `/item/ajax_category/${category}`,
+            type: 'GET',
+            success: function(data) {
+                renderItems(data);
+            },
+            error: function() {
+                alert('エラーが発生しました。もう一度やり直してください。');
+            }
+        });
+    });
+    // 상품 데이터 렌더링 하는 함수 
+    function renderItems(items) {
+        const container = $('.grid'); // 상품 목록 컨테이너
+        container.empty(); // 기존 목록 제거
+
+        if(items.length > 0) {
+            items.forEach(item => {
+                const itemHtml = `
+                    <div class="border rounded-lg overflow-hidden shadow-md">
+                        <div class="flex justify-center">
+                            <img src="${item.image ? `/storage/${item.image}` : 'images/default-image.png'}" alt="${item.name}" class="h-48 w-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold">${item.name}</h3>
+                            <p class="text-gray-700 mt-1">${(Math.floor(item.price).toLocaleString())}円</p>
+                            <div class="mt-3 flex justify-between items-center">
+                                <a href="/item/detail/${item.id}" class="px-2 py-1 outline outline-gray-200 rounded-xl">詳細</a>
+                                <div class="space-x-1">
+                                    <button onclick="addToCart(${item.id})" class="px-3 py-1 outline outline-gray-200 rounded-xl">カート</button>
+                                    <button class="px-3 py-1 outline outline-gray-200 rounded-xl">購入</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            container.append(itemHtml);
+            });
+        } else {
+            container.append('<div class="col-span-4 text-center"><p class="text-gray-700">登録された商品がございません。</p></div>');
+        }
+    }
+});
+
+<!-- ------------------------------------------------------------------------------------------------------------------ -->
+// blade 버튼
+<div class="flex flex-row items-center justify-center space-x-4 mt-5">
+    <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ALL">・ ALL ITEMS</a>
+    <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="상의">・ TOP</a>
+    <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="하의">・ BOTTOM</a>
+    <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="신발">・ SHOES</a>
+    <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ETC">・ ETC</a>
+    <a href="javascript:void(0)" class="text-center text-sm text-red-500 font-semibold category-btn" data-category="SALE">・ SALE</a>
+    <div class="flex justify-items-end my-4">
+        <form action="/item/search" method="GET" class="flex items-center space-x-2 ml-52">
+            <input type="text" name="keyword" placeholder="商品検索" class="px-3 py-2 border border-gray-200 rounded-md w-64">
+            <button type="submit" class="px-3 py-2 outline outline-gray-200 rounded-xl">検索</button>
+        </form>
+    </div>
+</div>
+
+<!-- ------------------------------------------------------------------------------------------------------------------ -->
+// 라우트
+Route::get('/item/ajax_category/{category}', [ItemController::class, 'getItemsByAjaxCategory'])->name('item.ajax_category');
+
+<!-- ------------------------------------------------------------------------------------------------------------------ -->
+// 메서드 
+public function getItemsByAjaxCategory($category) {
+    if ($category === 'ALL') {
+        // all data 
+        $items = Item::all();
+    } else {
+        // selected data
+        $items = Item::where('category', $category)->get();
+    }
+    return response()->json($items);
+}
