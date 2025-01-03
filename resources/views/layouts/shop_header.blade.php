@@ -1,9 +1,15 @@
-<header class="bg-orange-50 shadow-sm text-gray-900 p-4">
+<header class="shadow-sm text-gray-900 p-4">
     <div class="container mx-auto flex justify-between items-center">
         <a href="/item_index" class="text-xl font-bold">SHOPPING MALL</h1>
         <nav>
             <div class="flex space-x-4">
                 <div class="flex flex-row items-center justify-center space-x-4 mt-2">
+                    <a href="">
+                        Login
+                    </a>
+                    <a href="">
+                        Register
+                    </a>
                     <a href="/item_top" class="text-center text-md px-1">TOP</a>
                     <a href="/item_bottom" class="text-center text-md px-1">BOTTOM</a>
                     <a href="/item_shoes" class="text-center text-md px-1">SHOES</a>
