@@ -43,8 +43,8 @@
                 <h2 class="text-right text-sm mt-10 underline">ショッピングモールへ</h2>
             </a>
         </div>
-        <div class="bg-yellow-200 shadow-lg rounded-lg p-6 w-full h-64 flex flex-col justify-between">
-            <h1 class="text-center text-xl font-bold mb-6">토계부</h1>
+        <div class="bg-green-200 shadow-lg rounded-lg p-6 w-full h-64 flex flex-col justify-between">
+            <h1 class="text-center text-xl font-bold mb-6">토계부(필살기)</h1>
             <h2 class="text-center">まだスタートしてない状態です。</h2>
             <a href="">
                 <h2 class="text-right text-xs mt-10">more</h2>
