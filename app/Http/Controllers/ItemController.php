@@ -44,7 +44,7 @@ class ItemController extends Controller
             'size' => 'required|string|nullable',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category' => 'required|string|in:상의,하의,신발,ETC,SALE',
+            'category' => 'required|string|in:nike,adidas,newBalance,others,sale',
         ]);
 
         // 이미지 업로드 처리
@@ -70,22 +70,29 @@ class ItemController extends Controller
      * 상의 TOP
      *
      */
-    public function itemTop() {
-
+    public function itemNike() {
         //$items = Item::all();
-        $items = Item::where('category', '상의')->get();
+        $items = Item::where('category', 'nike')->get();
 
-        return view('item.top', compact('items'));
+        return view('item.nike', compact('items'));
     }
 
-    public function itemBottom() {
-        $items = Item::where('category', '하의')->get();
-        return view('item.bottom', compact('items'));
+    public function itemAdidas() {
+        $items = Item::where('category', 'adidas')->get();
+        return view('item.adidas', compact('items'));
     }
 
-    public function itemShoes() {
-        $items = Item::where('category', '신발')->get();
-        return view('item.shoes', compact('items'));
+    public function itemNewBalance() {
+        $items = Item::where('category', 'newBalance')->get();
+        return view('item.newbalance', compact('items'));
+    }
+
+    public function itemOthers() {
+
+    }
+
+    public function itemSale() {
+
     }
 
     /**

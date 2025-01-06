@@ -5,7 +5,6 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\NoticeController;
 
 /**
@@ -45,11 +44,14 @@ Route::get('/item_index', [ItemController::class, 'itemIndex'])->name('item.inde
 Route::get('/item_regIndex', [ItemController::class, 'itemRegIndex'])->name('item.regIndex');
 Route::post('/item_reg',[ItemController::class, 'itemReg'])->name('item.reg');
 Route::get('/item/detail/{id}',[ItemController::class, 'itemDetail'])->name('item.detail');
-Route::get('/item_top',[ItemController::class,'itemTop'])->name('item.top');
-Route::get('/item_bottom', [ItemController::class, 'itemBottom'])->name('item.bottom');
-Route::get('/item_shoes', [ItemController::class, 'itemShoes'])->name('item.shoes');
+Route::get('/item_nike', [ItemController::class, 'itemNike'])->name('item.nike');
+Route::get('/item_adidas', [ItemController::class, 'itemAdidas'])->name('item.adidas');
+Route::get('/item_newBalance', [ItemController::class, 'itemNewBalance'])->name('item.newBalance');
+Route::get('/item_others', [ItemController::class, 'itemOthers'])->name('item.others');
+Route::get('/item_sale', [ItemController::class, 'itemSale'])->name('item.sale');
 Route::get('/item/ajax_category/{category}', [ItemController::class, 'getItemsByAjaxCategory'])->name('item.ajax_category');
 Route::get('/item_search', [ItemController::class, 'itemSearch'])->name('item.search');
+
 /**
  *  CartController
  *
@@ -59,8 +61,6 @@ Route::get('/cart_index', [CartController::class, 'cartIndex'])->name('cart.inde
 Route::post('/cart/add',[CartController::class, 'cartAdd'])->name('cart.add');
 Route::post('/cart/delete/{id}',[CartController::class, 'cartDelete'])->name('cart.delete');
 Route::post('/cart/update/{id}',[CartController::class, 'cartUpdate'])->name('cart.update');
-
-
 
 /**
  * NoticeController

@@ -10,11 +10,11 @@
             <label for="category" class="block text-gray-700 font-semibold">カテゴリー</label>
             <select name="category" id="category" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
                 <option value="" selected>カテゴリーを選択してください</option>
-                <option value="상의">TOP(Tシャッツ・上着など)</option>
-                <option value="하의">BOTTOM(ズボン)</option>
-                <option value="신발">SHOES(靴)</option>
-                <option value="ETC">ETC(その他)</option>
-                <option value="SALE">SALE</option>
+                <option value="nike">NIKE</option>
+                <option value="adidas">ADIDAS</option>
+                <option value="newBalance">NEW BALANCE</option>
+                <option value="others">その他</option>
+                <option value="sale">割引商品</option>
             </select>
         </div>
         <!-- 상품명 -->

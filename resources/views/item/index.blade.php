@@ -6,12 +6,12 @@
         <a href="/main_index">MAIN</a>
     </div>
     <div class="flex flex-row items-center justify-center space-x-2 mt-5">
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ALL">・ ALL ITEMS</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="상의">・ TOP</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="하의">・ BOTTOM</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="신발">・ SHOES</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ETC">・ ETC</a>
-        <a href="javascript:void(0)" class="text-center text-sm text-red-500 font-semibold category-btn" data-category="SALE">・ SALE</a>
+        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ALL">・ ALL</a>
+        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="nike">・ Nike</a>
+        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="adidas">・ Adidas</a>
+        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="newbalance">・ New Balance</a>
+        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="others">・ Others</a>
+        <a href="javascript:void(0)" class="text-center text-sm text-red-500 font-semibold category-btn" data-category="sale">・ SALE</a>
         <div class="flex justify-items-end my-4">
             <form action="{{ route('item.search') }}" method="GET" class="flex items-center space-x-1 ml-52">
                 <!-- focus 파란색깔 안없어짐 작업해야함 -->
