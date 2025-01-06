@@ -8,13 +8,15 @@
     </div>
     <div class="text-center space-y-4 mt-5">
         <p class="text-gray-700">価格: <span class="font-bold">₩{{ number_format($item->price) }}</span></p>
-        <p class="text-gray-700">サイズ: <span class="font-bold">{{ $item->size }}</p>
+        <p class="text-gray-700">サイズ: <span class="font-bold">{{ $item->size }}mm</p>
         <p class="text-gray-700 text-lg">商品詳細</p>
         <p class="text-gray-600">{{ $item->description }}</p>
     </div>
     <div class="flex justify-center mt-8 space-x-3">
-        <button class="px-6 py-2 outline outline-gray-200 rounded-xl">購入する</button>
-        <a href="{{ url()->previous() }}" class="px-6 py-2 outline outline-gray-200 rounded-xl">戻る</a>
+        <button class="px-6 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">購入する</button>
+        <a href="{{ url()->previous() }}" class="px-6 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">戻る</a>
+        <button class="outline outline-gray-100 px-1 py-2 rounded-xl">編集</button>
+        <button class="outline outline-gray-100 px-1 py-2 rounded-xl">削除</button>
     </div>
     <div class="bg-white shadow-xl py-5 px-5 mt-5">
         <h2 class="flex justify-center text-2xl">簡単レビュー</h2>
