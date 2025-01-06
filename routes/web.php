@@ -42,7 +42,7 @@ Route::get('/main_index', [MainController::class, 'mainIndex']);
  */
 Route::get('/item_index', [ItemController::class, 'itemIndex'])->name('item.index');
 Route::get('/item_regIndex', [ItemController::class, 'itemRegIndex'])->name('item.regIndex');
-Route::post('/item_reg',[ItemController::class, 'itemReg'])->name('item.reg');
+Route::post('/item_reg',action: [ItemController::class, 'itemReg'])->name('item.reg');
 Route::get('/item/detail/{id}',[ItemController::class, 'itemDetail'])->name('item.detail');
 Route::get('/item_nike', [ItemController::class, 'itemNike'])->name('item.nike');
 Route::get('/item_adidas', [ItemController::class, 'itemAdidas'])->name('item.adidas');
@@ -61,6 +61,7 @@ Route::get('/cart_index', [CartController::class, 'cartIndex'])->name('cart.inde
 Route::post('/cart/add',[CartController::class, 'cartAdd'])->name('cart.add');
 Route::post('/cart/delete/{id}',[CartController::class, 'cartDelete'])->name('cart.delete');
 Route::post('/cart/update/{id}',[CartController::class, 'cartUpdate'])->name('cart.update');
+Route::get('/cart_count', [CartController::class, 'cartCount'])->name('cart.count');
 
 /**
  * NoticeController

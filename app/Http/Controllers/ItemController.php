@@ -18,7 +18,7 @@ class ItemController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function itemIndex() {
-        $items = Item::all();
+        $items = Item::latest()->get();
         return view('item.index', compact('items'));
 
     }
@@ -41,7 +41,7 @@ class ItemController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'size' => 'required|string|nullable',
+            'size' => 'nullable|string',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category' => 'required|string|in:nike,adidas,newBalance,others,sale',
@@ -73,7 +73,6 @@ class ItemController extends Controller
     public function itemNike() {
         //$items = Item::all();
         $items = Item::where('category', 'nike')->get();
-
         return view('item.nike', compact('items'));
     }
 
@@ -88,11 +87,9 @@ class ItemController extends Controller
     }
 
     public function itemOthers() {
-
     }
 
     public function itemSale() {
-
     }
 
     /**
@@ -114,10 +111,13 @@ class ItemController extends Controller
         //$items = Item::where('category', $category)->get();
         if ($category === 'ALL') {
             // get all data
-            $items = Item::all();
+            //$items = Item::all();
+            $items = Item::latest()->get();
         } else {
             // selected data
-            $items = Item::where('category', $category)->get();
+            $items = Item::where('category', $category)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
         }
         return response()->json($items);
     }

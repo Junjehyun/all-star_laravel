@@ -14,7 +14,7 @@ class NoticeController extends Controller
     //
     public function noticeIndex() {
 
-        $notices = Notice::withCount('comments')->get();
+        $notices = Notice::withCount('comments')->latest()->get();
 
         return view('notice.index', compact('notices'));
     }
@@ -90,20 +90,18 @@ class NoticeController extends Controller
         try {
             // 게시글 조회
             $notice = Notice::findOrFail($id);
-
             // 게시글 삭제
             $notice->delete();
-
             // 성공 응답 반환
             return response()->json([
                 'success' => true,
-                'message' => '게시글이 삭제되었습니다',
+                'message' => '投稿が削除されました。',
             ]);
         } catch (\Exception $e) {
             // 실패 응답 반환
             return response()->json([
                 'success' => false,
-                'message' => '게시글 삭제에 실패했습니다',
+                'message' => '削除に失敗しました。',
                 'error' => $e->getMessage(),
             ], 500);
         }

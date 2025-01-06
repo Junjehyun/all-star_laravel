@@ -32,12 +32,12 @@
     <body>
         @include('layouts.header')
         @if(session('success'))
-            <div id="success-message" class="bg-green-500 text-white p-4 rounded-lg shadow-md mb-6">
+            <div id="success-message" class="bg-green-300 text-white p-4 rounded-lg shadow-md mb-6">
                 {{ session('success') }}
             </div>
             @endif
             @if ($errors->any())
-            <div id="error-message" class="bg-red-500 text-white p-4 rounded-lg shadow-md mb-6">
+            <div id="error-message" class="bg-red-300 text-white p-4 rounded-lg shadow-md mb-6">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>

@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="flex justify-center">
-        <div class="w-1/2 bg-zinc-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="w-1/2 shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @if($notice->comments->isEmpty())
                 <p>コメントがありません！ 初コメントを作成しましょう</p>
             @else
@@ -115,8 +115,8 @@
                                 @csrf
                                 <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                                 <input type="hidden" name="notice_id" value="{{ $notice->id }}">
-                                <input type="text" name="author" class="w-3/12 bg-zinc-50 px-3 py-2 border rounded mb-2" placeholder="作成者">
-                                <textarea name="content" rows="5" class="w-full bg-zinc-50 px-3 py-2 border rounded" placeholder="返信を作成しましょう"></textarea>
+                                <input type="text" name="author" class="w-3/12 px-3 py-2 border rounded mb-2" placeholder="作成者">
+                                <textarea name="content" rows="5" class="w-full px-3 py-2 border rounded" placeholder="返信を作成しましょう"></textarea>
                                 <div class="flex justify-end">
                                     <button type="button" onclick="submitReply({{ $comment->id }})" class="text-black px-3 py-2 rounded mt-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#000000"><path d="m421-298 283-283-46-45-237 237-120-120-45 45 165 166Zm59 218q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"/></svg>
@@ -132,16 +132,16 @@
     </div>
     <!-- 댓글 작성 폼 -->
     <div class="flex justify-center">
-        <form action="{{ route('comment.store') }}" method="POST" class="w-1/2 bg-zinc-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="{{ route('comment.store') }}" method="POST" class="w-1/2 shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             <input type="hidden" name="notice_id" value="{{ $notice->id }}">
             <div class="mb-4">
                 <label for="author" class="block text-gray-700 text-sm font-bold mb-2">作成者</label>
-                <input type="text" id="author" name="author" required placeholder="作成者" class="w-3/12 bg-zinc-50 px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <input type="text" id="author" name="author" required placeholder="作成者" class="w-3/12 px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
             </div>
             <div class="mb-6">
                 <label for="content" class="block text-gray-700 text-sm font-bold mb-2">内容</label>
-                <textarea name="content" id="content" rows="3" placeholder="内容" class="w-full bg-zinc-50 px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                <textarea name="content" id="content" rows="3" placeholder="内容" class="w-full px-4 py-2 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="outline outline-gray-200 py-2 px-3 rounded">

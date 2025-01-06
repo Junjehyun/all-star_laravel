@@ -95,7 +95,28 @@
                 }
             }
         });
+        function addToCart(itemId) {
+            $.ajax({
+                url: '/cart/add',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    item_id: itemId
+                },
+                success: function(response) {
+                    if (response.success) {
+                        updateCartCount();
+                        alert('商品がカートに追加されました。');
+                    } else {
+                        alert('追加に失敗しました。もう一度やり直してください。');
+                    }
+                },
+                error: function(xhr) {
+                    alert('エラーが発生しました。もう一度やり直してください。');
+                }
+            });
+        }
     </script>
-
-
 @endsection

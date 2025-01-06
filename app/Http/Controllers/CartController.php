@@ -69,4 +69,9 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('success', '数量がアップデートされました。');
     }
+
+    public function cartCount() {
+        $count = Cart::sum('quantity');
+        return response()->json(['count' => $count]);
+    }
 }

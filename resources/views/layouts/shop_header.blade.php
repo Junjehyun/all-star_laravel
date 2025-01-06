@@ -23,3 +23,21 @@
         </nav>
     </div>
 </header>
+<script>
+    function updateCartCount() {
+        $.ajax({
+            url: '/cart_count',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#cart-count').text(data.count);
+            },
+            error: function () {
+                alert('エラーが発生しました。もう一度やり直してください!');
+            }
+        });
+        $(document).ready(function () {
+            updateCartCount();
+        });
+    }
+</script>
