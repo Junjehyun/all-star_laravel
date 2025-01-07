@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use Exception;
 use Illuminate\Http\Request;
 
 /**
@@ -136,5 +137,59 @@ class ItemController extends Controller
         $items = $query->get();
         // 검색 결과와 키워드를 뷰에 전달
         return view('item.index', compact('items', 'keyword'));
+    }
+
+    public function itemEdit($id) {
+        try {
+            $item = Item::findOrFail($id);
+            return view('item.edit', compact('item'));
+        } catch (\Exception $e) {
+            return redirect()->route('item.index')->withErrors(['error' => '商品が見つかりませんでした。']);
+        }
+    }
+
+    public function itemUpdate(Request $request, $id) {
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'size' => 'nullable|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category' => 'required|string|in:nike,adidas,newBalance,others,sale',
+        ]);
+
+        try {
+            $item = Item::findOrFail($id);
+
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('images', 'public');
+                $item->image = $imagePath;
+            }
+
+            // item update
+            $item->update([
+                'name' => $validated['name'],
+                'price' => $validated['price'],
+                'size' => $validated['size'],
+                'description' => $validated['description'],
+                'category' => $validated['category'],
+            ]);
+
+            return redirect()->route('item.index')->with('success', '修正を完了しました。');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => '商品更新中にエラーが発生しました。']);
+        }
+    }
+
+    public function itemDelete($id) {
+        try {
+            $item = Item::findOrFail($id);
+            $item->delete();
+
+            return redirect()->route('item.index')->with('success', '商品が削除されました。');
+        } catch (\Exception $e) {
+            return redirect()->route('item.index')->withErrors(['error' => '商品削除中にエラーが発生しました。']);
+        }
     }
 }

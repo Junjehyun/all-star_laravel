@@ -14,9 +14,14 @@
     </div>
     <div class="flex justify-center mt-8 space-x-3">
         <button class="px-6 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">購入する</button>
-        <a href="{{ url()->previous() }}" class="px-6 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">戻る</a>
-        <button class="outline outline-gray-100 px-1 py-2 rounded-xl">編集</button>
-        <button class="outline outline-gray-100 px-1 py-2 rounded-xl">削除</button>
+        <a href="{{ route('item.index') }}" class="px-6 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">戻る</a>
+        <a href="{{ route('item.edit', $item->id) }}">
+            <button class="outline outline-gray-100 px-1 py-2 rounded-xl">編集</button>
+        </a>
+        <form action="{{ route('item.delete', $item->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか?')">
+            @csrf
+            <button class="outline outline-gray-100 px-1 py-2 rounded-xl">削除</button>
+        </form>
     </div>
     <div class="bg-white shadow-xl py-5 px-5 mt-5">
         <h2 class="flex justify-center text-2xl">簡単レビュー</h2>

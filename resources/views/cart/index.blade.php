@@ -18,34 +18,32 @@
         </thead>
         <tbody>
             @foreach ($carts as $cart)
-            <tr class="text-center">
-                <td class="flex justify-center items-center border-b py-2">
-                    <img src="{{ $cart->item->image ? asset('storage/' . $cart->item->image) : '/images/default-image.png' }}" alt="{{ $cart->item->name }}" class="h-16 w-16 object-cover rounded-lg">{{ $cart->item->name }}
-                </td>
-                <td class="border-b py-2">₩{{ number_format($cart->item->price) }}</td>
-                <td class="border-b py-2">
-                    <form action="{{ route('cart.update', $cart->id) }}" method="POST" class="inline">
-                        @csrf
-                        <input type="number" name="quantity" value="{{ $cart->quantity }}" class="w-16 text-center border">
-                        <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded ml-2">修正</button>
-                    </form>
-                </td>
-                <td class="border-b py-2">₩{{ number_format($cart->item->price * $cart->quantity) }}</td>
-                <td class="border-b py-2">
-                    <form action="{{ route('cart.delete', $cart->id) }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded">削除</button>
-                    </form>
-                </td>
-            </tr>
+                <tr class="text-center">
+                    <td class="flex justify-center items-center border-b py-2">
+                        <img src="{{ $cart->item->image ? asset('storage/' . $cart->item->image) : '/images/default-image.png' }}" alt="{{ $cart->item->name }}" class="h-16 w-16 object-cover rounded-lg">{{ $cart->item->name }}
+                    </td>
+                    <td class="border-b py-2">₩{{ number_format($cart->item->price) }}</td>
+                    <td class="border-b py-2">
+                        <form action="{{ route('cart.update', $cart->id) }}" method="POST" class="inline">
+                            @csrf
+                            <input type="number" name="quantity" value="{{ $cart->quantity }}" class="w-16 text-center border">
+                            <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded ml-2">修正</button>
+                        </form>
+                    </td>
+                    <td class="border-b py-2">₩{{ number_format($cart->item->price * $cart->quantity) }}</td>
+                    <td class="border-b py-2">
+                        <form action="{{ route('cart.delete', $cart->id) }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded">削除</button>
+                        </form>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
     <div class="mt-6 text-right">
         <p class="text-xl font-bold">総計: {{ number_format($carts->sum(fn($cart) => $cart->item->price * $cart->quantity)) }} 円</p>
-        <button class="outline outline-gray-200 rounded-xl px-3 py-2 mt-5">
-            <a href="/item_index">戻る</a>
-        </button>
+        <a href="/item_index" class="outline outline-gray-200 rounded-xl px-3 py-2 mt-5 inline-block">戻る</a>
     </div>
     @endif
 </div>

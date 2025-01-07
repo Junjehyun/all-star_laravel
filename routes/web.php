@@ -6,6 +6,8 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 
 /**
  * 처음 만들었을때 기본적으로 생성되는 라우트 -> localhost:8000 Welcome Page
@@ -51,11 +53,32 @@ Route::get('/item_others', [ItemController::class, 'itemOthers'])->name('item.ot
 Route::get('/item_sale', [ItemController::class, 'itemSale'])->name('item.sale');
 Route::get('/item/ajax_category/{category}', [ItemController::class, 'getItemsByAjaxCategory'])->name('item.ajax_category');
 Route::get('/item_search', [ItemController::class, 'itemSearch'])->name('item.search');
+Route::get('/item_edit/{id}', [ItemController::class, 'itemEdit'])->name('item.edit');
+Route::post('/item_update/{id}', [ItemController::class, 'itemUpdate'])->name('item.update');
+Route::post('/item_delete/{id}',[ItemController::class, 'itemDelete'])->name('item.delete');
+
+/**
+ * PaymenController
+ *
+ * 결제 관련 라우트
+ *
+ */
+Route::get('/checkout/{id}', [PaymentController::class, 'checkout'])->name('checkout');
+Route::get('/payment', [PaymentController::class, 'processPayment'])->name('process.payment');
+
+/**
+ * OrderController
+ *
+ * 주문 내역 관련 컨트롤러?
+ *
+ */
+Route::get('/order_list', [OrderController::class, 'orderIndex'])->name('order.index');
 
 /**
  *  CartController
  *
  * 장바구니 관련 라우트
+ *
  */
 Route::get('/cart_index', [CartController::class, 'cartIndex'])->name('cart.index');
 Route::post('/cart/add',[CartController::class, 'cartAdd'])->name('cart.add');
