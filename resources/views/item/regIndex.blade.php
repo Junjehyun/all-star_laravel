@@ -30,7 +30,13 @@
             </div>
             <div class="w-1/2">
                 <label for="size" class="block text-gray-700 font-semibold">サイズ</label>
-                <input type="text" name="size" id="size" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="S, M, L, XL, XXL">
+                <select type="text" name="size" id="size" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="" selected>サイズ</option>
+                    @for ($i = 220; $i <= 290; $i += 5)
+                        <option value="{{ $i }}">{{ $i }} mm</option>
+                    @endfor
+                </select>
+
             </div>
         </div>
         <!-- 설명 -->

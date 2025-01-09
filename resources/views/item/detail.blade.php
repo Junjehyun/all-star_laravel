@@ -51,7 +51,7 @@
                 <input type="text" placeholder="レビューをお願いします。" class="border border-gray-200 rounded-xl px-3 py-2 w-96">
             </div>
             <div class="flex self-end">
-                <button type="sutbmit" class="outline outline-gray-200 rounded-xl px-3 py-2">작성</button>
+                <button type="sutbmit" class="outline outline-gray-200 rounded-xl px-3 py-2">作成</button>
             </div>
         </div>
     </div>
