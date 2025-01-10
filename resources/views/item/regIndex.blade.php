@@ -28,15 +28,26 @@
                 <label for="price" class="block text-gray-700 font-semibold">価格</label>
                 <input type="number" name="price" id="price" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="円 0">
             </div>
+            <!-- 사이즈 버튼화 -->
             <div class="w-1/2">
                 <label for="size" class="block text-gray-700 font-semibold">サイズ</label>
-                <select type="text" name="size" id="size" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                {{-- <select type="text" name="size" id="size" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     <option value="" selected>サイズ</option>
                     @for ($i = 220; $i <= 290; $i += 5)
                         <option value="{{ $i }}">{{ $i }} mm</option>
                     @endfor
-                </select>
-
+                </select> --}}
+                <div class="flex flex-wrap gap-2">
+                    @for ($i = 220; $i <= 290; $i += 5)
+                        <button type="button"
+                                class="size-button px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                data-value="{{ $i }}">
+                            {{ $i }}mm
+                        </button>
+                    @endfor
+                </div>
+                <input type="hidden" name="size" id="selectedSize" required>
+                <small class="text-gray-500">希望するサイズをクリックしてください。</small>
             </div>
         </div>
         <!-- 설명 -->
@@ -56,4 +67,7 @@
         </div>
     </form>
 </div>
+<script>
+// size 관련 js
+</script>
 @endsection
