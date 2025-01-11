@@ -8,7 +8,13 @@
     </div>
     <div class="text-center space-y-4 mt-5">
         <p class="text-gray-700">価格: <span class="font-bold">₩{{ number_format($item->price) }}</span></p>
-        <p class="text-gray-700">サイズ: <span class="font-bold">{{ $item->size }}mm</p>
+        <p class="text-gray-700">サイズ: <span class="font-bold">
+            @if(is_array($item->size))
+                {{ implode(', ', $item->size) }}mm
+            @else
+                {{ $item->size }}mm
+            @endif
+        </p>
         <p class="text-gray-700 text-lg">商品詳細</p>
         <p class="text-gray-600">{{ $item->description }}</p>
     </div>

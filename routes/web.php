@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PurchaseController;
 
 /**
  * 처음 만들었을때 기본적으로 생성되는 라우트 -> localhost:8000 Welcome Page
@@ -69,10 +70,19 @@ Route::get('/payment', [PaymentController::class, 'processPayment'])->name('proc
 /**
  * OrderController
  *
- * 주문 내역 관련 컨트롤러?
+ * 주문 내역 관련 라우트트
  *
  */
 Route::get('/order_list', [OrderController::class, 'orderIndex'])->name('order.index');
+
+/**
+ * PurchaseController
+ *
+ * 구매 관련 라우트
+ *
+ */
+Route::get('/purchase_index/{item_id}', [PurchaseController::class, 'purchase'])->name('purchase.index');
+Route::post('/purchase/checkout', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
 
 /**
  *  CartController

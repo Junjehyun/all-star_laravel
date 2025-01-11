@@ -19,6 +19,11 @@ class Item extends Model
         'category'
     ];
 
+    // size를 JSON으로 저장 및 읽기
+    protected $casts = [
+        'size' => 'array'
+    ];
+
     public function carts() {
         return $this->hasMany(Cart::class);
     }

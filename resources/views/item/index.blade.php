@@ -34,7 +34,8 @@
                         <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">詳細</a>
                         <div class="space-x-2">
                             <button  onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">カート</button>
-                            <a href="{{ route('checkout', $item->id) }}">
+                            {{-- <a href="{{ route('checkout', $item->id) }}"> --}}
+                            <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
                                 <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">購入</button>
                             </a>
                         </div>

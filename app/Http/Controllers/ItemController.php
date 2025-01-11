@@ -39,10 +39,14 @@ class ItemController extends Controller
      */
     public function itemReg(Request $request) {
 
+        $sizeData = json_decode($request->input('size'), true);
+
+        $request->merge(['size' => $sizeData]);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'size' => 'required|numeric|min:220|max:290',
+            'size' => 'required|array|min:1',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category' => 'required|string|in:nike,adidas,newBalance,others,sale',
