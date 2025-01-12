@@ -12,7 +12,7 @@ class PurchaseController extends Controller
 {
     // 구매하기 페이지
     public function purchase($item_id) {
-
+        // 상품 정보 로드
         $item = Item::findOrFail($item_id);
 
         return view('purchase.index', compact('item'));

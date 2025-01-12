@@ -16,6 +16,26 @@
                     <form action="" method="POST" class="space-y-6">
                         @csrf
                         <input type="hidden" name="item_id" value="{{ $item->id }}">
+                        <!-- 주문자 정보 -->
+                        <h2 class="text-xl font-semibold mb-4">注文者情報</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="customer_name" class="block text-gray-700 font-semibold mb-2">お名前</label>
+                                <input type="text" name="customer_name" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 山田太郎" required>
+                            </div>
+                            <div>
+                                <label for="customer_email" class="block text-gray-700 font-semibold mb-2">メールアドレス</label>
+                                <input type="email" name="customer_email" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: example@example.com" required>
+                            </div>
+                            <div>
+                                <label for="customer_phone" class="block text-gray-700 font-semibold mb-2">電話番号</label>
+                                <input type="tel" name="customer_phone" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 090-1234-5678" required>
+                            </div>
+                            <div>
+                                <label for="customer_address" class="block text-gray-700 font-semibold mb-2">住所</label>
+                                <!-- 좀 더 세분화 해서 입력 받을 수 있도록 수정 -->
+                            </div>
+                        </div>
                         <!-- 사이즈 선택 -->
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">サイズ選択:</label>
