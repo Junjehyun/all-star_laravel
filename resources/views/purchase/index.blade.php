@@ -21,31 +21,31 @@
                         <div class="space-y-4">
                             <div>
                                 <label for="customer_name" class="block text-gray-700 font-semibold mb-2">お名前</label>
-                                <input type="text" name="customer_name" id="customer_name" value="{{ old('customer_name') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 山田太郎" required>
+                                <input type="text" name="customer_name" id="customer_name" value="{{ $queryData['customer_name'] ?? '' }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 山田太郎" required>
                             </div>
                             <div>
                                 <label for="customer_email" class="block text-gray-700 font-semibold mb-2">メールアドレス</label>
-                                <input type="email" name="customer_email" id="customer_email" value="{{ old('customer_email') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: example@example.com" required>
+                                <input type="email" name="customer_email" id="customer_email" value="{{ $queryData['customer_email'] ?? '' }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: example@example.com" required>
                             </div>
                             <div>
                                 <label for="customer_phone" class="block text-gray-700 font-semibold mb-2">電話番号</label>
-                                <input type="tel" name="customer_phone" id="customer_phone" value="{{ old('customer_phone') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 090-1234-5678" required>
+                                <input type="tel" name="customer_phone" id="customer_phone" value="{{ $queryData['customer_phone'] ?? '' }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 090-1234-5678" required>
                             </div>
                             <div>
                                 <label for="zipcode" class="block text-gray-700 font-semibold mb-2">郵便番号:</label>
                                 <!-- 좀 더 세분화 해서 입력 받을 수 있도록 수정 -->
                                 <div class="flex space-x-2">
-                                    <input type="text" name="zipcode" id="zipcode" value="{{ old('zipcode') }}" class="w-4/5 border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 1234567 (-)なしで入力）" required>
+                                    <input type="text" name="zipcode" id="zipcode" value="{{ $queryData['zipcode'] ?? '' }}" class="w-4/5 border border-gray-300 rounded-lg px-3 py-2" placeholder="例: 1234567 (-)なしで入力）" required>
                                     <button type="button" id="zipcodeSearch" class="w-1/5 bg-blue-500 text-white py-2 rounded-lg">検索</button>
                                 </div>
                             </div>
                             <div class="mt-4">
                                 <label for="city" class="block text-gray-700 font-semibold mb-2">都道府県・市区町村:</label>
-                                <input type="text" name="city" id="city" value="{{ old('city') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="郵便番号入力すれば自動反映されます。" readonly>
+                                <input type="text" name="city" id="city" value="{{ $queryData['city'] ?? '' }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="郵便番号入力すれば自動反映されます。" readonly>
                             </div>
                             <div class="mt-4">
                                 <label for="detail_address" class="block text-gray-700 font-semibold mb-2">住所詳細:</label>
-                                <textarea name="detail_address" id="detail_address" cols="3" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="番地や建物名などを入力してください" required>{{ old('detail_address') }}</textarea>
+                                <textarea name="detail_address" id="detail_address" cols="3" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="番地や建物名などを入力してください" required>{{ $queryData['detail_address'] ?? '' }}</textarea>
                             </div>
                         </div>
                         <!-- 사이즈 선택 -->
@@ -53,19 +53,23 @@
                             <label class="block text-gray-700 font-semibold mb-2">サイズ選択:</label>
                             <div class="flex flex-wrap gap-2">
                                 @foreach (range(220, 290, 5) as $size)
-                                    <button type="button" class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white" data-value="{{ $size }}">
-                                        {{ $size }}mm
-                                    </button>
+                                <button
+                                    type="button"
+                                    class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
+                                        {{ in_array($size, $queryData['size'] ?? []) ? 'bg-sky-500 text-white' : '' }}"
+                                    data-value="{{ $size }}">
+                                    {{ $size }}mm
+                                </button>
                                 @endforeach
                             </div>
-                            <input type="hidden" name="size" id="selectedSizePurchase">
+                            <input type="hidden" name="size" id="selectedSizePurchase" value="{{ json_encode($queryData['size'] ?? []) }}">
                         </div>
                         <!-- 수량 선택과 버튼 배치 -->
                         <div class="w-3/5 mb-6">
                             <label for="quantity" class="block text-gray-700 font-semibold mb-2">数量選択:</label>
                             <div class="flex items-center space-x-2">
                                 <!-- 수량 입력 -->
-                                <input type="number" name="quantity" id="quantity" class="w-1/3 border border-gray-300 rounded-lg px-3 py-2 text-center" min="1" value="1">
+                                <input type="number" name="quantity" id="quantity" value="{{ $queryData['quantity'] ?? '' }}"class="w-1/3 border border-gray-300 rounded-lg px-3 py-2 text-center" min="1" value="1">
                                     <button type="submit" class="w-1/3 outline outline-sky-200 py-1 rounded-lg">
                                         次へ
                                     </button>

@@ -15,11 +15,18 @@ use Stripe\Checkout\Session as StripeSession;
 class PurchaseController extends Controller
 {
     // 구매 확인인 페이지
-    public function purchase($item_id) {
+    public function purchase(Request $request, $item_id) {
         // 상품 정보 로드
         $item = Item::findOrFail($item_id);
 
-        return view('purchase.index', compact('item'));
+        // URL 파라미터를 뷰에 전달
+        $queryData = $request->query();
+
+        if(isset($queryData['size'])) {
+            $queryData['size'] = json_decode($queryData['size'], true);
+        }
+
+        return view('purchase.index', compact('item', 'queryData'));
     }
 
     // 구매 확정 페이지
@@ -73,7 +80,6 @@ class PurchaseController extends Controller
 
         // 상품 정보 로드
         $item = Item::findOrFail($validated['item_id']);
-
         // Stripe 설정
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -91,7 +97,7 @@ class PurchaseController extends Controller
                     // 일본 엔화 단위 그대로
                     'unit_amount' => intval($item->price), // 소수점 제거
                 ],
-                'quantity' => 1, // 구매 수량
+                'quantity' => $validated['quantity'], // 구매 수량
             ]],
             'mode' => 'payment',
             // 결제 성공 url

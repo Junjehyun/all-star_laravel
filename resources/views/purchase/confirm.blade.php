@@ -1,6 +1,5 @@
 @extends('layouts.shop_common')
 @section('title', '購入確定')
-
 @section('content')
     <div class="container w-3/5 mx-auto mt-10">
         <h1 class="text-center text-2xl font-bold mb-6">購入内容の確認</h1>
@@ -11,7 +10,6 @@
                 <div class="w-1/3 flex justify-center">
                     <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="w-full rounded-lg shadow-md">
                 </div>
-
                 <!-- 제품 정보 및 사용자 정보 -->
                 <div class="w-2/3 space-y-6">
                     <!-- 제품 정보 -->
@@ -22,7 +20,6 @@
                         <p class="mb-2">サイズ: <strong>{{ $validated['size'] }}</strong></p>
                         <p>数量: <strong>{{ $validated['quantity'] }}</strong></p>
                     </div>
-
                     <!-- 사용자 입력 정보 -->
                     <div class="bg-white shadow-md rounded-lg p-6">
                         <h2 class="text-xl font-semibold mb-4">注文者情報</h2>
@@ -46,7 +43,7 @@
                             <input type="hidden" name="city" value="{{ $validated['city'] }}">
                             <input type="hidden" name="detail_address" value="{{ $validated['detail_address'] }}">
                             <button type="submit" class="w-full outline outline-sky-200 px-2 py-1 text-sm rounded-xl hover:bg-sky-400 hover:text-white">
-                                購入する
+                                決済
                             </button>
                         </form>
                         <!-- 수정으로 돌아가기 버튼 -->
@@ -60,7 +57,7 @@
                             <input type="hidden" name="size" value="{{ $validated['size'] }}">
                             <input type="hidden" name="quantity" value="{{ $validated['quantity'] }}">
                             <button type="submit" class="w-full outline outline-rose-200 px-2 py-1 text-sm rounded-xl hover:bg-rose-400 hover:text-white">
-                                修正に戻る
+                                情報修正
                             </button>
                         </form>
                     </div>
