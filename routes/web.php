@@ -82,6 +82,7 @@ Route::get('/order_list', [OrderController::class, 'orderIndex'])->name('order.i
  *
  */
 Route::get('/purchase_index/{item_id}', [PurchaseController::class, 'purchase'])->name('purchase.index');
+Route::post('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
 Route::post('/purchase/checkout', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
 
 /**
