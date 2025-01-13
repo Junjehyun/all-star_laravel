@@ -52,7 +52,8 @@ class PurchaseController extends Controller
     }
 
     public function checkout(Request $request) {
-
+        // 상품 정보 로드
+        $item = Item::findOrFail($request->item_id);
         // data validation
         $validated = $request->validate([
             'item_id' => 'required|integer|exists:items,id',
@@ -71,15 +72,20 @@ class PurchaseController extends Controller
             'item_id' => $validated['item_id'],
             'user_id' => null, // 로그인 없이 진행 중이므로 null 허용
             'status' => 'pending',
-            'amount' => $validated['quantity'],
+            'amount' => $item->price * $validated['quantity'],
+            'payment_id' => null, // 결제 완료 후에 업데이트
             'customer_name' => $validated['customer_name'],
             'customer_email' => $validated['customer_email'],
             'customer_phone' => $validated['customer_phone'],
             'customer_address' => "{$validated['zipcode']} {$validated['city']} {$validated['detail_address']}",
+            'zipcode' => $validated['zipcode'], // 추가
+            'city' => $validated['city'],       // 추가
+            'detail_address' => $validated['detail_address'], // 추가
         ]);
 
-        // 상품 정보 로드
-        $item = Item::findOrFail($validated['item_id']);
+        // 결제 성공 후 주문 상태 업데이트
+        $order->update(['status' => 'complete']);
+
         // Stripe 설정
         Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -101,7 +107,7 @@ class PurchaseController extends Controller
             ]],
             'mode' => 'payment',
             // 결제 성공 url
-            'success_url' => route('item.index') . '?session_id={CHECKOUT_SESSION_ID}',
+            'success_url' => route('purchase.thankyou') . '?session_id={CHECKOUT_SESSION_ID}',
             // 결제 실패 url
             'cancel_url' => route('purchase.index', ['item_id' => $item->id]),
             'metadata' => [
@@ -117,6 +123,12 @@ class PurchaseController extends Controller
 
         // Stripe 결제 페이지로 리다이렉트
         return redirect($session->url);
+    }
 
+    public function thankyou() {
+        // 최신 주문 정보 로드
+        $order = Order::latest()->first();
+
+        return view('purchase.thankyou', compact('order'));
     }
 }

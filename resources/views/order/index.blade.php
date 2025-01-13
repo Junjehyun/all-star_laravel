@@ -23,13 +23,13 @@
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
-                    <tr>
-                        <td class="border-b py-2 px-4">{{ $order->id }}</td>
-                        <td class="border-b py-2 px-4">{{ $order->item->name }}</td>
-                        <td class="border-b py-2 px-4">¥{{ number_format($order->amount) }}</td>
-                        <td class="border-b py-2 px-4">{{ $order->status }}</td>
-                        <td class="border-b py-2 px-4">{{ $order->created_at->format('Y-m-d H:i') }}</td>
-                    </tr>
+                        <tr>
+                            <td class="border-b py-2 px-4">{{ $order->id }}</td>
+                            <td class="border-b py-2 px-4">{{ $order->item->name }}</td>
+                            <td class="border-b py-2 px-4">￥{{ number_format($order->amount, 0) }}</td>
+                            <td class="border-b py-2 px-4">{{ $order->status }}</td>
+                            <td class="border-b py-2 px-4">{{ $order->created_at->format('Y-m-d H:i') }}</td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

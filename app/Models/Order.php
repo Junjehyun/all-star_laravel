@@ -15,7 +15,14 @@ class Order extends Model
         'user_id',
         'status',
         'amount',
-        'payment_id'
+        'payment_id',
+        'customer_name',
+        'customer_email',
+        'customer_phone',
+        'customer_address',
+        'zipcode',
+        'city',
+        'detail_address',
     ];
 
     // relationship with item
