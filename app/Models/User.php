@@ -64,4 +64,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // public function redirectTo(): string
+    // {
+    //     // 모든 사용자에 대해 /item_index로 리다이렉트
+    //     return '/item_index';
+    // }
 }

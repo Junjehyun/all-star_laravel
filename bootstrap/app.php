@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,7 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // 라우트 미들웨어 (배열형태로 키 => 클래스 형태로)
+        $middleware->alias(['admin', AdminMiddleware::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

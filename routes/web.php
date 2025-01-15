@@ -28,6 +28,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
+
 /**
  * MainController
  *
