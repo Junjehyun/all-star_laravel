@@ -58,7 +58,7 @@ Route::get('/item_search', [ItemController::class, 'itemSearch'])->name('item.se
 Route::get('/item_edit/{id}', [ItemController::class, 'itemEdit'])->name('item.edit');
 Route::post('/item_update/{id}', [ItemController::class, 'itemUpdate'])->name('item.update');
 Route::post('/item_delete/{id}',[ItemController::class, 'itemDelete'])->name('item.delete');
-
+Route::get('/qna_index', [ItemController::class, 'qnaIndex'])->name('qna.index');
 /**
  * PaymenController
  *

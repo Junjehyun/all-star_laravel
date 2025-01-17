@@ -196,4 +196,8 @@ class ItemController extends Controller
             return redirect()->route('item.index')->withErrors(['error' => '商品削除中にエラーが発生しました。']);
         }
     }
+
+    public function qnaIndex() {
+        return view('item.qna');
+    }
 }
