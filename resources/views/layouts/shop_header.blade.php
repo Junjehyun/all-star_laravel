@@ -4,12 +4,27 @@
         <nav>
             <div class="flex space-x-4">
                 <div class="flex flex-row items-center justify-center space-x-4 mt-2">
-                    <a href="">
-                        Login
-                    </a>
-                    <a href="">
-                        Register
-                    </a>
+                    @auth
+                        <form action="{{ route('logout')}}" method="POST">
+                            @csrf
+                            <button type="submit" class="text-lg">
+                                ログアウト
+                            </button>
+                        </form>
+                    @else
+                        <div class="flex flex-row items-center justify-center space-x-4 mt-2">
+                            <form action="/login" method="GET">
+                                <button type="submit" class="">
+                                    ログイン
+                                </button>
+                            </form>
+                            <form action="/register" method="GET">
+                                <button type="submit" class="">
+                                    新規登録
+                                </button>
+                            </form>
+                        </div>
+                    @endauth
                     {{-- <a href="/item_top" class="text-center text-md px-1">TOP</a>
                     <a href="/item_bottom" class="text-center text-md px-1">BOTTOM</a>
                     <a href="/item_shoes" class="text-center text-md px-1">SHOES</a>
