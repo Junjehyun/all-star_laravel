@@ -4,6 +4,13 @@ use Laravel\Fortify\Features;
 
 return [
 
+    //redirects customizing
+    'redirects' => [
+            'login' => '/main_index',
+            'logout' => '/login',
+            'register' => '/main_index',
+        ],
+
     /*
     |--------------------------------------------------------------------------
     | Fortify Guard
@@ -73,7 +80,7 @@ return [
     |
     */
 
-    'home' => '/dashboard',
+    'home' => '/login',
 
     /*
     |--------------------------------------------------------------------------
