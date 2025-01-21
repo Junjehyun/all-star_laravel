@@ -1,7 +1,6 @@
 <header class="bg-transparent shadow-xl text-gray-600 p-4">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="/main_index" class="text-xl font-bold">Programming Center</h1>
-        <nav>
+        {{-- <a href="/main_index" class="text-xl font-bold">Programming Center</h1> --}}
             <div class="flex space-x-4 justify-end">
                 <div class="flex flex-row items-center justify-center space-x-4 mt-2">
                     @auth
@@ -28,6 +27,5 @@
                 </div>
                 @endauth
             </div>
-        </nav>
     </div>
 </header>
