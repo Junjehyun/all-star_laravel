@@ -20,6 +20,17 @@
             </div>
 
             <div class="mt-4">
+                <label for="role" class="block text-sm font-medium text-gray-700">
+                    ロール
+                </label>
+                <select name="role" id="role" class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-300">
+                    <option value="user">一般会員</option>
+                    <option value="admin">管理者</option>
+                </select>
+            </div>
+
+
+            <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>

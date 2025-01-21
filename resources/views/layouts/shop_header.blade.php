@@ -1,4 +1,4 @@
-<header class="shadow-sm text-gray-900 p-4">
+<header class="bg-transparent shadow-xl text-gray-900 p-4">
     <div class="container mx-auto flex justify-between items-center">
         <a href="/item_index" class="text-xl font-bold">XYZ MART</h1>
         <nav>
@@ -11,6 +11,7 @@
                                 ログアウト
                             </button>
                         </form>
+                    </div>
                     @else
                         <div class="flex flex-row items-center justify-center space-x-4 mt-2">
                             <form action="/login" method="GET">
