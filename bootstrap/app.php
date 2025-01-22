@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // 라우트 미들웨어 (배열형태로 키 => 클래스 형태로)
-        $middleware->alias(['admin', AdminMiddleware::class]);
+        //$middleware->alias(['admin', AdminMiddleware::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

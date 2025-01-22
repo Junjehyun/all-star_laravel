@@ -9,8 +9,6 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PurchaseController;
-use Illuminate\Support\Facades\Auth;
-
 
 /**
  * 처음 만들었을때 기본적으로 생성되는 라우트 -> localhost:8000 Welcome Page
@@ -25,19 +23,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-
     // group 안에 있는 라우트는 모두 인증된 사용자만 접근 가능
-
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    // Route::post('/logout', function () {
-    //     Auth::logout();
-    //     // 로그아웃 후 리다이렉트 경로
-    //     // Illuminate\Auth\RequestGuard::logout
-    //     return redirect('/login');
-    // })->name('logout');
 });
 
 
@@ -71,6 +60,7 @@ Route::get('/item_edit/{id}', [ItemController::class, 'itemEdit'])->name('item.e
 Route::post('/item_update/{id}', [ItemController::class, 'itemUpdate'])->name('item.update');
 Route::post('/item_delete/{id}',[ItemController::class, 'itemDelete'])->name('item.delete');
 Route::get('/qna_index', [ItemController::class, 'qnaIndex'])->name('qna.index');
+
 /**
  * PaymenController
  *
