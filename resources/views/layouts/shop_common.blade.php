@@ -9,6 +9,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
         <!--Tailwind cdn-->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,13 +20,13 @@
         <!-- Alpine.js CDN -->
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
         @livewireScripts
-        <title>@yield('title') - Untitle</title>
+        <title>@yield('title') - xyz Mart</title>
         <style>
             body {
-                font-family: 'Kiwi Maru', sans-serif;
+                font-family: "JetBrains Mono", "Kiwi Maru", sans-serif;
             }
             h1, h2, h3, h4, h5 {
-                font-family: 'Kiwi Maru', sans-serif;
+                font-family: "JetBrains Mono", "Kiwi Maru", sans-serif;
             }
         </style>
     </head>

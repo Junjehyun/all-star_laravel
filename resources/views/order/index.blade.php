@@ -1,24 +1,24 @@
 @extends('layouts.shop_common')
-@section('title', '注文履歴')
+@section('title', 'Order List')
 @section('content')
     <div class="container w-3/5 mx-auto mt-10">
-        <h1 class="text-center text-2xl font-bold mb-6">注文履歴</h1>
+        <h1 class="text-center text-2xl font-bold mb-6">ORDER LIST</h1>
         @if($orders->isEmpty())
-            <p class="text-center text-gray-700 text-xl">注文履歴がありません。</p>
+            <p class="text-center text-gray-700 text-xl">Order history is missing.</p>
             <div class="flex justify-center mt-10">
                 <a href="{{  route('item.index') }}" class="outline outline-rose-200 hover:outline-rose-300 rounded-xl px-3 py-2">
-                    ショッピングモールへ
+                    Back to Shop
                 </a>
             </div>
         @else
             <table class="table-auto w-full justify-center text-left border-collapse border border-gray-300">
                 <thead>
                     <tr>
-                        <th class="border-b py-2 px-4">注文ID</th>
-                        <th class="border-b py-2 px-4">商品名</th>
-                        <th class="border-b py-2 px-4">価格</th>
-                        <th class="border-b py-2 px-4">ステータス</th>
-                        <th class="border-b py-2 px-4">注文日時</th>
+                        <th class="border-b py-2 px-4">ORDER ID</th>
+                        <th class="border-b py-2 px-4">ITEM NAME</th>
+                        <th class="border-b py-2 px-4">PRICE</th>
+                        <th class="border-b py-2 px-4">STATUS</th>
+                        <th class="border-b py-2 px-4">Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +35,7 @@
             </table>
         @endif
         <div class="flex justify-end mt-3">
-            <a href="/item_index" class="outline outline-rose-100 py-1 px-2 rounded-xl">戻る</a>
+            <a href="/item_index" class="outline outline-rose-100 py-1 px-2 rounded-xl">RETURN</a>
         </div>
     </div>
 @endsection

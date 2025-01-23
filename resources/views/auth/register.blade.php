@@ -21,11 +21,11 @@
 
             <div class="mt-4">
                 <label for="role" class="block text-sm font-medium text-gray-700">
-                    ロール
+                    Role
                 </label>
                 <select name="role" id="role" class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-300">
-                    <option value="user">一般会員</option>
-                    <option value="admin">管理者</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
                 </select>
             </div>
 
