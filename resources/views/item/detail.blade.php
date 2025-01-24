@@ -18,14 +18,14 @@
     </div>
     <div class="flex justify-center mt-8 space-x-3">
         <button class="px-4 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
-        <a href="{{ route('item.index') }}" class="px-4 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">RETURN</a>
+        <a href="{{ route(name: 'item.index') }}" class="px-4 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">RETURN</a>
         @auth
             @if(Auth::user()->role === 'admin')
                 <a href="{{ route('item.edit', $item->id) }}">
                     <button class="outline outline-gray-100 px-1 py-2 rounded-xl">EDIT</button>
                 </a>
                 <form action="{{ route('item.delete', $item->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか?')">
-                @csrf
+                    @csrf
                     <button class="outline outline-gray-100 px-1 py-2 rounded-xl">DELETE</button>
                 </form>
             @endif

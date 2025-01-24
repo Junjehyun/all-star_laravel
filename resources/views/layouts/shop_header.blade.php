@@ -1,6 +1,6 @@
 <header class="bg-transparent shadow-xl text-gray-600 p-4">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="/main_index" class="text-xl font-bold">xyz Mart</a>
+        <a href="/item_index" class="text-xl font-bold">xyz Mart</a>
         <nav>
             <div class="flex justify-end space-x-4">
                 @auth
@@ -55,11 +55,12 @@
                 $('#cart-count').text(data.count);
             },
             error: function () {
-                alert('エラーが発生しました。もう一度やり直してください!');
+                alert('?? An error has occurred. Please try again.');
             }
         });
-        $(document).ready(function () {
-            updateCartCount();
-        });
     }
+
+    $(document).ready(function () {
+            updateCartCount();
+    });
 </script>
