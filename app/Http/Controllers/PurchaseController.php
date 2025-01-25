@@ -141,8 +141,8 @@ class PurchaseController extends Controller
 
         // 선택된 상품들의 정보를 가져오기
         $items = Item::whereIn('id', $selectedItemIds)->get();
-
+        //dd($items);
         // 결제 페이지로 넘어갈 데이터와 함께 뷰 반환
-        return view('purchase.confirm', compact('items'));
+        return view('purchase.cart-confirm', compact('items'));
     }
 }
