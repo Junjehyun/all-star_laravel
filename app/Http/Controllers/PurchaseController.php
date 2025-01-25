@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 use Illuminate\Support\Str;
+
 /**
  * 구매 관련 컨트롤러
  *
@@ -140,9 +142,16 @@ class PurchaseController extends Controller
         $selectedItemIds = $request->input('selected_item');
 
         // 선택된 상품들의 정보를 가져오기
-        $items = Item::whereIn('id', $selectedItemIds)->get();
+        //$items = Item::whereIn('id', $selectedItemIds)->get();
+        $carts = Cart::with('item')  // 아이템도 함께 로드
+                ->whereIn('item_id', $selectedItemIds)
+                ->where('user_id', Auth::id())  // 현재 로그인한 사용자의 카트
+                ->get();
         //dd($items);
+
+        // 로그인한 사용자의 이름 가져오기
+        $userName = Auth::user()->name;
         // 결제 페이지로 넘어갈 데이터와 함께 뷰 반환
-        return view('purchase.cart-confirm', compact('items'));
+        return view('purchase.cart-confirm', compact('carts', 'userName'));
     }
 }
