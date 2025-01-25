@@ -5,17 +5,13 @@
         <h1 class="text-center text-2xl font-bold mb-6">ORDER LIST</h1>
         @if($orders->isEmpty())
             <p class="text-center text-gray-700 text-xl">Order history is missing.</p>
-            <div class="flex justify-center mt-10">
-                <a href="{{  route('item.index') }}" class="outline outline-rose-200 hover:outline-rose-300 rounded-xl px-3 py-2">
-                    Back to Shop
-                </a>
-            </div>
         @else
             <table class="table-auto w-full justify-center text-left border-collapse border border-gray-300">
                 <thead>
                     <tr>
                         <th class="border-b py-2 px-4">ORDER ID</th>
                         <th class="border-b py-2 px-4">ITEM NAME</th>
+                        <th class="border-b py-2 px-4">QUANTITY</th>
                         <th class="border-b py-2 px-4">PRICE</th>
                         <th class="border-b py-2 px-4">STATUS</th>
                         <th class="border-b py-2 px-4">Date</th>
@@ -26,6 +22,7 @@
                         <tr>
                             <td class="border-b py-2 px-4">{{ $order->id }}</td>
                             <td class="border-b py-2 px-4">{{ $order->item->name }}</td>
+                            <td class="border-b py-2 px-4">{{ $order->quantity }}</td>
                             <td class="border-b py-2 px-4">￥{{ number_format($order->amount, 0) }}</td>
                             <td class="border-b py-2 px-4">{{ $order->status }}</td>
                             <td class="border-b py-2 px-4">{{ $order->created_at->format('Y-m-d H:i') }}</td>

@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
-
+use Illuminate\Support\Str;
 /**
  * 구매 관련 컨트롤러
  *
@@ -70,10 +71,11 @@ class PurchaseController extends Controller
         // 주문 데이터 저장
         $order = Order::create([
             'item_id' => $validated['item_id'],
-            'user_id' => null, // 로그인 없이 진행 중이므로 null 허용
+            'user_id' => Auth::id(),
             'status' => 'pending',
+            'quantity' => $validated['quantity'],
             'amount' => $item->price * $validated['quantity'],
-            'payment_id' => null, // 결제 완료 후에 업데이트
+            'payment_id' => Str::uuid(), // 결제 완료 후에 업데이트
             'customer_name' => $validated['customer_name'],
             'customer_email' => $validated['customer_email'],
             'customer_phone' => $validated['customer_phone'],
@@ -130,5 +132,17 @@ class PurchaseController extends Controller
         $order = Order::latest()->first();
 
         return view('purchase.thankyou', compact('order'));
+    }
+
+    public function purchaseSelected(Request $request) {
+
+        // 선택된 상품들의 ID를 가져옴 (selected_item[]으로 전달된 값)
+        $selectedItemIds = $request->input('selected_item');
+
+        // 선택된 상품들의 정보를 가져오기
+        $items = Item::whereIn('id', $selectedItemIds)->get();
+
+        // 결제 페이지로 넘어갈 데이터와 함께 뷰 반환
+        return view('purchase.confirm', compact('items'));
     }
 }

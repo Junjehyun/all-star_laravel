@@ -6,7 +6,7 @@ return [
 
     //redirects customizing
     'redirects' => [
-            'login' => '/main_index',
+            'login' => '/item_index',
             'logout' => '/login',
             'register' => '/main_index',
         ],
