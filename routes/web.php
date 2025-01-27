@@ -78,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/purchase/checkout', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
     Route::get('/purchase/thankyou', [PurchaseController::class, 'thankyou'])->name('purchase.thankyou');
     Route::post('/purchase/selected', [PurchaseController::class, 'purchaseSelected'])->name('purchase.selected');
+    Route::post('/purchase/next-cart-confirm', [PurchaseController::class, 'nextCartConfirm'])->name('purchase.next-cart-confirm');
 
     /**
      *  CartController

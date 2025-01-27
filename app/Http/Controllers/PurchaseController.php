@@ -139,7 +139,25 @@ class PurchaseController extends Controller
     public function purchaseSelected(Request $request) {
 
         // 선택된 상품들의 ID를 가져옴 (selected_item[]으로 전달된 값)
-        $selectedItemIds = $request->input('selected_item');
+        //$selectedItemIds = $request->input('selected_item');
+        $selectedItemIds = $request->input('selected_item', []);
+        //dd($selectedItemIds);
+        session([
+            'item_ids' => $request->input('item_ids', []),
+            'quantities' => $request->input('quantities', []),
+            'customer_name' => $request->input('customer_name'),
+            'customer_email' => $request->input('customer_email'),
+            'customer_phone' => $request->input('customer_phone'),
+            'zipcode' => $request->input('zipcode'),
+            'city' => $request->input('city'),
+            'detail_address' => $request->input('detail_address'),
+        ]);
+
+        // 세션에 저장된 item_ids와 quantities를 기반으로 카트 정보를 불러오기
+        $itemIds = session('item_ids', []);
+        $quantities = session('quantities', []);
+
+        //dd($request->all());
 
         // 선택된 상품들의 정보를 가져오기
         //$items = Item::whereIn('id', $selectedItemIds)->get();
@@ -149,9 +167,41 @@ class PurchaseController extends Controller
                 ->get();
         //dd($items);
 
+        //상품 수량 매핑
+        foreach ($carts as $cart) {
+            $cart->quantity = $quantities[array_search($cart->item->id, $itemIds)];
+        }
+
         // 로그인한 사용자의 이름 가져오기
         $userName = Auth::user()->name;
         // 결제 페이지로 넘어갈 데이터와 함께 뷰 반환
-        return view('purchase.cart-confirm', compact('carts', 'userName'));
+        return view('purchase.cart-confirm', compact('carts', 'userName', 'selectedItemIds', 'itemIds', 'quantities'));
+    }
+
+    public function nextCartConfirm(Request $request) {
+
+        // 입력된 아이템들과 사용자 정보 가져오기
+        $validated = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_email' => 'required|email|max:255',
+            'customer_phone' => 'required|string|max:20',
+            'zipcode' => 'required|string|max:10',
+            'city' => 'nullable|string|max:255',
+            'detail_address' => 'required|string|max:500',
+            'item_ids' => 'required|array',
+            'quantities' => 'required|array',
+        ]);
+
+        // 선택된 상품들의 정보를 가져오기
+        $carts = Cart::with('item')  // 아이템도 함께 로드
+                ->whereIn('item_id', $validated['item_ids'])
+                ->where('user_id', Auth::id())  // 현재 로그인한 사용자의 카트
+                ->get();  // $queryData['item_ids']가 null일 경우 빈 배열을 사용
+
+
+        // 최종 확인을 위한 데이터
+        $userName = Auth::user()->name;
+
+        return view('purchase.next-cart-confirm', compact('carts', 'userName', 'validated'));
     }
 }
