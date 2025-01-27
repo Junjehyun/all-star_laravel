@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 구매 관련 컨트롤러
@@ -203,5 +204,146 @@ class PurchaseController extends Controller
         $userName = Auth::user()->name;
 
         return view('purchase.next-cart-confirm', compact('carts', 'userName', 'validated'));
+    }
+
+    public function cartCheckout(Request $request) {
+        // DB검증
+        $validated = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_email' => 'required|email|max:255',
+            'customer_phone' => 'required|string|max:20',
+            'zipcode' => 'required|string|max:10',
+            'city' => 'required|string|max:255',
+            'detail_address' => 'required|string|max:500',
+            'item_ids' => 'required|array',
+            'item_ids.*' => 'integer|exists:items,id',
+            'quantities' => 'required|array',
+            'quantities.*' => 'integer|min:1',
+        ]);
+
+        // 상품 ID와 수량 배열
+        $itemIds = $validated['item_ids'];
+        $quantities = $validated['quantities'];
+
+        // 사용자 정보
+        $customerName = $validated['customer_name'];
+        $customerEmail = $validated['customer_email'];
+        $customerPhone = $validated['customer_phone'];
+        $zipcode = $validated['zipcode'];
+        $city = $validated['city'];
+        $detailAddress = $validated['detail_address'];
+
+        // 공통 group_id 생성
+        $groupId = Str::uuid();
+
+        // 트랜잭션 시작
+        DB::beginTransaction();
+
+        try {
+            $lineItems = [];
+            $metadata = [
+                'user_id' => Auth::id(),
+                'group_id' => $groupId, // 그룹 식별자 추가
+                'customer_name' => $customerName,
+                'customer_email' => $customerEmail,
+                'customer_phone' => $customerPhone,
+                'customer_address' => "{$zipcode} {$city} {$detailAddress}",
+            ];
+
+            foreach ($itemIds as $index => $itemId) {
+                $item = Item::findOrFail($itemId);
+                $quantity = $quantities[$index];
+                $unitAmount = intval($item->price); // Stripe는 정수 단위 사용 (엔화)
+
+                // Stripe 라인 아이템 구성
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'jpy',
+                        'product_data' => [
+                            'name' => $item->name,
+                        ],
+                        'unit_amount' => $unitAmount,
+                    ],
+                    'quantity' => $quantity,
+                ];
+
+                // 주문 데이터 저장
+                Order::create([
+                    'item_id' => $item->id,
+                    'user_id' => Auth::id(),
+                    'status' => 'pending',
+                    'quantity' => $quantity,
+                    'amount' => $unitAmount * $quantity,
+                    'payment_id' => $groupId, // 공통 그룹 식별자 할당
+                    'customer_name' => $customerName,
+                    'customer_email' => $customerEmail,
+                    'customer_phone' => $customerPhone,
+                    'customer_address' => "{$zipcode} {$city} {$detailAddress}",
+                    'zipcode' => $zipcode,
+                    'city' => $city,
+                    'detail_address' => $detailAddress,
+                ]);
+            }
+
+            // Stripe 설정
+            Stripe::setApiKey(config('services.stripe.secret'));
+
+            // Stripe Checkout 세션 생성
+            $session = StripeSession::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
+                'mode' => 'payment',
+                //'success_url' => route('purchase.thankyouMultiple') . '?session_id={CHECKOUT_SESSION_ID}',
+                // success_url에 group_id를 쿼리 파라미터로 포함
+                'success_url' => route('purchase.thankyouMultiple') . '?group_id=' . $groupId,
+                'cancel_url' => route('purchase.index'),
+                'metadata' => $metadata,
+            ]);
+
+            // 트랜잭션 커밋
+            DB::commit();
+
+            // Stripe 결제 페이지로 리다이렉트
+            return redirect($session->url);
+
+        } catch (\Exception $e) {
+            // 트랜잭션 롤백
+            DB::rollBack();
+            // 사용자에게 에러 메시지 반환
+            return back()->withErrors(['error' => 'There was a problem during the payment process, please try again.']);
+        }
+    }
+
+    public function thankyouMultiple(Request $request) {
+        // group_id 가져오기
+        $groupId = $request->query('group_id');
+
+        if (!$groupId) {
+            return redirect()->route('item.index')->withErrors(['error' => 'Invalid group ID.']);
+        }
+
+        try {
+            // 해당 group_id의 모든 'pending' 주문 가져오기
+            $orders = Order::with('item')
+                        ->where('payment_id', $groupId)
+                        ->where('status', 'pending')
+                        ->get();
+
+            if ($orders->isEmpty()) {
+                return redirect()->route('item.index')->withErrors(['error' => 'No orders found for this group.']);
+            }
+
+            // 주문 상태를 'complete'로 업데이트
+            foreach ($orders as $order) {
+                $order->update(['status' => 'complete']);
+            }
+
+            return view('purchase.thankyou-multiple', compact('orders'));
+
+        } catch (\Exception $e) {
+            //\Log::error('Thankyou Multiple Error: ' . $e->getMessage());
+            return redirect()->route('item.index')->withErrors(['error' => 'There was a problem loading the Thankyou page.']);
+        }
+
     }
 }

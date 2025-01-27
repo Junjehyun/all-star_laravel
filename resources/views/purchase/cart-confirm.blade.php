@@ -38,20 +38,20 @@
                             <input type="tel" name="customer_phone" id="customer_phone" value="{{ session ('customer_phone', $queryData['customer_phone'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="ex)090-1234-5678" required>
                         </div>
                         <div>
-                            <label for="zipcode" class="block text-gray-700 font-semibold text-xs mb-2">POST NO.</label>
+                            <label for="zipcode" class="block text-gray-700 font-semibold text-xs text-left mb-2">POST NO.</label>
                             <!-- 좀 더 세분화 해서 입력 받을 수 있도록 수정 -->
                             <div class="flex space-x-2">
-                                <input type="text" name="zipcode" id="zipcode" value="{{ session ('zipcode', $queryData['zipcode'] ?? '' ) }}" class="w-4/5 border border-gray-300 rounded-lg px-3 py-2" placeholder="ex)Input without 1234567(-)" required>
-                                <button type="button" id="zipcodeSearch" class="w-1/5 bg-blue-500 text-white py-2 rounded-lg">SEARCH</button>
+                                <input type="text" name="zipcode" id="zipcode" value="{{ session ('zipcode', $queryData['zipcode'] ?? '' ) }}" class="w-4/5 border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="ex)Input without 1234567(-)" required>
+                                <button type="button" id="zipcodeSearch" class="w-1/5 outline outline-sky-200 text-sky-500 text-sm py-1 rounded-lg">SEARCH</button>
                             </div>
                         </div>
                         <div class="mt-4">
-                            <label for="city" class="block text-gray-700 font-semibold text-xs mb-2">STATE/CITY</label>
-                            <input type="text" name="city" id="city" value="{{ session ('city', $queryData['city'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="automatically reflected." readonly>
+                            <label for="city" class="block text-gray-700 font-semibold text-xs text-left mb-2">STATE/CITY</label>
+                            <input type="text" name="city" id="city" value="{{ session ('city', $queryData['city'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="automatically reflected." readonly>
                         </div>
                         <div class="mt-4">
-                            <label for="detail_address" class="block text-gray-700 font-semibold text-xs mb-2">DETAIL ADDRESS</label>
-                            <textarea name="detail_address" id="detail_address" ls="3" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Please enter your address, building name, etc" required>{{ session('detail_address', $queryData['detail_address'] ?? '') }}</textarea>
+                            <label for="detail_address" class="block text-gray-700 font-semibold text-xs text-left mb-2">DETAIL ADDRESS</label>
+                            <textarea name="detail_address" id="detail_address" ls="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="Please enter your address, building name, etc" required>{{ session('detail_address', $queryData['detail_address'] ?? '') }}</textarea>
                         </div>
                     </div>
                     @foreach ($carts as $cart)

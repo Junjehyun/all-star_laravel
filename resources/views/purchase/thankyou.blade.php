@@ -1,5 +1,5 @@
 @extends('layouts.shop_common')
-@section('title', '注文完了')
+@section('title', 'Order Completed')
 @section('content')
     <div class="container w-1/2 mx-auto mt-10">
         <h1 class="text-2xl text-center font-bold text-green-500">Thank you for your order!</h1>

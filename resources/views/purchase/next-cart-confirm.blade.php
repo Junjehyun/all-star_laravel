@@ -54,7 +54,7 @@
         </div>
         <div class="flex justify-end space-x-4 mt-10">
             <!-- 결제 버튼 -->
-            <form action="{{ route('purchase.checkout') }}" method="POST" class="inline">
+            <form action="{{ route('purchase.cartCheckout') }}" method="POST" class="inline">
                 @csrf
                 @foreach ($carts as $cart)
                     <input type="hidden" name="item_ids[]" value="{{ $cart->item->id }}">
