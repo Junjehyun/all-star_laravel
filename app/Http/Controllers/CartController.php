@@ -76,13 +76,15 @@ class CartController extends Controller
     public function cartUpdate(Request $request, $id) {
 
         $validatedData = $request->validate([
-            'quantity' => 'required|integer|min:1',
+            //'quantity' => 'required|integer|min:1',
+            'quantities.' . $id => 'required|integer|min:1',
         ]);
 
         //$cart = Cart::findOrFail($id);
         $cart = Cart::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
-        $cart->quantity = $validatedData['quantity'];
+        //$cart->quantity = $validatedData['quantity'];
+        $cart->quantity = $validatedData['quantities'][$id];
         $cart->save();
 
         return redirect()->route('cart.index')->with('success', 'The quantity has been updated.');
@@ -90,6 +92,8 @@ class CartController extends Controller
 
     public function cartCount() {
         //$count = Cart::sum('quantity');
+        //$count = Cart::where('user_id', Auth::id())->sum('quantity');
+        // 로그인한 사용자의 카트에서 수량 합산
         $count = Cart::where('user_id', Auth::id())->sum('quantity');
 
         return response()->json(['count' => $count]);

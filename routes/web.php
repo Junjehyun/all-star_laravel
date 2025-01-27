@@ -9,6 +9,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\UserController;
 
 /**
  * 처음 만들었을때 기본적으로 생성되는 라우트 -> localhost:8000 Welcome Page
@@ -92,6 +93,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/delete/{id}',[CartController::class, 'cartDelete'])->name('cart.delete');
     Route::post('/cart/update/{id}',[CartController::class, 'cartUpdate'])->name('cart.update');
     Route::get('/cart_count', [CartController::class, 'cartCount'])->name('cart.count');
+
+    /**
+     * UserController
+     *
+     * 유저관련 컨트롤러
+     */
+    Route::get('/mypage', [UserController::class, 'myPage'])->name('user.mypage')->middleware('auth');
 
 });
 

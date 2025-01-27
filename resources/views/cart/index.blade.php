@@ -30,23 +30,40 @@
                             </td>
                             <td class="border-b py-2 item-price" data-price="{{ $cart->item->price }}">{{ number_format($cart->item->price) }}円</td>
                             <td class="border-b py-2">
-                                <form action="{{ route('cart.update', $cart->id) }}" method="POST" class="inline">
+                                {{-- <form action="{{ route('cart.update', $cart->id) }}" method="POST" class="inline">
                                     @csrf
-                                    <input type="number" name="quantities[]" value="{{ $cart->quantity }}" class="w-16 text-center border item-quantity">
+                                    <input type="number" name="quantities[]" value="{{ $cart->quantity }}" class="w-16 text-center border item-quantity" data-cart-id="{{ $cart->id }}">
                                     <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded ml-2">EDIT</button>
-                                </form>
+                                </form> --}}
+                                <!---->
+                                <input type="number" name="quantities[{{ $cart->id }}]" value="{{ $cart->quantity }}" class="w-16 text-center border item-quantity" data-cart-id="{{ $cart->id }}">
+                                <button
+                                    type="submit"
+                                    formaction="{{ route('cart.update', $cart->id) }}"
+                                    formmethod="POST"
+                                    class="edit-button outline outline-gray-200 px-2 py-1 rounded ml-2">
+                                    EDIT
+                                </button>
                             </td>
                             <td class="border-b py-2">{{ number_format($cart->item->price * $cart->quantity) }}円</td>
                             <td class="border-b py-2">
-                                <form action="{{ route('cart.delete', $cart->id) }}" method="POST" class="inline">
+                                {{-- <form action="{{ route('cart.delete', $cart->id) }}" method="POST" class="inline">
                                     @csrf
                                     <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded">DELETE</button>
-                                </form>
+                                </form> --}}
+                                <button
+                                    type="submit"
+                                    formaction="{{ route('cart.delete', $cart->id) }}"
+                                    formmethod="POST"
+                                    class="outline outline-gray-200 px-2 py-1 rounded">
+                                    DROP
+                                </button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <!-- 총합 및 결제 버튼 -->
             <div class="mt-6 text-right">
                 <p class="text-xl font-bold total-price">TOTAL: 0円</p>
                     <input type="hidden" name="selected_item[]" id="selected_item_ids"> <!-- 선택된 상품들의 ID를 저장할 필드 -->

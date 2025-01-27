@@ -20,7 +20,7 @@
                     </thead>
                     <tbody>
                         @foreach ($orders as $order)
-                            <tr>
+                            <tr class="mt-5">
                                 <td class="py-2 px-4 border-b text-center">{{ $order->id }}</td>
                                 <td class="py-2 px-4 border-b">{{ $order->item->name }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $order->quantity }}</td>
@@ -29,21 +29,21 @@
                             </tr>
                         @endforeach
                         <tr>
-                            <td colspan="4" class="py-2 px-4 text-right font-bold">TOTAL AMOUNT:</td>
+                            <td colspan="4" class="py-4 px-4 text-right font-bold">TOTAL AMOUNT:</td>
                             <td class="py-2 px-4 text-right font-bold">¥{{ number_format($orders->sum('amount')) }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="mt-6">
-                <h3 class="text-xl font-semibold">ORDERER INFO</h3>
+                <h3 class="text-xl font-semibold mb-3">ORDERER INFO</h3>
                 <p><strong>Name:</strong> {{ $orders[0]->customer_name }}</p>
                 <p><strong>Telephone:</strong> {{ $orders[0]->customer_phone }}</p>
                 <p><strong>E-mail:</strong> {{ $orders[0]->customer_email }}</p>
                 <p><strong>Address:</strong> {{ $orders[0]->customer_address }}</p>
             </div>
-            <p class="text-center mt-4">We will let you know as soon as the product is shipped.</p>
-            <div class="flex justify-center mt-6">
+            <p class="text-center mt-4 text-green-500">We will let you know as soon as the product is shipped.</p>
+            <div class="flex justify-end mt-6">
                 <a href="{{ route('item.index') }}">
                     <button class="underline underline-offset-4 rounded-xl px-3 py-2 mt-4">
                         TOP

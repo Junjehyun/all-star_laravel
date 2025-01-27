@@ -19,8 +19,35 @@ class ItemController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function itemIndex() {
+        // 카테고리 정의
+        $categories = [
+            'ALL' => 'ALL',
+            'nike' => 'Nike',
+            'adidas' => 'Adidas',
+            'newbalance' => 'New Balance',
+            'others' => 'Others',
+            'sale' => 'SALE',  // SALE은 특별히 할인이 적용된 상품을 의미하는 카테고리
+        ];
+
+        // 각 카테고리별 상품 수 계산
+        $categoryCounts = [];
+
+        // 카테고리별 상품 개수 구하기
+        foreach ($categories as $key => $displayName) {
+            if ($key == 'ALL') {
+                // 'ALL'은 모든 상품 수
+                $categoryCounts[$key] = Item::count();
+            } elseif ($key == 'sale') {
+                // 'SALE' 카테고리는 SALE에 해당하는 상품만 카운트
+                // 예시로 SALE 카테고리가 'sale'로 지정된 상품들만 카운트
+                $categoryCounts[$key] = Item::where('category', 'sale')->count();
+            } else {
+                // 각 브랜드별 상품 개수를 구함.
+                $categoryCounts[$key] = Item::where('category', $displayName)->count();
+            }
+        }
         $items = Item::latest()->get();
-        return view('item.index', compact('items'));
+        return view('item.index', compact('items', 'categoryCounts'));
 
     }
 

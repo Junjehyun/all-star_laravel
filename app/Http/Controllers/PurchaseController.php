@@ -169,8 +169,15 @@ class PurchaseController extends Controller
         //dd($items);
 
         //상품 수량 매핑
+        // foreach ($carts as $cart) {
+        //     $cart->quantity = $quantities[array_search($cart->item->id, $itemIds)];
+        // }
         foreach ($carts as $cart) {
-            $cart->quantity = $quantities[array_search($cart->item->id, $itemIds)];
+            $index = array_search($cart->item->id, $itemIds);
+
+            if ($index !== false) {
+                $cart->quantity = $quantities[$index];
+            }
         }
 
         // 로그인한 사용자의 이름 가져오기
@@ -334,7 +341,18 @@ class PurchaseController extends Controller
             }
 
             // 주문 상태를 'complete'로 업데이트
+            // foreach ($orders as $order) {
+            //     $order->update(['status' => 'complete']);
+            // }
+
+            // 주문 상태를 'complete'로 업데이트 하고 해당 카트에서 상품 삭제
             foreach ($orders as $order) {
+                // 카트에서 해당 아이템 삭제
+                Cart::where('item_id', $order->item_id)
+                    ->where('user_id', Auth::id())
+                    ->delete();
+
+                // 주문 상태를 complete로 업데이트
                 $order->update(['status' => 'complete']);
             }
 
