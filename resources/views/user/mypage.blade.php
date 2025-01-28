@@ -2,7 +2,7 @@
 @section('title', 'MY PAGE')
 @section('content')
 <div class="container w-1/2 mx-auto mt-10">
-    <h1 class="text-center text-2xl font-bold mb-6"><span class="text-sky-700">{{ $userName }}</span> PROFILE</h1>
+    <h1 class="text-center text-2xl font-bold mb-6"><span class="text-sky-700">{{ $userName }}</span> PROFILE EDIT</h1>
     <!-- 사용자 정보 -->
     <div class="p-6 rounded-lg">
         {{-- <h2 class="text-xl text-center font-semibold mb-10">User Information</h2> --}}

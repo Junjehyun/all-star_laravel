@@ -32,4 +32,9 @@ class Item extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function reviews(){
+        return $this->hasMany(Comment::class, 'item_id')->latest(); // 'notice_id'가 Comment 모델의 외래 키입니다.
+    }
+
+
 }

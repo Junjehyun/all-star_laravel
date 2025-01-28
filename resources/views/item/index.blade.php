@@ -34,7 +34,11 @@
                     <p class="text-gray-700 mt-1">{{ number_format($item->price) }}円</p>
                     <div class="mt-3 flex justify-between items-center">
                         <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">DETAIL</a>
-                        <div class="space-x-2">
+                        <div class="flex justify-between space-x-3">
+                            <div class="mt-1" id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
+                                <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
+                                {{ $item->like }}
+                            </div>
                             <button  onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
                             <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
                                 <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
@@ -54,6 +58,8 @@
         @endforelse
     </div>
     <script>
+        const initialKeyword = "{{ $keyword ?? '' }}"; // 서버에서 키워드 전달
+
         $(document).ready(function () {
             $('.category-btn').on('click', function () {
                 const category = $(this).data('category');
@@ -62,6 +68,7 @@
                     url: `/item/ajax_category/${category}`,
                     type: 'GET',
                     success: function (data) {
+                        //console.log(data);
                         renderItems(data);
                     },
                     error: function () {
@@ -72,8 +79,10 @@
             function renderItems(items) {
                 const container = $('.grid');
                 container.empty();
-                if (items.length > 0) {
+
+                if (Array.isArray(items) && items.length > 0) {
                     items.forEach(item => {
+                        const formattedPrice = Number(item.price).toLocaleString();
                         const itemHtml = `
                             <div class="border rounded-lg overflow-hidden">
                                 <div class="flex justify-center">
@@ -81,7 +90,7 @@
                                 </div>
                                 <div class="p-4">
                                     <h3 class="text-lg font-semibold">${item.name}</h3>
-                                    <p class="text-gray-700 mt-1">{{ number_format($item->price) }}円</p>
+                                    <p class="text-gray-700 mt-1">${formattedPrice}円</p>
                                     <div class="mt-3 flex justify-between items-center">
                                         <a href="/item/detail/${item.id}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">DETAIL</a>
                                         <div class="space-x-1">

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Item;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  *
@@ -157,17 +159,52 @@ class ItemController extends Controller
     public function itemSearch(Request $request) {
         // 폼에서 전달된 검색 키워드 추출
         $keyword = $request->input('keyword');
+        $selectedCategory = $request->input('category', 'ALL');  // 기본값은 'ALL'
+
         // Item 모델 기반으로 쿼리 시작
         $query = Item::query();
+
         // 키워드가 있으면 상품명 또는 설명에 해당 키워드가 포함된 항목 검색
         if (!empty($keyword)) {
             $query->where('name', 'like', '%' . $keyword . '%');
                     //->orWhere('description', 'like', '%' . $keyword . '%');
         }
+
+        // 카테고리 필터링
+        if ($selectedCategory != 'ALL') {
+            $query->where('category', $selectedCategory);
+        }
+
         // 조건에 맞는 상품들 가져오기
         $items = $query->get();
+
+        // 검색 결과가 없으면 빈 배열로 처리
+        if ($items->isEmpty()) {
+            $items = collect(); // 빈 컬렉션 반환
+        }
+
+        // 카테고리별 상품 수 계산 (카테고리 개수는 그대로 사용)
+        $categories = [
+            'ALL' => 'ALL',
+            'nike' => 'Nike',
+            'adidas' => 'Adidas',
+            'newbalance' => 'New Balance',
+            'others' => 'Others',
+            'sale' => 'SALE',
+        ];
+        $categoryCounts = [];
+
+        foreach ($categories as $key => $displayName) {
+            if ($key == 'ALL') {
+                $categoryCounts[$key] = Item::count();
+            } elseif ($key == 'sale') {
+                $categoryCounts[$key] = Item::where('category', 'sale')->count();
+            } else {
+                $categoryCounts[$key] = Item::where('category', $displayName)->count();
+            }
+        }
         // 검색 결과와 키워드를 뷰에 전달
-        return view('item.index', compact('items', 'keyword'));
+        return view('item.index', compact('items', 'keyword','categoryCounts', 'selectedCategory'));
     }
 
     public function itemEdit($id) {
@@ -226,5 +263,86 @@ class ItemController extends Controller
 
     public function qnaIndex() {
         return view('item.qna');
+    }
+
+    public function likeProduct($id) {
+        try {
+            // 아이템 조회
+            $item = Item::findOrFail($id);
+
+            // 좋아요 수 증가
+            $item->increment('like');
+
+            // 성공 응답
+            return response()->json([
+                'success' => true,
+                'message' => 'I pressed Like for the item.',
+                'like_count' => $item->like,
+            ]);
+        } catch (\Exception $e) {
+            // 실패 응답
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred during processing.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function review(Request $request, $id) {
+
+        // 현재 로그인한 유저 정보
+        $user = Auth::user();
+
+        // 아이템 조회
+        $item = Item::findOrFail($id);
+
+        $comment = Comment::latest()->get();
+
+        // 리뷰 내용과 평점 유효성 검사
+        $validated = $request->validate([
+            'content' => 'required|string|max:255',  // 리뷰 내용
+            'rating' => 'required|integer|between:1,5', // 평점 (1부터 5까지)
+        ]);
+
+        try {
+            // 리뷰 데이터 저장
+            $item->reviews()->create([
+                'user_id' => $user->id,
+                'content' => $validated['content'],
+                'rating' => $validated['rating'],
+            ]);
+
+            // 성공 응답
+            return redirect()->route('item.detail', ['id' => $item->id])->with('success', 'Review has been added successfully.');
+
+        } catch (\Exception $e) {
+            // 오류 발생 시 응답
+            return back()->withErrors(['error' => 'Failed to submit the review. Please try again.']);
+        }
+    }
+
+    public function storeReview(Request $request, $id) {
+        // 유효성 검사
+        $validated = $request->validate([
+            'author' => 'required|string|max:20',
+            'content' => 'required|string|max:200',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        // 아이템을 찾고, 해당 아이템에 리뷰를 추가
+        $item = Item::findOrFail($id);
+
+        // 리뷰 저장
+        $item->reviews()->create([
+            'author' => $validated['author'],
+            'content' => $validated['content'],
+            'rating' => $validated['rating'],
+            'item_id' => $item->id,
+            'notice_id' => null,
+        ]);
+
+        // 성공적으로 리뷰가 저장되었다는 메시지와 함께 아이템 상세 페이지로 리디렉션
+        return redirect()->route('item.detail', ['id' => $id])->with('success', 'Your review has been created.');
     }
 }

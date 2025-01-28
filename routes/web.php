@@ -50,6 +50,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/item_edit/{id}', [ItemController::class, 'itemEdit'])->name('item.edit');
     Route::post('/item_update/{id}', [ItemController::class, 'itemUpdate'])->name('item.update');
     Route::post('/item_delete/{id}',[ItemController::class, 'itemDelete'])->name('item.delete');
+    Route::post('/item/like/{id}', action: [ItemController::class, 'likeProduct'])->name('item.like');
+    Route::post('/item/review/{id}', [ItemController::class, 'review'])->name('item.review');
+    Route::post('/item/{id}/review/store', [ItemController::class, 'storeReview'])->name('review.store');
+
 
     /**
      * PaymenController
