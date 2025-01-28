@@ -17,7 +17,7 @@
         <a href="javascript:void(0)" class="text-center text-sm text-red-500 font-semibold category-btn" data-category="sale">・ SALE({{ $categoryCounts['sale'] }})</a>
         <div class="flex justify-items-end my-4">
             <form action="{{ route('item.search') }}" method="GET" class="flex items-center space-x-1 ml-52">
-                <input type="text" name="keyword" placeholder="Searching" class="px-3 py-2 border border-sky-100 rounded-md w-64" value="{{ old('keyword', $keyword ?? '') }}">
+                <input type="text" name="keyword" placeholder="Search Item!" class="px-3 py-2 border border-sky-100 rounded-md w-64" value="{{ old('keyword', $keyword ?? '') }}">
                 <button type="submit" class="px-3 py-2 outline outline-sky-100 hover:bg-sky-200 hover:text-white rounded-xl">FIND</button>
             </form>
         </div>

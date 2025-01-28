@@ -9,8 +9,11 @@ class UserController extends Controller
 {
     //
     public function myPage() {
+
         $user = Auth::user();
 
-        return view('user.mypage', compact('user'));
+        $userName = Auth::user()->name;
+
+        return view('user.mypage', compact('user', 'userName'));
     }
 }

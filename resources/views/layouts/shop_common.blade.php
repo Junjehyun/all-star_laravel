@@ -17,9 +17,9 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- Font Awesome CDN -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        @livewireStyles
         <!-- Alpine.js CDN -->
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-        @livewireScripts
         <title>@yield('title') - xyz Mart</title>
         <style>
             body {
@@ -31,6 +31,7 @@
         </style>
     </head>
     <body>
+        @livewireScripts
         @include('layouts.shop_header')
         @if(session('success'))
             <div id="success-message" class="bg-green-500 text-white p-4 rounded-lg shadow-md mb-6">
