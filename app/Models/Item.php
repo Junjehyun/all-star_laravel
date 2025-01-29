@@ -40,7 +40,8 @@ class Item extends Model
     public function averageRating() {
 
         // Rating의 평균을 계산
-        return $this->reviews()->avg('rating');
+        $rating = $this->reviews()->avg('rating');
+        return $rating ? $rating : null; // 평균 별점이 없으면 null 반환
     }
 
 

@@ -17,16 +17,20 @@
         </p>
     </div>
     <div class="text-center mt-5">
-        <span class="text-xl text-yellow-500">
-            @for ($i = 1; $i <= 5; $i++)
-                @if ($i <= round($item->averageRating()))
-                    <i class="fas fa-star"></i>
-                @else
-                    <i class="far far-star"></i>
-                @endif
-            @endfor
-        </span>
-        <span class="ml-2 text-sm text-gray-600">{{ round($item->averageRating(), 1) }}</span>
+        @if($item->averageRating())
+            <span class="text-xl text-yellow-500">
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= round($item->averageRating()))
+                        <i class="fas fa-star"></i>
+                    @else
+                        <i class="far far-star"></i>
+                    @endif
+                @endfor
+            </span>
+            <span class="ml-2 text-sm text-gray-600">{{ round($item->averageRating(), 1) }}</span>
+        @else
+            <span class="text-sm text-gray-600">No reviews yet!</span>
+        @endif
     </div>
 
     <div class="flex justify-center mt-8 space-x-3">
@@ -67,7 +71,7 @@
                         @if(old('rating') == $i) checked @endif onclick="setRating({{ $i }})">
                     <label for="star{{ $i }}" class="cursor-pointer text-2xl
                         {{ old('rating') >= $i ? 'text-yellow-500' : 'text-gray-300' }}
-                        hover:text-yellow-500">★</label>
+                        hover:text-yellow-500"><i class="fas fa-star"></i></label>
                     @endfor
                 </div>
                 <!-- 작성자 -->
