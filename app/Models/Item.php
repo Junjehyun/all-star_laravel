@@ -36,5 +36,12 @@ class Item extends Model
         return $this->hasMany(Comment::class, 'item_id')->latest(); // 'notice_id'가 Comment 모델의 외래 키입니다.
     }
 
+    // 평균 별점 계산
+    public function averageRating() {
+
+        // Rating의 평균을 계산
+        return $this->reviews()->avg('rating');
+    }
+
 
 }

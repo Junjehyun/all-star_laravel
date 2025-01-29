@@ -16,6 +16,18 @@
             @endif
         </p>
     </div>
+    <div class="text-center mt-5">
+        <span class="text-xl text-yellow-500">
+            @for ($i = 1; $i <= 5; $i++)
+                @if ($i <= round($item->averageRating()))
+                    <i class="fas fa-star"></i>
+                @else
+                    <i class="far far-star"></i>
+                @endif
+            @endfor
+        </span>
+        <span class="ml-2 text-sm text-gray-600">{{ round($item->averageRating(), 1) }}</span>
+    </div>
 
     <div class="flex justify-center mt-8 space-x-3">
         <button class="px-4 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
