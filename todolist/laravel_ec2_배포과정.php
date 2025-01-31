@@ -177,14 +177,6 @@
 	// DB 마이그레이션
 	sudo php artisan migrate
 	
-	// key generate
-	sudo php artisan key:generate
-	
-	
-	
-	
-	root /var/www/html/laravel_all_star/public;
-	
 	
 	
 	
