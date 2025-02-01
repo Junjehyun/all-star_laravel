@@ -22,20 +22,20 @@
             </form>
         </div>
     </div>
-    <div class="flex flex-row items-center justify-center space-x-5 mt-5">
+    <div class="container mx-auto px-4 py-6">
         <div class="grid grid-cols-3 gap-5">
         @forelse ($items as $item)
             <div class="border rounded-lg overflow-hidden">
                 <div class="flex justify-center">
-                    <img src="{{ $item->image ? asset('storage/' . $item->image) : 'images/default-image.png' }}" alt="{{ $item->name }}" class="h-48 w-48 object-cover">
+                    <img src="{{ $item->image ? asset('storage/' . $item->image) : 'images/default-image.png' }}" alt="{{ $item->name }}" class="h-56 w-56 object-cover">
                 </div>
                 <div class="p-4">
-                    <h3 class="text-lg font-semibold">{{ $item->name }}</h3>
+                    <h3 class="text-md font-semibold">{{ $item->name }}</h3>
                     <p class="text-gray-700 mt-1">{{ number_format($item->price) }}円</p>
                     <div class="mt-3 flex justify-between items-center">
                         <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">DETAIL</a>
                         <div class="flex justify-between space-x-3">
-                            <div class="mt-1" id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
+                            <div class="mt-1 mr-3" id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                 {{ $item->like }}
                             </div>
@@ -84,22 +84,28 @@
                     items.forEach(item => {
                         const formattedPrice = Number(item.price).toLocaleString();
                         const itemHtml = `
+
                             <div class="border rounded-lg overflow-hidden">
                                 <div class="flex justify-center">
-                                    <img src="${item.image ? `/storage/${item.image}` : 'images/default-image.png'}" alt="${item.name}" class="h-48 w-48 object-cover">
+                                    <img src="${item.image ? `/storage/${item.image}` : 'images/default-image.png'}" alt="${item.name}" class="h-56 w-56 object-cover">
                                 </div>
                                 <div class="p-4">
-                                    <h3 class="text-lg font-semibold">${item.name}</h3>
+                                    <h3 class="text-md font-semibold">${item.name}</h3>
                                     <p class="text-gray-700 mt-1">${formattedPrice}円</p>
                                     <div class="mt-3 flex justify-between items-center">
                                         <a href="/item/detail/${item.id}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">DETAIL</a>
-                                        <div class="space-x-1">
+                                        <div class="flex justify-between space-x-3">
+                                            <div class="mt-1 mr-3" id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
+                                                <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
+                                                ${item.like}
+                                            </div>
                                             <button onclick="addToCart(${item.id})" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
                                             <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         `;
                         container.append(itemHtml);
                     });

@@ -121,9 +121,11 @@ class ItemController extends Controller
     }
 
     public function itemOthers() {
+
     }
 
     public function itemSale() {
+
     }
 
     /**
