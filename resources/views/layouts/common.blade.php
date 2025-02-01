@@ -46,7 +46,7 @@
                 </ul>
             </div>
         @endif
-        <div class="flex-grow p-3">
+        <div class="flex-grow p-3 transition-opacity duration-700 opacity-0 page-transition">
                 @yield('content')
         </div>
     </body>
@@ -56,6 +56,12 @@
                 $('#success-message').fadeOut('slow');
                 $('#error-message').fadeOut('slow');
             }, 3000);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 페이지가 로드된 후 페이드 인 효과를 추가
+            document.querySelector('.page-transition').classList.remove('opacity-0');
+            document.querySelector('.page-transition').classList.add('opacity-100');
         });
     </script>
 </html>

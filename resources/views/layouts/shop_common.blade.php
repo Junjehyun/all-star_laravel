@@ -67,7 +67,7 @@
             }
         </style>
     </head>
-    <body>
+    <body class="flex flex-col min-h-screen">
         @livewireScripts
         @include('layouts.shop_header')
         @if(session('success'))
@@ -84,9 +84,37 @@
                 </ul>
             </div>
         @endif
-        <div class="flex-grow p-3">
+        <div class="flex-grow transition-opacity duration-700 opacity-0 page-transition">
                 @yield('content')
         </div>
+        <footer class="bg-gray-500 text-white py-6 mt-10">
+            <div class="container mx-auto text-center">
+                <p class="text-sm">&copy; 2025 xyz Mart. All rights reserved.</p>
+                <div class="mt-4">
+                    <a href="#" class="text-gray-300 hover:text-white mx-4">Privacy Policy</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4">Terms of Service</a>
+                    <a href="#" class="text-gray-300 hover:text-white mx-4">Contact Us</a>
+                    <a href="/notice_index" class="text-gray-300 hover:text-white mx-4">Q&A</a>
+                </div>
+                <div class="mt-6">
+                    <p class="text-sm">Follow us</p>
+                    <div class="flex justify-center space-x-6 mt-2">
+                        <a href="#" class="text-gray-300 hover:text-white text-xl">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </body>
     <script>
         $(document).ready(function() {
@@ -95,5 +123,23 @@
                 $('#error-message').fadeOut('slow');
             }, 3000);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 페이지가 로드된 후 페이드 인 효과를 추가
+            document.querySelector('.page-transition').classList.remove('opacity-0');
+            document.querySelector('.page-transition').classList.add('opacity-100');
+        });
+
+        // 오른쪽 마우스 클릭 금지 (관리자 제외)
+        const userRole = @json(Auth::user()->role); // Admin 또는 다른 역할을 확인
+
+        // 만약 role이 Admin이면 오른쪽 클릭 허용
+        if (userRole !== 'admin') {
+            // 일반 user라면 오른쪽 마우스 버튼 클릭 방지
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault(); // 기본 컨텍스트 메뉴 차단
+                alert("Right click is desabled for non-admin users!");
+            });
+        }
     </script>
 </html>

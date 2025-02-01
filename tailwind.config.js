@@ -17,6 +17,10 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 jp: ['Kiwi Maru', 'Noto Sans Japanese', 'sans-serif'], // 日本語フォント
             },
+            scale: {
+                '130': '1.30',
+                '150': '1.50',
+            },
         },
     },
 

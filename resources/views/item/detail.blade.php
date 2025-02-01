@@ -4,7 +4,7 @@
 <div class="container w-full mx-auto mt-10">
     <h1 class="text-center text-2xl font-bold mb-6">{{ $item->name }}</h1>
     <div class="flex flex-col items-center">
-        <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.png') }}" alt="{{ $item->name }}" class="w-96 h-96 object-cover mb-6 border rounded-lg shadow-lg">
+        <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.png') }}" alt="{{ $item->name }}" class="w-96 h-96 object-cover mb-6 border rounded-lg shadow-lg transition-all duration-300 hover:scale-130">
     </div>
     <div class="text-center space-y-4 mt-5">
         <p class="text-gray-700">PRICE: <span class="font-bold">{{ number_format($item->price) }}円</span></p>
@@ -184,7 +184,5 @@
         // 선택된 별점을 콘솔에 출력
         console.log('Selected Rating: ' + rating);
     }
-
-
 </script>
 @endsection

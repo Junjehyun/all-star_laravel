@@ -1,31 +1,31 @@
 @extends('layouts.shop_common')
 @section('title', 'Shop Index')
 @section('content')
-    <div class="flex justify-end mb-4 space-x-5">
+    <div class="flex justify-end mt-4 space-x-5">
         @auth
             @if(Auth::user()->role === 'admin')
-                <a href="{{ route('item.regIndex') }}" class="outline outline-gray-300 rounded-xl text-sm px-2">Item Regist</a>
+                <a href="{{ route('item.regIndex') }}" class="underline underline-offset-4 rounded-xl text-sm px-2">Item Regist</a>
             @endif
         @endauth
     </div>
     <div class="flex flex-row items-center justify-center space-x-2 mt-5">
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ALL">・ ALL({{ $categoryCounts['ALL'] }})</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="nike">・ Nike({{ $categoryCounts['nike'] }})</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="adidas">・ Adidas({{ $categoryCounts['adidas'] }})</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="newbalance">・ New Balance({{ $categoryCounts['newbalance'] }})</a>
-        <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="others">・ Others({{ $categoryCounts['others'] }})</a>
-        <a href="javascript:void(0)" class="text-center text-sm text-red-500 font-semibold category-btn" data-category="sale">・ SALE({{ $categoryCounts['sale'] }})</a>
+            <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ALL">・ ALL({{ $categoryCounts['ALL'] }})</a>
+            <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="nike">・ Nike({{ $categoryCounts['nike'] }})</a>
+            <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="adidas">・ Adidas({{ $categoryCounts['adidas'] }})</a>
+            <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="newbalance">・ New Balance({{ $categoryCounts['newbalance'] }})</a>
+            <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="others">・ Others({{ $categoryCounts['others'] }})</a>
+            <a href="javascript:void(0)" class="text-center text-sm text-red-500 font-semibold category-btn" data-category="sale">・ SALE({{ $categoryCounts['sale'] }})</a>
         <div class="flex justify-items-end my-4">
             <form action="{{ route('item.search') }}" method="GET" class="flex items-center space-x-1 ml-52">
-                <input type="text" name="keyword" placeholder="Search Item!" class="px-3 py-2 border border-sky-100 rounded-md w-64" value="{{ old('keyword', $keyword ?? '') }}">
-                <button type="submit" class="px-3 py-2 outline outline-sky-100 hover:bg-sky-200 hover:text-white rounded-xl">FIND</button>
+                <input type="text" name="keyword" placeholder="Search Item!" class="px-3 py-2 border border-gray-800 rounded-md w-64" value="{{ old('keyword', $keyword ?? '') }}">
+                <button type="submit" class="px-3 py-2 underline underline-offset-2 hover:bg-gray-700 hover:text-white rounded-xl">FIND</button>
             </form>
         </div>
     </div>
     <div class="container mx-auto px-4 py-6">
-        <div class="grid grid-cols-3 gap-5">
+        <div class="grid grid-cols-3 gap-10">
         @forelse ($items as $item)
-            <div class="border rounded-lg overflow-hidden">
+            <div class="overflow-hidden transition-transform hover:scale-105 hover:shadow-lg">
                 <div class="flex justify-center">
                     <img src="{{ $item->image ? asset('storage/' . $item->image) : 'images/default-image.png' }}" alt="{{ $item->name }}" class="h-56 w-56 object-cover">
                 </div>
@@ -79,6 +79,7 @@
                     }
                 });
             });
+
             function renderItems(items) {
                 const container = $('.grid');
                 container.empty();
@@ -88,7 +89,7 @@
                         const formattedPrice = Number(item.price).toLocaleString();
                         const itemHtml = `
 
-                            <div class="border rounded-lg overflow-hidden">
+                            <div class="overflow-hidden transition-transform hover:scale-105 hover:shadow-lg">
                                 <div class="flex justify-center">
                                     <img src="${item.image ? `/storage/${item.image}` : 'images/default-image.png'}" alt="${item.name}" class="h-56 w-56 object-cover">
                                 </div>
@@ -98,7 +99,7 @@
                                     <div class="mt-3 flex justify-between items-center">
                                         <a href="/item/detail/${item.id}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">DETAIL</a>
                                         <div class="flex justify-between space-x-3">
-                                            <div class="mt-1 mr-3" id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
+                                            <div class="mt-1 mr-3" id="like-button-${item.id}" onclick="likeItem(${item.id})">
                                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                                 ${item.like}
                                             </div>
@@ -174,9 +175,9 @@
 
         // _.throttle(함수, 시간)
         toTopEl.addEventListener('click', function () {
-        gsap.to(window, .7, {
-            scrollTo: 0
+            gsap.to(window, .7, {
+                scrollTo: 0
+            });
         });
-    });
     </script>
 @endsection
