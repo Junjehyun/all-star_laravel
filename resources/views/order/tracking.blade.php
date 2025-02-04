@@ -1,9 +1,9 @@
 @extends('layouts.shop_common')
 @section('title', 'Order Tracking')
 @section('content')
-<div class="container w-3/5 justify-center mx-auto mt-10">
-    <h1 class="text-center text-2xl font-bold mb-6">TRACKING DELIVERY</h1>
-    <p class="text-center mt-20">
+{{-- <div class="container w-full justify-center mx-auto mt-10">
+    <h1 class="text-left text-2xl font-bold">TRACKING DELIVERY</h1>
+    <p class="text-center mt-5">
         <span class="{{ $shipping_status == 'pay-confirm' ? 'font-bold text-green-500 text-2xl' : '' }}">
             @if($shipping_status == 'pay-confirm')
                 <i class="fa-solid fa-check"></i>
@@ -29,6 +29,74 @@
             DELIVERY COMPLETE
         </span>
     </p>
+    <!-- -->
+    <div class="rounded-lg flex justify-between mt-20">
+        <h2 class="text-2xl font-semibold mt-2 text-center mb-10">ORDER DETAILS</h2>
+        <!-- 상품 정보 테이블 -->
+        <div class="max-w-5xl mx-auto mt-6">
+            <h3 class="text-xl font-semibold mb-4">Product Information</h3>
+            <table class="table-auto w-[80%]">
+                <tbody>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">ORDER ID</td>
+                        <td>{{ $order->id }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">ITEM</td>
+                        <td>{{ $order->item->name }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">QUANTITY</td>
+                        <td>{{ $order->quantity }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">SIZE</td>
+                        <td>{{ $order->item->size }}mm</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">PAYMENT TYPE</td>
+                        <td>{{ $order->payment_type }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">TOTAL</td>
+                        <td>¥{{ number_format($order->amount) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 배송자 정보 테이블 -->
+        <div class="max-w-3xl mx-auto mt-6">
+            <h3 class="text-xl font-semibold mb-4">Customer Information</h3>
+            <table class="table-auto w-3/5">
+                <tbody>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">NAME</td>
+                        <td>{{ $order->customer_name }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">TELEPHONE</td>
+                        <td>{{ $order->customer_phone }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">E-MAIL</td>
+                        <td>{{ $order->customer_email }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">ADDRESS</td>
+                        <td>{{ $order->customer_address }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex justify-end">
+        <a href="{{ route('item.index') }}">
+            <button class="underline underline-offset-4 rounded-xl px-3 py-2 mt-4">
+                TOP
+            </button>
+        </a>
+    </div>
+    <!-- -->
 </div>
     @auth
         @if(Auth::user()->role === 'admin')
@@ -46,5 +114,5 @@
                 </form>
             </div>
         @endif
-    @endauth
+    @endauth --}}
 @endsection
