@@ -164,7 +164,7 @@
                     </tr>
                     <tr class="border-b">
                         <td class="px-4 py-2 font-semibold text-left">SIZE</td>
-                        <td>{{ $order->item->size }}mm</td>
+                        <td>{{ $order->purchased_size }}</td>
                     </tr>
                     <tr class="border-b">
                         <td class="px-4 py-2 font-semibold text-left">PAYMENT TYPE</td>

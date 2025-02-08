@@ -30,12 +30,6 @@
                             </td>
                             <td class="border-b py-2 item-price" data-price="{{ $cart->item->price }}">{{ number_format($cart->item->price) }}円</td>
                             <td class="border-b py-2">
-                                {{-- <form action="{{ route('cart.update', $cart->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    <input type="number" name="quantities[]" value="{{ $cart->quantity }}" class="w-16 text-center border item-quantity" data-cart-id="{{ $cart->id }}">
-                                    <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded ml-2">EDIT</button>
-                                </form> --}}
-                                <!---->
                                 <input type="number" name="quantities[{{ $cart->id }}]" value="{{ $cart->quantity }}" class="w-16 text-center border item-quantity" data-cart-id="{{ $cart->id }}">
                                 <button
                                     type="submit"
@@ -47,10 +41,6 @@
                             </td>
                             <td class="border-b py-2">{{ number_format($cart->item->price * $cart->quantity) }}円</td>
                             <td class="border-b py-2">
-                                {{-- <form action="{{ route('cart.delete', $cart->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded">DELETE</button>
-                                </form> --}}
                                 <button
                                     type="submit"
                                     formaction="{{ route('cart.delete', $cart->id) }}"

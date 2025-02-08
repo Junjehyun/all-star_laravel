@@ -16,7 +16,11 @@ class Item extends Model
         'size',
         'description',
         'image',
-        'category'
+        'category',
+        'stock_s',
+        'stock_m',
+        'stock_l',
+        'stock_xl'
     ];
 
     // size를 JSON으로 저장 및 읽기

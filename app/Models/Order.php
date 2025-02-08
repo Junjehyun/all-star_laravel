@@ -17,6 +17,7 @@ class Order extends Model
         'amount',
         'payment_type',
         'quantity',
+        'purchased_size',
         'payment_id',
         'customer_name',
         'customer_email',

@@ -7,14 +7,37 @@
         <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.png') }}" alt="{{ $item->name }}" class="w-96 h-96 object-cover mb-6 border rounded-lg shadow-lg transition-all duration-300 hover:scale-130">
     </div>
     <div class="text-center space-y-4 mt-5">
-        <p class="text-gray-700">PRICE: <span class="font-bold">{{ number_format($item->price) }}円</span></p>
-        <p class="text-gray-700">SIZE: <span class="font-bold">
+        <p class="text-gray-700 text-2xl">PRICE: <span class="font-bold">{{ number_format($item->price) }}円</span></p>
+        {{-- <p class="text-gray-700">SIZE: <span class="font-bold">
             @if(is_array($item->size))
-                {{ implode(', ', $item->size) }}mm
+                {{ implode(', ', $item->size) }}
             @else
-                {{ $item->size }}mm
+                {{ $item->size }}
             @endif
-        </p>
+        </p> --}}
+        <div class="inline-block">
+            <table class="table-auto border-collapse border border-gray-300 mx-auto mt-5">
+                <thead>
+                    <tr>
+                        <th class="bg-zinc-100">SIZE</th>
+                        <th class="px-4 py-2 border border-gray-300">S</th>
+                        <th class="px-4 py-2 border border-gray-300">M</th>
+                        <th class="px-4 py-2 border border-gray-300">L</th>
+                        <th class="px-4 py-2 border border-gray-300">XL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bg-zinc-100 border px-4 py-2">STOCK</td>
+                        <td class="border px-4 py-2">{{ $item->stock_s }}</td>
+                        <td class="border px-4 py-2">{{ $item->stock_m }}</td>
+                        <td class="border px-4 py-2">{{ $item->stock_l }}</td>
+                        <td class="border px-4 py-2">{{ $item->stock_xl }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-center text-xs text-rose-600 mt-2 mr-5">※在庫の状況によって、ご購入できない場合があります。</p>
+        </div>
     </div>
     <div class="text-center mt-5">
         @if($item->averageRating())

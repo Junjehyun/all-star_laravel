@@ -7,7 +7,7 @@
             <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
                 <!-- 제품 이미지 -->
                 <div class="w-full md:w-1/2 flex justify-center">
-                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="w-3/4 md:w-full rounded-lg shadow-md">
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="w-3/4 md:w-full rounded-lg">
                 </div>
                 <!-- 제품 정보 -->
                 <div class="w-full md:w-1/2">
@@ -52,15 +52,31 @@
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">SELECT SIZE</label>
                             <div class="flex flex-wrap gap-2">
-                                @foreach (range(220, 290, 5) as $size)
-                                <button
-                                    type="button"
-                                    class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
-                                        {{ in_array($size, $queryData['size'] ?? []) ? 'bg-sky-500 text-white' : '' }}"
-                                    data-value="{{ $size }}">
-                                    {{ $size }}mm
+                                <!-- 신규 사이즈 도입 -->
+                                <button type="button"
+                                        class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('S', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
+                                        data-value="S">
+                                    S
                                 </button>
-                                @endforeach
+                                <button type="button"
+                                        class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('M', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
+                                        data-value="M">
+                                    M
+                                </button>
+                                <button type="button"
+                                        class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('L', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
+                                        data-value="L">
+                                    L
+                                </button>
+                                <button type="button"
+                                        class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('XL', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
+                                        data-value="XL">
+                                    XL
+                                </button>
                             </div>
                             <input type="hidden" name="size" id="selectedSizePurchase" value="{{ json_encode($queryData['size'] ?? []) }}">
                         </div>
@@ -88,7 +104,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const buttons = document.querySelectorAll('.sizeBtn');
             const selectedSizeInput = document.getElementById('selectedSizePurchase');
-            let selectedSize = [];
+
+            let selectedSize = selectedSizeInput.value ? JSON.parse(selectedSizeInput.value) : [];
 
             buttons.forEach(button => {
                 button.addEventListener('click', () => {

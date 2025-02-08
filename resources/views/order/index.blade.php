@@ -39,7 +39,7 @@
                             @if(Auth::user()->role == 'admin')
                             <th class="border-b py-2 px-4 text-rose-600">{{ $order->shipping_status }}</th>
                             @endif
-                            <td class="border-b py-2 px-4">{{ $order->created_at->format('Y-m-d H:i') }}</td>
+                            <td class="border-b py-2 px-4">{{ $order->created_at->format('Y年m月d日 H:i') }}</td>
                         </tr>
                     @endforeach
                 </tbody>

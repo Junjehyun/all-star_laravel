@@ -27,7 +27,10 @@
                         </tr>
                         <tr class="border-b">
                             <td class="px-4 py-2 font-semibold text-left">SIZE</td>
-                            <td class="px-4 py-2">{{ $order->item->size }}mm</td>
+                            {{-- <td class="px-4 py-2">{{ $order->item->size }}mm</td> --}}
+                            <td class="px-4 py-2">
+                                {{ $order->purchased_size }}
+                            </td>
                         </tr>
                         <tr class="border-b">
                             <td class="px-4 py-2 font-semibold text-left">TELEPHONE</td>

@@ -32,13 +32,37 @@
             <div class="w-1/2">
                 <label for="size" class="block text-gray-700 font-semibold">Size</label>
                 <div class="flex flex-wrap gap-2">
-                    @for ($i = 220; $i <= 290; $i += 5)
+                    {{-- @for ($i = 220; $i <= 290; $i += 5)
                         <button type="button"
                                 class="sizeBtn px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 data-value="{{ $i }}">
                             {{ $i }}mm
                         </button>
-                    @endfor
+                    @endfor --}}
+                    <!-- S 사이즈 버튼 -->
+                    <button type="button"
+                            class="sizeBtn px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            data-value="S">
+                        S
+                    </button>
+                    <!-- M 사이즈 버튼 -->
+                    <button type="button"
+                            class="sizeBtn px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            data-value="M">
+                        M
+                    </button>
+                    <!-- L 사이즈 버튼 -->
+                    <button type="button"
+                            class="sizeBtn px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            data-value="L">
+                        L
+                    </button>
+                    <!-- XL 사이즈 버튼 -->
+                    <button type="button"
+                            class="sizeBtn px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            data-value="XL">
+                        XL
+                    </button>
                 </div>
                 <input type="hidden" name="size" id="selectedSize" required>
                 <small class="text-gray-500">Click on the desired size.</small>

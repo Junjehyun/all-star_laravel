@@ -69,7 +69,6 @@ class ItemController extends Controller
     public function itemReg(Request $request) {
 
         $sizeData = json_decode($request->input('size'), true);
-
         $request->merge(['size' => $sizeData]);
 
         $validated = $request->validate([
@@ -79,6 +78,10 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category' => 'required|string|in:nike,adidas,newBalance,others,sale',
+            //'stock_s' => 'required|integer|min:0',   // S 사이즈 재고
+            //'stock_m' => 'required|integer|min:0',   // M 사이즈 재고
+            //'stock_l' => 'required|integer|min:0',   // L 사이즈 재고
+            //'stock_xl' => 'required|integer|min:0',  // LX 사이즈 재고
         ]);
 
         // 이미지 업로드 처리
@@ -94,6 +97,10 @@ class ItemController extends Controller
             'description' => $validated['description'] ?? null,
             'image' => $imagePath,
             'category' => $validated['category'],
+            //'stock_s' => $validated['stock_s'],  // S 사이즈 재고
+            //'stock_m' => $validated['stock_m'],  // M 사이즈 재고
+            //'stock_l' => $validated['stock_l'],  // L 사이즈 재고
+            //'stock_lx' => $validated['stock_xl'], // LX 사이즈 재고
         ]);
 
         return redirect()->route('item.index')->with('success', '상품이 등록되었습니다.');
@@ -210,8 +217,10 @@ class ItemController extends Controller
     }
 
     public function itemEdit($id) {
+
         try {
             $item = Item::findOrFail($id);
+            //dd($item);
             return view('item.edit', compact('item'));
         } catch (\Exception $e) {
             return redirect()->route('item.index')->withErrors(['error' => '商品が見つかりませんでした。']);
@@ -223,7 +232,8 @@ class ItemController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'size' => 'nullable|string',
+            'size' => 'array', // size는 배열로 받음.
+            //'size.*' => 'in:S,M,L,XL',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category' => 'required|string|in:nike,adidas,newBalance,others,sale',
@@ -236,6 +246,11 @@ class ItemController extends Controller
                 $imagePath = $request->file('image')->store('images', 'public');
                 $item->image = $imagePath;
             }
+
+            // S, M, L, XL 순으로 정렬
+            //$sizeOrder = ['S','M','L','XL'];
+            //$sortedSizes = array_intersect($sizeOrder, $validated['size'] ?? []);
+
 
             // item update
             $item->update([

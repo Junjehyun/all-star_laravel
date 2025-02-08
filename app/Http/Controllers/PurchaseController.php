@@ -86,6 +86,9 @@ class PurchaseController extends Controller
             'zipcode' => $validated['zipcode'], // 추가
             'city' => $validated['city'],       // 추가
             'detail_address' => $validated['detail_address'], // 추가
+
+            // purchased_size추가
+            'purchased_size' => $validated['size']
         ]);
 
         // 결제 성공 후 주문 상태 업데이트
