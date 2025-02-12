@@ -39,7 +39,7 @@
                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                 {{ $item->like }}
                             </div>
-                            <button  onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
+                            <button onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
                             <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
                                 <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
                             </a>
@@ -59,6 +59,22 @@
     </div>
     <div id="to-top">
         <div class="material-icons">arrow_upward</div>
+    </div>
+    <!-- size selecte modal -->
+    <div id="sizeModal" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-70">
+        <div class="bg-white p-6 rouded-lg shadow-lg w-[20%]">
+            <h2 class="text-xl font-semibold flex justify-center mb-4">SELECT SIZE</h2>
+            <div class="flex justify-center space-x-3 mb-4">
+                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="S">S</button>
+                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="M">M</button>
+                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="L">L</button>
+                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="XL">XL</button>
+            </div>
+            <div class="flex justify-center space-x-3 mt-5">
+                <button id="closeModal" class="px-4 py-2 bg-gray-200 rounded-md">CANCEL</button>
+                <button id="confirmSize" class="px-4 py-2 bg-blue-500 text-white rounded-md">CONRIFM</button>
+            </div>
+        </div>
     </div>
     <script>
         const initialKeyword = "{{ $keyword ?? '' }}"; // 서버에서 키워드 전달
@@ -118,7 +134,19 @@
                 }
             }
         });
+        // 상품을 카트에 추가
         function addToCart(itemId) {
+            const selectedSize = document.querySelector('.size-option.selected');
+
+            // cart 담을때 모달창 띄우기
+            if (!selectedSize) {
+                document.getElementById('sizeModal').style.display = 'flex';
+                //alert('Please select a size');
+                return;
+            }
+
+            const size = selectedSize.dataset.size; // 선택된 사이즈
+
             $.ajax({
                 url: '/cart/add',
                 type: 'POST',
@@ -126,12 +154,14 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    item_id: itemId
+                    item_id: itemId,
+                    size: size // 사이즈 추가
                 },
                 success: function(response) {
                     if (response.success) {
                         updateCartCount();
                         alert('The item has been added to your cart.');
+                        closeModal();
                     } else {
                         alert('Failed to add. Please try again.');
                     }
@@ -140,6 +170,22 @@
                     alert('An error has occurred. Please try again.');
                 }
             });
+        }
+
+        // 사이즈 버튼 클릭 시 'selected' 클래스를 추가하여 선택된 사이즈 표시
+        document.querySelectorAll('.size-option').forEach(button => {
+            button.addEventListener('click', function() {
+                // 기존 선택된 사이즈의 'selected' 클래스 제거
+                document.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('selected'));
+
+                // 현재 버튼에 'selected' 클래스 추가
+                this.classList.add('selected');
+            });
+        });
+
+        // 모달을 닫는 함수
+        function closeModal() {
+            document.getElementById('sizeModal').style.display = 'none'; // 모달 숨기기
         }
 
         //const badgeEl = document.querySelector('.badge');
