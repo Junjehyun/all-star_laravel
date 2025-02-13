@@ -13,7 +13,8 @@ class Cart extends Model
     protected $fillable = [
         'item_id',
         'quantity',
-        'user_id'
+        'user_id',
+        'selected_size'
     ];
 
     // item 모델과의 관계 설정

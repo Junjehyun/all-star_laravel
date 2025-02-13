@@ -218,6 +218,8 @@ class PurchaseController extends Controller
 
     public function cartCheckout(Request $request) {
         // DB검증
+        //dd(request()->method());
+        //dd(request()->method(), $request->all());
         $validated = $request->validate([
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'required|email|max:255',

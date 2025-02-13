@@ -15,6 +15,7 @@
                         <th class="border-b py-2">ITEM NAME</th>
                         <th class="border-b py-2">PRICE</th>
                         <th class="border-b py-2">QUANTITY</th>
+                        {{-- <th class="border-b py-2">SIZE</th> --}}
                         <th class="border-b py-2">TOTAL PRICE</th>
                         <th class="border-b py-2">ACTION</th>
                     </tr>
@@ -39,6 +40,7 @@
                                     EDIT
                                 </button>
                             </td>
+                            {{-- <td class="border-b py-2"><span class="text-rose-600">{{ $cart->selected_size }}</span></td> --}}
                             <td class="border-b py-2">{{ number_format($cart->item->price * $cart->quantity) }}円</td>
                             <td class="border-b py-2">
                                 <button

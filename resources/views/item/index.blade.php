@@ -39,7 +39,8 @@
                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                 {{ $item->like }}
                             </div>
-                            <button onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
+                            {{-- <button onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button> --}}
+                            <button onclick="openModal('{{ $item->id }}')">CART</button>
                             <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
                                 <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
                             </a>
@@ -62,7 +63,7 @@
     </div>
     <!-- size selecte modal -->
     <div id="sizeModal" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-70">
-        <div class="bg-white p-6 rouded-lg shadow-lg w-[20%]">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-[20%]">
             <h2 class="text-xl font-semibold flex justify-center mb-4">SELECT SIZE</h2>
             <div class="flex justify-center space-x-3 mb-4">
                 <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="S">S</button>
@@ -72,7 +73,7 @@
             </div>
             <div class="flex justify-center space-x-3 mt-5">
                 <button id="closeModal" class="px-4 py-2 bg-gray-200 rounded-md">CANCEL</button>
-                <button id="confirmSize" class="px-4 py-2 bg-blue-500 text-white rounded-md">CONRIFM</button>
+                <button id="confirmSize" class="px-4 py-2 bg-sky-500 text-white rounded-md">CONRIFM</button>
             </div>
         </div>
     </div>
@@ -134,18 +135,28 @@
                 }
             }
         });
+        let globalItemId = null;
+
+        function openModal(itemId) {
+            globalItemId = itemId;
+            document.getElementById('sizeModal').style.display = 'flex';
+        }
+
         // 상품을 카트에 추가
-        function addToCart(itemId) {
-            const selectedSize = document.querySelector('.size-option.selected');
+        function addToCart(itemId, size) {
+            //const selectedSize = document.querySelector('.size-option.selected');
+            //const size = selectedSize.dataset.size; // 선택된 사이즈 값 취득
 
             // cart 담을때 모달창 띄우기
-            if (!selectedSize) {
+            // if (!selectedSize) {
+            //     document.getElementById('sizeModal').style.display = 'flex';
+            //     //alert('Please select a size');
+            //     return; // 사이즈 선택되지 않으면 추가 진행 안함
+            // }
+            if (!size) {
                 document.getElementById('sizeModal').style.display = 'flex';
-                //alert('Please select a size');
                 return;
             }
-
-            const size = selectedSize.dataset.size; // 선택된 사이즈
 
             $.ajax({
                 url: '/cart/add',
@@ -175,11 +186,18 @@
         // 사이즈 버튼 클릭 시 'selected' 클래스를 추가하여 선택된 사이즈 표시
         document.querySelectorAll('.size-option').forEach(button => {
             button.addEventListener('click', function() {
-                // 기존 선택된 사이즈의 'selected' 클래스 제거
-                document.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('selected'));
+                // 이미 선택된 버튼을 클릭했을 경우 선택을 해제
+                if (this.classList.contains('bg-sky-500')) {
+                    this.classList.remove('bg-sky-500', 'text-white', 'selected'); // 선택 해제
+                } else {
+                    // 모든 버튼에서 'selected', 'bg-blue-500', 'text-white' 클래스를 제거
+                    document.querySelectorAll('.size-option').forEach(btn => {
+                        btn.classList.remove('bg-sky-500', 'text-white', 'selected');
+                    });
 
-                // 현재 버튼에 'selected' 클래스 추가
-                this.classList.add('selected');
+                    // 현재 버튼에 'selected', 'bg-blue-500', 'text-white' 클래스를 추가
+                    this.classList.add('bg-sky-500', 'text-white', 'selected');
+                }
             });
         });
 
@@ -188,6 +206,32 @@
             document.getElementById('sizeModal').style.display = 'none'; // 모달 숨기기
         }
 
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+
+        document.getElementById('confirmSize').addEventListener('click', function () {
+            console.log('CONFIRM 버튼 클릭 이벤트 호출됨.');
+            // 선택된 사이즈 찾기
+            const selectedSize = document.querySelector('.size-option.selected');
+            console.log('선택된 사이즈 요소:', selectedSize);
+
+            if (!selectedSize) {
+                console.log('사이즈가 선택되지 않아, 함수 종료');
+                return;
+            }
+
+            const size = selectedSize.dataset.size;
+            console.log('선택된 사이즈:', size);
+            console.log('itemId:', globalItemId);
+
+            // addToCart함수 호출
+            console.log('addToCart 호출 직전');
+            addToCart(globalItemId, size); // size와 itemId를 전달하여 장바구니로 추가
+            console.log('addToCart 호출 직후');
+
+            closeModal();
+            console.log('closeModal 호출 직후');
+        });
+
         //const badgeEl = document.querySelector('.badge');
         const toTopEl = document.querySelector('#to-top');
 
@@ -195,22 +239,11 @@
             console.log(window.scrollY);
 
             if (window,scrollY > 500) {
-                // 배지 숨기기
-                // gsap.to(요소, 지속시간, 옵션);
-                // gsap.to(badgeEl, 0.6, {
-                //     opacity: 0,
-                //     display: 'none'
-                // });
                 // 버튼 보이기!
                 gsap.to(toTopEl, 0.2, {
                     x: 0
                 });
             } else {
-                // 배지 보이기
-                // gsap.to(badgeEl, 0.6, {
-                //     opacity: 1,
-                //     display: 'block'
-                // });
                 // 버튼 숨기기!
                 gsap.to(toTopEl, 0.2, {
                     x: 100

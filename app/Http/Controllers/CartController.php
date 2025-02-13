@@ -33,11 +33,18 @@ class CartController extends Controller
         try {
             // 요청에서 item_id를 가져옴
             $itemId = $request->input('item_id');
+            // 사이즈 값 추가
+            $size = $request->input('size');
 
             // 아이템이 존재하는지 확인
             $item = Item::find($itemId);
             if (!$item) {
                 return response()->json(['success' => false, 'message' => 'We dont have any products.'], 404);
+            }
+
+            // 사이즈가 선택되지 않으면 오류 반환
+            if (!$size) {
+                return response()->json(['success' => false, 'message' => 'Please select a size'], 404);
             }
 
             // 이미 장바구니에 있는지 확인
@@ -46,6 +53,7 @@ class CartController extends Controller
             if ($cartItem) {
                 // 기존 수량 증가
                 $cartItem->quantity += 1;
+                $cartItem->selected_size = $size;
                 $cartItem->save();
             } else {
                 // 새로 추가
@@ -53,6 +61,7 @@ class CartController extends Controller
                     'user_id' => Auth::id(), // 로그인한 사용자의 ID
                     'item_id' => $itemId,
                     'quantity' => 1,
+                    'selected_size' => $size
                 ]);
             }
 

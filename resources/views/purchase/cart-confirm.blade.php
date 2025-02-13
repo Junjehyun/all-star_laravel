@@ -4,8 +4,8 @@
     <div class="container mx-auto mt-10">
         <h1 class="text-center text-2xl font-bold mb-6">CONFIRM PURCHASE</h1>
         <h2 class="text-center text-gray-700 text-xl font-bold mb-6"><span class="text-sky-700">{{ $userName }}</span> ORDER ITEMS</h2>
-        <div class="bg-white rounded-lg p-6 mx-auto max-w-2xl">
-            <form action="{{ route('purchase.next-cart-confirm') }}" method="post">
+        <div class="bg-white rounded-lg p-6 mx-auto max-w-3xl">
+            <form action="{{ route('purchase.next-cart-confirm') }}" method="POST">
                 @csrf
                 <div class="space-y-6">
                     @foreach ($carts as $cart)
@@ -13,7 +13,8 @@
                             <span class="flex-1 text-left">{{ $cart->item->name }}</span>
                             <span class="w-24 text-right">{{ number_format($cart->item->price) }}円</span>
                             <span class="w-24 text-center">x {{ $cart->quantity }}</span>  <!-- 수량 -->
-                            <span class="w-32 text-right">{{ number_format($cart->item->price * $cart->quantity) }}円</span>
+                            {{-- <span class="w-24 text-center text-rose-500">{{ $cart->selected_size }}</span> --}}
+                            <span class="w-24 text-right">{{ number_format($cart->item->price * $cart->quantity) }}円</span>
                         </div>
                     @endforeach
                 </div>
