@@ -24,7 +24,7 @@
                                 <td class="py-2 px-4 border-b text-center">{{ $order->id }}</td>
                                 <td class="py-2 px-4 border-b">{{ $order->item->name }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $order->quantity }}</td>
-                                <td class="py-2 px-4 border-b text-center">{{ $order->item->size }}</td>
+                                {{-- <td class="py-2 px-4 border-b text-center">{{ $order->item->size }}</td> --}}
                                 <td class="py-2 px-4 border-b text-right">{{ number_format($order->amount) }}</td>
                             </tr>
                         @endforeach

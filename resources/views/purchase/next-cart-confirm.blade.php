@@ -71,6 +71,10 @@
                         BUY NOW
                     </button>
             </form>
+            <form action="{{ route('purchase.testCartCheckout')}}" method="POST">
+                @csrf
+                <button>test</button>
+            </form>
             <!-- 수정으로 돌아가기 버튼 -->
             <form action="{{ route('purchase.selected') }}" method="POST" class="inline">
                 @csrf

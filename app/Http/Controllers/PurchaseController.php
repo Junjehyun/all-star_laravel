@@ -218,8 +218,6 @@ class PurchaseController extends Controller
 
     public function cartCheckout(Request $request) {
         // DB검증
-        //dd(request()->method());
-        //dd(request()->method(), $request->all());
         $validated = $request->validate([
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'required|email|max:255',
@@ -267,6 +265,11 @@ class PurchaseController extends Controller
                 $quantity = $quantities[$index];
                 $unitAmount = intval($item->price); // Stripe는 정수 단위 사용 (엔화)
 
+                // 장바구니에서 사이즈 정보 가져오기
+                $cart = Cart::where('item_id', $itemId)
+                ->where('user_id', Auth::id())
+                ->first();
+
                 // Stripe 라인 아이템 구성
                 $lineItems[] = [
                     'price_data' => [
@@ -294,6 +297,7 @@ class PurchaseController extends Controller
                     'zipcode' => $zipcode,
                     'city' => $city,
                     'detail_address' => $detailAddress,
+                    'purchased_size' => $cart->selected_size
                 ]);
             }
 
@@ -319,6 +323,7 @@ class PurchaseController extends Controller
             return redirect($session->url);
 
         } catch (\Exception $e) {
+            dd($e->getMessage());
             // 트랜잭션 롤백
             DB::rollBack();
             // 사용자에게 에러 메시지 반환

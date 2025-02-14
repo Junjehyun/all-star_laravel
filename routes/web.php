@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\KanriController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
@@ -73,12 +75,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order_list', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order/{id}/tracking/', [OrderController::class, 'orderTracking'])->name('order.tracking');
     Route::post('/order/{id}/update-shipping-status', [OrderController::class, 'updateShippingStatus'])->name('update.shipping.status');
+
     /**
      * PurchaseController
      *
      * 구매 관련 라우트
      *
      */
+
     Route::get('/purchase_index/{item_id?}', [PurchaseController::class, 'purchase'])->name('purchase.index');
     Route::post('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
     Route::post('/purchase/checkout', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
@@ -87,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/purchase/next-cart-confirm', [PurchaseController::class, 'nextCartConfirm'])->name('purchase.next-cart-confirm');
     Route::post('/purchase/cart-checkout', [PurchaseController::class, 'cartCheckout'])->name('purchase.cartCheckout');
     Route::get('/purchase/thankyou-multiple', [PurchaseController::class, 'thankyouMultiple'])->name('purchase.thankyouMultiple');
+
     /**
      *  CartController
      *
@@ -106,6 +111,11 @@ Route::middleware(['auth'])->group(function () {
      */
     Route::get('/mypage', [UserController::class, 'myPage'])->name('user.mypage')->middleware('auth');
 
+    /**
+     * AdminController
+     *
+     */
+    Route::get('/kanri/dashboard/', [KanriController::class, 'dashboard'])->name('kanri.dashboard');
 });
 
 /**

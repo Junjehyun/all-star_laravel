@@ -46,6 +46,13 @@
                         </form>
                     </div>
                 @endauth
+                @auth
+                    @if(Auth::user()->role === 'admin')
+                        <form action="{{ route('kanri.dashboard') }}" method="GET">
+                            <button class="mb-2 text-rose-500">管理</button>
+                        </form>
+                    @endif
+                @endauth
             </div>
         </nav>
     </div>
