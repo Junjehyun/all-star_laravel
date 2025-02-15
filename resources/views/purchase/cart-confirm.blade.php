@@ -13,7 +13,7 @@
                             <span class="flex-1 text-left">{{ $cart->item->name }}</span>
                             <span class="w-24 text-right">{{ number_format($cart->item->price) }}円</span>
                             <span class="w-24 text-center">x {{ $cart->quantity }}</span>  <!-- 수량 -->
-                            {{-- <span class="w-24 text-center text-rose-500">{{ $cart->selected_size }}</span> --}}
+                            <span class="w-24 text-center text-rose-500">{{ $cart->selected_size }}</span>
                             <span class="w-24 text-right">{{ number_format($cart->item->price * $cart->quantity) }}円</span>
                         </div>
                     @endforeach

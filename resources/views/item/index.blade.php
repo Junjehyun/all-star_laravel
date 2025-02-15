@@ -139,20 +139,16 @@
 
         function openModal(itemId) {
             globalItemId = itemId;
-            document.getElementById('sizeModal').style.display = 'flex';
+            //document.getElementById('sizeModal').style.display = 'flex';
+            // 사이즈 선택 초기화
+            document.querySelectorAll('.size-option').forEach(button => {
+                button.classList.remove('bg-sky-500', 'text-white', 'selected'); // 선택 상태 초기화
+            });
+            document.getElementById('sizeModal').style.display = 'flex'; // 모달열기
         }
 
         // 상품을 카트에 추가
         function addToCart(itemId, size) {
-            //const selectedSize = document.querySelector('.size-option.selected');
-            //const size = selectedSize.dataset.size; // 선택된 사이즈 값 취득
-
-            // cart 담을때 모달창 띄우기
-            // if (!selectedSize) {
-            //     document.getElementById('sizeModal').style.display = 'flex';
-            //     //alert('Please select a size');
-            //     return; // 사이즈 선택되지 않으면 추가 진행 안함
-            // }
             if (!size) {
                 document.getElementById('sizeModal').style.display = 'flex';
                 return;
@@ -203,6 +199,12 @@
 
         // 모달을 닫는 함수
         function closeModal() {
+            // 모달을 닫을 때 선택된 사이즈 초기화
+            // document.querySelectorAll('.size-option').forEach(button => {
+            //     button.classList.remove('bg-sky-500', 'text-white', 'selected');
+            // });
+            // document.getElementById('sizeModal').style.display = 'none'; // 모달 숨기기
+
             document.getElementById('sizeModal').style.display = 'none'; // 모달 숨기기
         }
 

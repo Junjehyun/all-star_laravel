@@ -12,8 +12,10 @@
                     <span class="flex-1 text-left">{{ $cart->item->name }}</span>
                     <span class="w-24 text-right">{{ number_format($cart->item->price) }}円</span>
                     <span class="w-24 text-center">x {{ $cart->quantity }}</span>
-                    {{-- <span class="2-24 text-center text-rose-500">{{ $cart->selected_size }}</span> --}}
-                    <span class="w-24 text-right">{{ number_format($cart->item->price * $cart->quantity) }}円</span> <!-- 총합 -->
+                    <span class="2-24 text-center text-rose-500">{{ $cart->selected_size }}</span>
+                    <span class="w-24 text-right">{{ number_format($cart->item->price * $cart->quantity) }}円</span>
+                    <!-- 사이즈(selected_size) 배열로 전환 시키기 -->
+                    <input type="hidden" name="selected_size[{{ $cart->item->id }}]" value="{{ $cart->selected_size }}">
                 </div>
             @endforeach
         </div>
@@ -60,6 +62,7 @@
                     @foreach ($carts as $cart)
                         <input type="hidden" name="item_ids[]" value="{{ $cart->item->id }}">
                         <input type="hidden" name="quantities[]" value="{{ $cart->quantity }}">
+                        <input type="hidden" name="selected_size[{{ $cart->item->id }}]" value="{{ $cart->selected_size }}">
                     @endforeach
                     <input type="hidden" name="customer_name" value="{{ $validated['customer_name'] }}">
                     <input type="hidden" name="customer_email" value="{{ $validated['customer_email'] }}">
@@ -70,10 +73,6 @@
                     <button type="submit" class="w-full outline outline-sky-200 px-2 py-1 text-sm rounded-xl hover:bg-sky-400 hover:text-white">
                         BUY NOW
                     </button>
-            </form>
-            <form action="{{ route('purchase.testCartCheckout')}}" method="POST">
-                @csrf
-                <button>test</button>
             </form>
             <!-- 수정으로 돌아가기 버튼 -->
             <form action="{{ route('purchase.selected') }}" method="POST" class="inline">

@@ -229,12 +229,14 @@ class PurchaseController extends Controller
             'item_ids.*' => 'integer|exists:items,id',
             'quantities' => 'required|array',
             'quantities.*' => 'integer|min:1',
+            'selected_size' => 'required|array'
         ]);
 
         // 상품 ID와 수량 배열
         $itemIds = $validated['item_ids'];
         $quantities = $validated['quantities'];
-
+        $selectedSizes = $validated['selected_size'];
+        //dd($selectedSizes);
         // 사용자 정보
         $customerName = $validated['customer_name'];
         $customerEmail = $validated['customer_email'];
@@ -266,9 +268,16 @@ class PurchaseController extends Controller
                 $unitAmount = intval($item->price); // Stripe는 정수 단위 사용 (엔화)
 
                 // 장바구니에서 사이즈 정보 가져오기
-                $cart = Cart::where('item_id', $itemId)
-                ->where('user_id', Auth::id())
-                ->first();
+                // $cart = Cart::where('item_id', $itemId)
+                // ->where('user_id', Auth::id())
+                // ->first();
+
+                $selectedSize = isset($selectedSizes[$itemId]) ? $selectedSizes[$itemId] : null;
+                if (!$selectedSize) {
+                    throw new \Exception("사이즈 정보가 누락되었습니다. (Item ID: $itemId)");
+                }
+
+
 
                 // Stripe 라인 아이템 구성
                 $lineItems[] = [
@@ -297,7 +306,8 @@ class PurchaseController extends Controller
                     'zipcode' => $zipcode,
                     'city' => $city,
                     'detail_address' => $detailAddress,
-                    'purchased_size' => $cart->selected_size
+                    //'purchased_size' => implode(',', $selectedSizes)
+                    'purchased_size' => json_encode([$selectedSize])
                 ]);
             }
 
