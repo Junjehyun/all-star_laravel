@@ -57,7 +57,9 @@
     </div>
 
     <div class="flex justify-center mt-8 space-x-3">
-        <button class="px-4 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
+        <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
+            <button class="px-4 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
+        </a>
         <a href="{{ route(name: 'item.index') }}" class="px-4 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">RETURN</a>
         @auth
             @if(Auth::user()->role === 'admin')

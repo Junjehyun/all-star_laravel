@@ -71,6 +71,61 @@ class PurchaseController extends Controller
             'quantity' => 'required|integer|min:1',
         ]);
 
+        // 검증된 size 값 (예: '["S"]')
+        $validatedSize = $validated['size'];
+
+        // 만약 $validatedSize가 JSON 문자열이라면 디코딩 시도
+        $decodedSize = json_decode($validatedSize, true);
+
+        // 디코딩이 성공적이면 배열에서 첫 번째 값을 사용, 아니면 그대로 사용
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decodedSize)) {
+            $selectedSize = strtoupper(trim($decodedSize[0] ?? ''));
+        } else {
+            $selectedSize = strtoupper(trim($validatedSize));
+        }
+
+        // DB에 저장된 사이즈 배열 가져오기
+        $availableSizes = is_array($item->size) ? $item->size : json_decode($item->size, true);
+
+        // 디버깅: 실제 값 확인 (필요 시 주석 처리)
+        //dd($selectedSize, $availableSizes);
+
+        if (!in_array($selectedSize, $availableSizes)) {
+            throw new \Exception("유효하지 않은 사이즈입니다.");
+        }
+        //dd($selectedSize);
+        $quantity = $validated['quantity'];
+
+        switch ($selectedSize) {
+            case 'S':
+                if ($item->stock_s < $quantity) {
+                    throw new \Exception("해당 사이즈의 재고가 부족합니다. (사이즈: S, 상품: {$item->name})");
+                }
+                $item->stock_s -= $quantity;
+                break;
+            case 'M':
+                if ($item->stock_m < $quantity) {
+                    throw new \Exception("해당 사이즈의 재고가 부족합니다. (사이즈: M, 상품: {$item->name})");
+                }
+                $item->stock_m -= $quantity;
+                break;
+            case 'L':
+                if ($item->stock_l < $quantity) {
+                    throw new \Exception("해당 사이즈의 재고가 부족합니다. (사이즈: L, 상품: {$item->name})");
+                }
+                $item->stock_l -= $quantity;
+                break;
+            case 'XL':
+                if ($item->stock_xl < $quantity) {
+                    throw new \Exception("해당 사이즈의 재고가 부족합니다. (사이즈: XL, 상품: {$item->name})");
+                }
+                $item->stock_xl -= $quantity;
+                break;
+            default:
+                throw new \Exception("유효하지 않은 사이즈입니다.");
+        }
+        $item->save();
+
         // 주문 데이터 저장
         $order = Order::create([
             'item_id' => $validated['item_id'],
@@ -267,17 +322,42 @@ class PurchaseController extends Controller
                 $quantity = $quantities[$index];
                 $unitAmount = intval($item->price); // Stripe는 정수 단위 사용 (엔화)
 
-                // 장바구니에서 사이즈 정보 가져오기
-                // $cart = Cart::where('item_id', $itemId)
-                // ->where('user_id', Auth::id())
-                // ->first();
-
                 $selectedSize = isset($selectedSizes[$itemId]) ? $selectedSizes[$itemId] : null;
                 if (!$selectedSize) {
                     throw new \Exception("사이즈 정보가 누락되었습니다. (Item ID: $itemId)");
                 }
 
-
+                // 판매완료시 해당 사이즈 재고 차감
+                switch ($selectedSize) {
+                    case 'S':
+                        if ($item->stock_s < $quantity) {
+                            throw new \Exception("해당 사이즈의 재고가 부족합니다. (SIZE: S, 상품: {$item->name})");
+                        }
+                        $item->stock_s -= $quantity;
+                        break;
+                    case 'M':
+                        if ($item->stock_m < $quantity) {
+                            throw new \Exception("해당 사이즈의 재고가 부족합니다. (SIZE: M, 상품: {$item->name})");
+                        }
+                        $item->stock_m -= $quantity;
+                        break;
+                    case 'L':
+                        if ($item->stock_l < $quantity) {
+                            throw new \Exception("해당 사이즈의 재고가 부족합니다. (SIZE: L, 상품: {$item->name})");
+                        }
+                        $item->stock_l -= $quantity;
+                        break;
+                    case 'XL':
+                        if ($item->stock_xl < $quantity) {
+                            throw new \Exception("해당 사이즈의 재고가 부족합니다. (SIZE: XL, 상품: {$item->name})");
+                        }
+                        $item->stock_xl -= $quantity;
+                        break;
+                    default:
+                        throw new \Exception("유효하지 않은 사이즈 입니다.");
+                }
+                // 재고 업데이트
+                $item->save();
 
                 // Stripe 라인 아이템 구성
                 $lineItems[] = [
@@ -333,7 +413,7 @@ class PurchaseController extends Controller
             return redirect($session->url);
 
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            //dd($e->getMessage());
             // 트랜잭션 롤백
             DB::rollBack();
             // 사용자에게 에러 메시지 반환
