@@ -40,7 +40,13 @@
                                 {{ $item->like }}
                             </div>
                             {{-- <button onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button> --}}
-                            <button onclick="openModal('{{ $item->id }}')">CART</button>
+                            <button onclick="openModal(
+                                '{{ $item->id }}',
+                                {{ $item->stock_s }},
+                                {{ $item->stock_m }},
+                                {{ $item->stock_l }},
+                                {{ $item->stock_xl }}
+                            )">CART</button>
                             <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
                                 <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
                             </a>
@@ -66,10 +72,10 @@
         <div class="bg-white p-6 rounded-lg shadow-lg w-[20%]">
             <h2 class="text-xl font-semibold flex justify-center mb-4">SELECT SIZE</h2>
             <div class="flex justify-center space-x-3 mb-4">
-                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="S">S</button>
-                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="M">M</button>
-                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="L">L</button>
-                <button class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="XL">XL</button>
+                <button id="btn-s" class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="S">S</button>
+                <button id="btn-m" class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="M">M</button>
+                <button id="btn-l" class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="L">L</button>
+                <button id="btn-xl" class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="XL">XL</button>
             </div>
             <div class="flex justify-center space-x-3 mt-5">
                 <button id="closeModal" class="px-4 py-2 bg-gray-200 rounded-md">CANCEL</button>
@@ -137,14 +143,33 @@
         });
         let globalItemId = null;
 
-        function openModal(itemId) {
+        function openModal(itemId, stockS, stockM, stockL, stockXL) {
             globalItemId = itemId;
-            //document.getElementById('sizeModal').style.display = 'flex';
-            // 사이즈 선택 초기화
+
+            // 모달의 모든 사이즈 버튼 상태 초기화
             document.querySelectorAll('.size-option').forEach(button => {
-                button.classList.remove('bg-sky-500', 'text-white', 'selected'); // 선택 상태 초기화
+                button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-sky-500', 'text-white', 'selected');
+                button.disabled = false;
             });
+
+            // 재고 정보에 따라 각 버튼 상태 업데이트
+            updateButtonState('btn-s', stockS);
+            updateButtonState('btn-m', stockM);
+            updateButtonState('btn-l', stockL);
+            updateButtonState('btn-xl', stockXL);
+
             document.getElementById('sizeModal').style.display = 'flex'; // 모달열기
+        }
+
+        function updateButtonState(buttonId, stock) {
+            const button = document.getElementById(buttonId);
+            if (stock === 0) {
+                button.classList.add('opacity-50', 'cursor-not-allowed');
+                button.disabled = true;
+            } else {
+                button.classList.remove('opaicty-50', 'cursor-not-allowed');
+                button.disabled = false;
+            }
         }
 
         // 상품을 카트에 추가

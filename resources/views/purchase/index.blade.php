@@ -55,26 +55,34 @@
                                 <!-- 신규 사이즈 도입 -->
                                 <button type="button"
                                         class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
-                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('S', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
-                                        data-value="S">
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('S', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}
+                                        {{ $item->stock_s == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
+                                        data-value="S"
+                                        {{ $item->stock_s == 0 ? 'disabled' : '' }}>
                                     S
                                 </button>
                                 <button type="button"
                                         class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
-                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('M', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
-                                        data-value="M">
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('M', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}
+                                        {{ $item->stock_m == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
+                                        data-value="M"
+                                        {{ $item->stock_m == 0 ? 'disabled' : '' }}>
                                     M
                                 </button>
                                 <button type="button"
                                         class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
-                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('L', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
-                                        data-value="L">
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('L', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}
+                                        {{ $item->stock_l == 0 ? 'opacity-50 cursor-not-allowed' : ''}}"
+                                        data-value="L"
+                                        {{ $item->stock_l == 0 ? 'disabled' : '' }}>
                                     L
                                 </button>
                                 <button type="button"
                                         class="sizeBtn px-2 py-1 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white
-                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('XL', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}"
-                                        data-value="XL">
+                                        {{ (isset($queryData['size']) && is_array($queryData['size']) && in_array('XL', $queryData['size'])) ? 'bg-sky-500 text-white' : '' }}
+                                        {{ $item->stock_xl == 0 ? 'opacity-50 cursor-not-allowed' : ''}}"
+                                        data-value="XL"
+                                        {{ $item->stock_xl == 0 ? 'disabled' : '' }}>
                                     XL
                                 </button>
                             </div>

@@ -28,15 +28,31 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="bg-zinc-100 border px-4 py-2">STOCK</td>
-                        <td class="border px-4 py-2">{{ $item->stock_s }}</td>
-                        <td class="border px-4 py-2">{{ $item->stock_m }}</td>
-                        <td class="border px-4 py-2">{{ $item->stock_l }}</td>
-                        <td class="border px-4 py-2">{{ $item->stock_xl }}</td>
+                        <td class="bg-zinc-100 border px-4 py-2">在庫</td>
+                        <td class="border px-4 py-2">
+                            <span class="{{ $item->stock_s < 10 ? 'text-rose-500' : '' }}">
+                                {{ $item->stock_s == 0 ? '無' : $item->stock_s }}
+                            </span>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <span class="{{ $item->stock_m < 10 ? 'text-rose-500' : '' }}">
+                                {{ $item->stock_m == 0 ? '無' : $item->stock_m }}
+                            </span>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <span class="{{ $item->stock_l < 10 ? 'text-rose-500' : '' }}">
+                                {{ $item->stock_l == 0 ? '無' : $item->stock_l }}
+                            </span>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <span class="{{ $item->stock_xl < 10 ? 'text-rose-500' : '' }}">
+                                {{ $item->stock_xl == 0 ? '無' : $item->stock_xl }}
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <p class="text-center text-xs text-rose-600 mt-2 mr-5">※在庫の状況によって、ご購入できない場合があります。</p>
+            <p class="text-center text-xs text-rose-600 mt-2 mx-auto">※在庫の状況によって、ご購入できない場合があります。</p>
         </div>
     </div>
     <div class="text-center mt-5">
@@ -82,7 +98,6 @@
         </span>
     </div>
     <div class="bg-white shadow-xl py-5 px-5 mt-5">
-        {{-- <h2 class="flex justify-center text-2xl">REVIEW</h2> --}}
         @auth
         <form action="{{ route('review.store', $item->id) }}" method="POST" class="mt-5">
             @csrf
@@ -90,7 +105,6 @@
                 <!-- 평점 (1~5) -->
                 <div class="flex gap-1 mt-9">
                     <input type="radio" id="star5" name="rating" value="5" class="hidden peer" onclick="setRating(5)">
-                    {{-- <label for="star5" class="cursor-pointer text-xl text-gray-300 hover:text-yellow-500">★</label> --}}
                     @for ($i = 1; $i <= 5; $i++)
                     <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}" class="hidden peer"
                         @if(old('rating') == $i) checked @endif onclick="setRating({{ $i }})">
@@ -118,7 +132,6 @@
 
         <!-- 리뷰 리스트 -->
         <div class="mt-5 items-center">
-            {{-- <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center mt-10">Review List</h3> --}}
             <div class="flex flex-col items-center">
                 @foreach ($item->reviews as $review)
                     <div class="bg-white shadow-md w-full max-w-2xl rounded-lg p-4 mb-4">
