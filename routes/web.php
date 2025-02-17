@@ -83,7 +83,6 @@ Route::middleware(['auth'])->group(function () {
      * 구매 관련 라우트
      *
      */
-
     Route::get('/purchase_index/{item_id?}', [PurchaseController::class, 'purchase'])->name('purchase.index');
     Route::post('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
     Route::post('/purchase/checkout', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
@@ -94,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/purchase/thankyou-multiple', [PurchaseController::class, 'thankyouMultiple'])->name('purchase.thankyouMultiple');
 
     /**
-     *  CartController
+     * CartController
      *
      * 장바구니 관련 라우트
      *
@@ -117,6 +116,8 @@ Route::middleware(['auth'])->group(function () {
      *
      */
     Route::get('/kanri/dashboard/', [KanriController::class, 'dashboard'])->name('kanri.dashboard');
+    Route::get('/kanri/items', [KanriController::class, 'kanriItems'])->name('kanri.items');
+    Route::get('/kanri/users', [KanriController::class, 'kanriUsers'])->name('kanri.users');
 });
 
 /**

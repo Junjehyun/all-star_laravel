@@ -1,13 +1,13 @@
 @extends('layouts.shop_common')
 @section('title', 'Shop Index')
 @section('content')
-    <div class="flex justify-end mt-4 space-x-5">
+    {{-- <div class="flex justify-end mt-4 space-x-5">
         @auth
             @if(Auth::user()->role === 'admin')
                 <a href="{{ route('item.regIndex') }}" class="underline underline-offset-4 rounded-xl text-sm px-2">Item Regist</a>
             @endif
         @endauth
-    </div>
+    </div> --}}
     <div class="flex flex-row items-center justify-center space-x-2 mt-5">
             <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ALL">・ ALL({{ $categoryCounts['ALL'] }})</a>
             <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="nike">・ Nike({{ $categoryCounts['nike'] }})</a>
@@ -46,7 +46,7 @@
                                 {{ $item->stock_m }},
                                 {{ $item->stock_l }},
                                 {{ $item->stock_xl }}
-                            )">CART</button>
+                            )" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
                             <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
                                 <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
                             </a>

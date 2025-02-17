@@ -20,6 +20,8 @@
         @livewireStyles
         <!-- Alpine.js CDN -->
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+        <!-- Chart.js CDN 추가 -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- Lodash 라이브러리 추가 (버전은 필요에 따라 변경) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
         <!-- GSAP 라이브러리 -->

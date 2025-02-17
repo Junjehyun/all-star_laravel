@@ -81,7 +81,7 @@
         <!-- 저장 버튼 -->
         <div class="text-center mt-5 space-x-2">
             <button type="submit" class="px-2 py-1 underline underline-offset-4">regist</button>
-            <a href="/item_index" class="px-2 py-1 underline underline-offset-4">return</a>
+            <a href="{{ route('kanri.dashboard') }}" class="px-2 py-1 underline underline-offset-4">return</a>
         </div>
     </form>
 </div>

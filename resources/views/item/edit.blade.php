@@ -84,7 +84,7 @@
             </div>
             <div class="text-center mt-5 space-x-2">
                 <button type="submit" class="outline outline-gray-200 px-2 py-1 rounded">Save</button>
-                <a href="{{ route('item.index') }}" class="outline outline-rose-200 px-2 py-1 rounded">Return</a>
+                <a href="{{ route('kanri.items') }}" class="outline outline-rose-200 px-2 py-1 rounded">Return</a>
             </div>
         </form>
     </div>
