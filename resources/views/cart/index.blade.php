@@ -2,22 +2,22 @@
 @section('title', 'Cart')
 @section('content')
     <div class="container mx-auto mt-10">
-        <h1 class="text-center text-2xl font-bold mb-6">CART</h1>
+        <h1 class="text-center text-2xl font-bold mb-6">カート</h1>
         @if ($carts->isEmpty())
-            <p class="text-center text-xl text-gray-500 font-semibold mt-10">The cart is empty. Let's go shopping right now!</p>
+            <p class="text-center text-xl text-gray-500 font-semibold mt-10">カートが空いています。早速ショッピングしましょう！</p>
         @else
         <form action="{{ route('purchase.selected') }}" method="POST" id="checkout-form">
             @csrf
             <table class="w-full border-collapse">
                 <thead>
                     <tr>
-                        <th class="border-b py-2">SELECT</th>
-                        <th class="border-b py-2">ITEM NAME</th>
-                        <th class="border-b py-2">PRICE</th>
-                        <th class="border-b py-2">QUANTITY</th>
-                        <th class="border-b py-2">SIZE</th>
-                        <th class="border-b py-2">TOTAL PRICE</th>
-                        <th class="border-b py-2">ACTION</th>
+                        <th class="border-b py-2">選択</th>
+                        <th class="border-b py-2">商品名</th>
+                        <th class="border-b py-2">価格</th>
+                        <th class="border-b py-2">数量</th>
+                        <th class="border-b py-2">サイズ</th>
+                        <th class="border-b py-2">トータル価格</th>
+                        <th class="border-b py-2">アクション</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +37,7 @@
                                     formaction="{{ route('cart.update', $cart->id) }}"
                                     formmethod="POST"
                                     class="edit-button outline outline-gray-200 px-2 py-1 rounded ml-2">
-                                    EDIT
+                                    調節
                                 </button>
                             </td>
                             <td class="border-b py-2"><span class="text-rose-600">{{ $cart->selected_size }}</span></td>
@@ -48,7 +48,7 @@
                                     formaction="{{ route('cart.delete', $cart->id) }}"
                                     formmethod="POST"
                                     class="outline outline-gray-200 px-2 py-1 rounded">
-                                    DROP
+                                    削除
                                 </button>
                             </td>
                         </tr>
@@ -57,10 +57,10 @@
             </table>
             <!-- 총합 및 결제 버튼 -->
             <div class="mt-6 text-right">
-                <p class="text-xl font-bold total-price">TOTAL: 0円</p>
+                <p class="text-xl font-bold total-price">総計: 0円</p>
                     <input type="hidden" name="selected_item[]" id="selected_item_ids"> <!-- 선택된 상품들의 ID를 저장할 필드 -->
-                    <button type="submit" class="outline outline-gray-200 rounded-xl px-3 py-2 mt-5 inline-block">Proceed to Checkout</button>
-                <a href="/item_index" class="outline outline-gray-200 rounded-xl px-3 py-2 mt-5 inline-block">RETURN</a>
+                    <button type="submit" class="outline outline-gray-200 rounded-xl px-3 py-2 mt-5 inline-block">手続きへ</button>
+                <a href="/item_index" class="outline outline-gray-200 rounded-xl px-3 py-2 mt-5 inline-block">戻る</a>
             </div>
         </form>
         @endif

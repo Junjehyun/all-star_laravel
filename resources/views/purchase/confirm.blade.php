@@ -2,7 +2,7 @@
 @section('title', 'Purchase Confirm')
 @section('content')
     <div class="container w-3/5 mx-auto mt-10">
-        <h1 class="text-center text-2xl font-bold mb-6">PURCHASE CONFIRM</h1>
+        <h1 class="text-center text-2xl font-bold mb-6">購入確定</h1>
         <div class="bg-white rounded-lg p-8">
             <!-- 메인 레이아웃: 이미지 + 정보 컨테이너 -->
             <div class="flex gap-12 items-start">
@@ -14,19 +14,19 @@
                 <div class="w-2/3 space-y-6">
                     <!-- 제품 정보 -->
                     <div class="bg-white shadow-md rounded-lg p-6">
-                        <h2 class="text-xl font-semibold mb-4">ITEM INFORMATION</h2>
-                        <p class="mb-2">ITEM NAME: <strong>{{ $item->name }}</strong></p>
-                        <p class="mb-2">PRICE: <strong>{{ number_format($item->price) }} 円</strong></p>
-                        <p class="mb-2">SIZE: <strong>{{ $validated['size'] }}</strong></p>
-                        <p>QUANTITY: <strong>{{ $validated['quantity'] }}</strong></p>
+                        <h2 class="text-xl font-semibold mb-4">商品の情報</h2>
+                        <p class="mb-2">商品名: <strong>{{ $item->name }}</strong></p>
+                        <p class="mb-2">価格: <strong>{{ number_format($item->price) }} 円</strong></p>
+                        <p class="mb-2">サイズ: <strong>{{ $validated['size'] }}</strong></p>
+                        <p>数量: <strong>{{ $validated['quantity'] }}</strong></p>
                     </div>
                     <!-- 사용자 입력 정보 -->
                     <div class="bg-white shadow-md rounded-lg p-6">
-                        <h2 class="text-xl font-semibold mb-4">ORDERER INFO</h2>
-                        <p class="mb-2">NAME: <strong>{{ $validated['customer_name'] }}</strong></p>
-                        <p class="mb-2">E-MAIL: <strong>{{ $validated['customer_email'] }}</strong></p>
-                        <p class="mb-2">TELEPHONE: <strong>{{ $validated['customer_phone'] }}</strong></p>
-                        <p class="text-sm">ADDRESS: <strong>{{ $validated['zipcode'] }} {{ $validated['city'] }} {{ $validated['detail_address'] }}</strong></p>
+                        <h2 class="text-xl font-semibold mb-4">お客様の情報</h2>
+                        <p class="mb-2">氏名: <strong>{{ $validated['customer_name'] }}</strong></p>
+                        <p class="mb-2">メールアドレス: <strong>{{ $validated['customer_email'] }}</strong></p>
+                        <p class="mb-2">電話番号: <strong>{{ $validated['customer_phone'] }}</strong></p>
+                        <p class="text-sm">発送住所: <strong>{{ $validated['zipcode'] }} {{ $validated['city'] }} {{ $validated['detail_address'] }}</strong></p>
                     </div>
                     <!-- 버튼 -->
                     <div class="flex justify-end space-x-4">
@@ -43,7 +43,7 @@
                             <input type="hidden" name="city" value="{{ $validated['city'] }}">
                             <input type="hidden" name="detail_address" value="{{ $validated['detail_address'] }}">
                             <button type="submit" class="w-full outline outline-sky-200 px-2 py-1 text-sm rounded-xl hover:bg-sky-400 hover:text-white">
-                                BUY
+                                購入
                             </button>
                         </form>
                         <!-- 수정으로 돌아가기 버튼 -->
@@ -57,7 +57,7 @@
                             <input type="hidden" name="size" value="{{ $validated['size'] }}">
                             <input type="hidden" name="quantity" value="{{ $validated['quantity'] }}">
                             <button type="submit" class="w-full outline outline-rose-200 px-2 py-1 text-sm rounded-xl hover:bg-rose-400 hover:text-white">
-                                RETURN
+                                戻る
                             </button>
                         </form>
                     </div>

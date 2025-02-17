@@ -17,8 +17,8 @@
             <a href="javascript:void(0)" class="text-center text-sm text-red-500 font-semibold category-btn" data-category="sale">・ SALE({{ $categoryCounts['sale'] }})</a>
         <div class="flex justify-items-end my-4">
             <form action="{{ route('item.search') }}" method="GET" class="flex items-center space-x-1 ml-52">
-                <input type="text" name="keyword" placeholder="Search Item!" class="px-3 py-2 border border-gray-800 rounded-md w-64" value="{{ old('keyword', $keyword ?? '') }}">
-                <button type="submit" class="px-3 py-2 underline underline-offset-2 hover:bg-gray-700 hover:text-white rounded-xl">FIND</button>
+                <input type="text" name="keyword" placeholder="探しましょう!" class="px-3 py-2 border border-gray-800 rounded-md w-64" value="{{ old('keyword', $keyword ?? '') }}">
+                <button type="submit" class="px-3 py-2 underline underline-offset-2 hover:bg-gray-700 hover:text-white rounded-xl">検索</button>
             </form>
         </div>
     </div>
@@ -33,7 +33,7 @@
                     <h3 class="text-md font-semibold">{{ $item->name }}</h3>
                     <p class="text-gray-700 mt-1">{{ number_format($item->price) }}円</p>
                     <div class="mt-3 flex justify-between items-center">
-                        <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">DETAIL</a>
+                        <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">詳細</a>
                         <div class="flex justify-between space-x-3">
                             <div class="mt-1 mr-3" id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
@@ -46,9 +46,9 @@
                                 {{ $item->stock_m }},
                                 {{ $item->stock_l }},
                                 {{ $item->stock_xl }}
-                            )" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
+                            )" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">カート</button>
                             <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
-                                <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
+                                <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">今すぐ購入</button>
                             </a>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
     <!-- size selecte modal -->
     <div id="sizeModal" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-70">
         <div class="bg-white p-6 rounded-lg shadow-lg w-[20%]">
-            <h2 class="text-xl font-semibold flex justify-center mb-4">SELECT SIZE</h2>
+            <h2 class="text-xl font-semibold flex justify-center mb-4">サイズを選択</h2>
             <div class="flex justify-center space-x-3 mb-4">
                 <button id="btn-s" class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="S">S</button>
                 <button id="btn-m" class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="M">M</button>
@@ -78,8 +78,8 @@
                 <button id="btn-xl" class="size-option px-4 py-2 border border-gray-300 rounded-md" data-size="XL">XL</button>
             </div>
             <div class="flex justify-center space-x-3 mt-5">
-                <button id="closeModal" class="px-4 py-2 bg-gray-200 rounded-md">CANCEL</button>
-                <button id="confirmSize" class="px-4 py-2 bg-sky-500 text-white rounded-md">CONRIFM</button>
+                <button id="closeModal" class="px-4 py-2 bg-gray-200 rounded-md">キャンセル</button>
+                <button id="confirmSize" class="px-4 py-2 bg-sky-500 text-white rounded-md">選択</button>
             </div>
         </div>
     </div>
@@ -120,14 +120,14 @@
                                     <h3 class="text-md font-semibold">${item.name}</h3>
                                     <p class="text-gray-700 mt-1">${formattedPrice}円</p>
                                     <div class="mt-3 flex justify-between items-center">
-                                        <a href="/item/detail/${item.id}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">DETAIL</a>
+                                        <a href="/item/detail/${item.id}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">詳細</a>
                                         <div class="flex justify-between space-x-3">
                                             <div class="mt-1 mr-3" id="like-button-${item.id}" onclick="likeItem(${item.id})">
                                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                                 ${item.like}
                                             </div>
-                                            <button onclick="addToCart(${item.id})" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button>
-                                            <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
+                                            <button onclick="addToCart(${item.id})" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">カート</button>
+                                            <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">今すぐ購入</button>
                                         </div>
                                     </div>
                                 </div>

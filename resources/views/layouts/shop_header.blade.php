@@ -23,25 +23,25 @@
                     <form action="{{ url('/order_list') }}" method="GET" style="display: inline;">
                         @csrf
                         <button type="submit" class="text-md">
-                            ORDERS
+                            注文
                         </button>
                     </form>
                     <form action="{{ route('logout')}}" method="POST">
                         @csrf
                         <button type="submit" class="text-md">
-                            SIGN OUT
+                            サインアウト
                         </button>
                     </form>
                 @else
                     <div class="flex flex-row items-center justify-center space-x-4 mt-2">
                         <form action="/login" method="GET">
                             <button type="submit" class="text-xs">
-                                SIGN IN
+                                サインイン
                             </button>
                         </form>
                         <form action="/register" method="GET">
                             <button type="submit" class="text-xs">
-                                JOIN
+                                新規登録
                             </button>
                         </form>
                     </div>

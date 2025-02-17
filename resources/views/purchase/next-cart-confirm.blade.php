@@ -2,9 +2,8 @@
 @section('title', 'Cart Purchase Confirm')
 @section('content')
 <div class="container mx-auto mt-10">
-    <h1 class="text-center text-2xl font-bold mb-6">CONFIRM PURCHASE</h1>
-    <h2 class="text-center text-gray-700 text-xl font-bold mb-6"><span class="text-sky-700">{{ $userName }}</span> ORDER ITEMS</h2>
-
+    <h1 class="text-center text-2xl font-bold mb-6">購入確定</h1>
+    <h2 class="text-center text-gray-700 text-xl font-bold mb-6"><span class="text-sky-700">{{ $userName }}</span>様のご注文商品</h2>
     <div class="bg-white rounded-lg p-6 mx-auto max-w-3xl">
         <div class="space-y-6">
             @foreach ($carts as $cart)
@@ -23,35 +22,35 @@
         <!-- 총합 계산 -->
         <div class="mt-6 text-right">
             <p class="text-xl font-bold mb-10">
-                TOTAL: ₩{{ number_format($carts->sum(fn($cart) => $cart->item->price * $cart->quantity)) }}
+                総計:{{ number_format($carts->sum(fn($cart) => $cart->item->price * $cart->quantity)) }}円
             </p>
         </div>
 
         <!-- 사용자 정보 확인 -->
-        <h2 class="text-xl font-semibold mb-10 text-center">ORDERER INFO</h2>
+        <h2 class="text-xl font-semibold mb-10 text-center">お客様のご注文情報</h2>
         <div class="container space-y-4">
             <div>
-                <label for="customer_name" class="block text-gray-700 font-semibold text-xs mb-2">NAME</label>
+                <label for="customer_name" class="block text-gray-700 font-semibold text-xs mb-2">氏名</label>
                 <p>{{ $validated['customer_name'] }}</p>
             </div>
             <div>
-                <label for="customer_email" class="block text-gray-700 font-semibold text-xs mb-2">E-MAIL</label>
+                <label for="customer_email" class="block text-gray-700 font-semibold text-xs mb-2">メールアドレス</label>
                 <p>{{ $validated['customer_email'] }}</p>
             </div>
             <div>
-                <label for="customer_phone" class="block text-gray-700 font-semibold text-xs mb-2">TELEPHONE</label>
+                <label for="customer_phone" class="block text-gray-700 font-semibold text-xs mb-2">電話番号</label>
                 <p>{{ $validated['customer_phone'] }}</p>
             </div>
             <div>
-                <label for="zipcode" class="block text-gray-700 font-semibold text-xs mb-2">POST NO.</label>
+                <label for="zipcode" class="block text-gray-700 font-semibold text-xs mb-2">郵便番号</label>
                 <p>{{ $validated['zipcode'] }}</p>
             </div>
             <div>
-                <label for="city" class="block text-gray-700 font-semibold text-xs mb-2">STATE/CITY</label>
+                <label for="city" class="block text-gray-700 font-semibold text-xs mb-2">都道府県</label>
                 <p>{{ $validated['city'] }}</p>
             </div>
             <div>
-                <label for="detail_address" class="block text-gray-700 font-semibold text-xs mb-2">DETAIL ADDRESS</label>
+                <label for="detail_address" class="block text-gray-700 font-semibold text-xs mb-2">詳細住所</label>
                 <p>{{ $validated['detail_address'] }}</p>
             </div>
         </div>
@@ -71,7 +70,7 @@
                     <input type="hidden" name="city" value="{{ $validated['city'] }}">
                     <input type="hidden" name="detail_address" value="{{ $validated['detail_address'] }}">
                     <button type="submit" class="w-full outline outline-sky-200 px-2 py-1 text-sm rounded-xl hover:bg-sky-400 hover:text-white">
-                        BUY NOW
+                        購入
                     </button>
             </form>
             <!-- 수정으로 돌아가기 버튼 -->
@@ -88,7 +87,7 @@
                 <input type="hidden" name="city" value="{{ $validated['city'] }}">
                 <input type="hidden" name="detail_address" value="{{ $validated['detail_address'] }}">
                 <button type="submit" class="w-full outline outline-rose-200 px-2 py-1 text-sm rounded-xl hover:bg-rose-400 hover:text-white">
-                    RETURN
+                    戻る
                 </button>
             </form>
         </div>

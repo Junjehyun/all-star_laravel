@@ -7,7 +7,7 @@
         <img src="{{ $item->image ? asset('storage/' . $item->image) : asset('images/default-image.png') }}" alt="{{ $item->name }}" class="w-96 h-96 object-cover mb-6 border rounded-lg shadow-lg transition-all duration-300 hover:scale-130">
     </div>
     <div class="text-center space-y-4 mt-5">
-        <p class="text-gray-700 text-2xl">PRICE: <span class="font-bold">{{ number_format($item->price) }}円</span></p>
+        <p class="text-gray-700 text-2xl">価格: <span class="font-bold">{{ number_format($item->price) }}円</span></p>
         {{-- <p class="text-gray-700">SIZE: <span class="font-bold">
             @if(is_array($item->size))
                 {{ implode(', ', $item->size) }}
@@ -19,7 +19,7 @@
             <table class="table-auto border-collapse border border-gray-300 mx-auto mt-5">
                 <thead>
                     <tr>
-                        <th class="bg-zinc-100">SIZE</th>
+                        <th class="bg-zinc-100">サイズ</th>
                         <th class="px-4 py-2 border border-gray-300">S</th>
                         <th class="px-4 py-2 border border-gray-300">M</th>
                         <th class="px-4 py-2 border border-gray-300">L</th>
@@ -68,16 +68,16 @@
             </span>
             <span class="ml-2 text-sm text-gray-600">{{ round($item->averageRating(), 1) }}</span>
         @else
-            <span class="text-sm text-gray-600">No reviews yet!</span>
+            <span class="text-sm text-gray-600">まだコメントがありません。今すぐ作成しましょう！</span>
         @endif
     </div>
 
     <div class="flex justify-center mt-8 space-x-3">
         <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
-            <button class="px-4 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">BUY</button>
+            <button class="px-4 py-2 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">購入</button>
         </a>
-        <a href="{{ route(name: 'item.index') }}" class="px-4 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">RETURN</a>
-        @auth
+        <a href="{{ route(name: 'item.index') }}" class="px-4 py-2 outline outline-gray-100 hover:bg-gray-200 hover:text-white rounded-xl">戻る</a>
+        {{-- @auth
             @if(Auth::user()->role === 'admin')
                 <a href="{{ route('item.edit', $item->id) }}">
                     <button class="outline outline-gray-100 px-1 py-2 rounded-xl">EDIT</button>
@@ -87,7 +87,7 @@
                     <button class="outline outline-gray-100 px-1 py-2 rounded-xl">DELETE</button>
                 </form>
             @endif
-        @endauth
+        @endauth --}}
     </div>
     <div class="flex justify-center mt-10">
         <button id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
@@ -115,16 +115,16 @@
                 </div>
                 <!-- 작성자 -->
                 <div class="flex flex-col">
-                    <label for="author" class="py-2 px-2">AUTHOR</label>
+                    <label for="author" class="py-2 px-2">作成者</label>
                     <input type="text" name="author" placeholder="AUTHOR" class="border border-gray-200 rounded-xl px-3 py-2 w-32" value="{{ old('author', Auth::user()->name) }}" required>
                 </div>
                 <!-- 리뷰 내용 -->
                 <div class="flex flex-col">
-                    <label for="content" class="py-2 px-2">REVIEW</label>
-                    <input type="text" name="content" placeholder="Please review it." class="border border-gray-200 rounded-xl px-3 py-2 w-96" required>
+                    <label for="content" class="py-2 px-2">レビュー</label>
+                    <input type="text" name="content" placeholder="レビューを作成しましょう。" class="border border-gray-200 rounded-xl px-3 py-2 w-96" required>
                 </div>
                 <div class="flex flex-col mt-10">
-                    <button type="submit" class="outline outline-gray-200 rounded-xl px-2 py-1">SEND</button>
+                    <button type="submit" class="outline outline-gray-200 rounded-xl px-2 py-1">作成</button>
                 </div>
             </div>
         </form>

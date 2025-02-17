@@ -2,8 +2,8 @@
 @section('title', 'Cart Purchase Confirm')
 @section('content')
     <div class="container mx-auto mt-10">
-        <h1 class="text-center text-2xl font-bold mb-6">CONFIRM PURCHASE</h1>
-        <h2 class="text-center text-gray-700 text-xl font-bold mb-6"><span class="text-sky-700">{{ $userName }}</span> ORDER ITEMS</h2>
+        <h1 class="text-center text-2xl font-bold mb-6">購入手続き</h1>
+        <h2 class="text-center text-gray-700 text-xl font-bold mb-6"><span class="text-sky-700">{{ $userName }}</span>様のご注文商品</h2>
         <div class="bg-white rounded-lg p-6 mx-auto max-w-3xl">
             <form action="{{ route('purchase.next-cart-confirm') }}" method="POST">
                 @csrf
@@ -20,46 +20,46 @@
                 </div>
                 <div class="mt-6 text-right">
                 <p class="text-xl font-bold mb-10">
-                    TOTAL: ₩{{ number_format($carts->sum(fn($cart) => $cart->item->price * $cart->quantity)) }}
+                    総計:{{ number_format($carts->sum(fn($cart) => $cart->item->price * $cart->quantity)) }}円
                 </p>
-                    <h2 class="text-xl font-semibold mb-10 text-center">ORDERER INFO</h2>
+                    <h2 class="text-xl font-semibold mb-10 text-center">お客様の情報入力</h2>
                     <div class="container space-y-4">
                         <div class="flex flex-row space-x-3">
                             <div class="flex-1">
-                                <label for="customer_name" class="block text-gray-700 text-xs text-left font-semibold mb-2">NAME</label>
-                                <input type="text" name="customer_name" id="customer_name" value="{{ session ('customer_name', $queryData['customer_name'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="ex) Suzuki Ichiro" required>
+                                <label for="customer_name" class="block text-gray-700 text-xs text-left font-semibold mb-2">氏名</label>
+                                <input type="text" name="customer_name" id="customer_name" value="{{ session ('customer_name', $queryData['customer_name'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="例) 鈴木一郎" required>
                             </div>
                             <div class="flex-1">
-                                <label for="customer_email" class="block text-gray-700 text-xs text-left font-semibold mb-2">E-MAIL</label>
-                                <input type="email" name="customer_email" id="customer_email" value="{{ session ('customer_email', $queryData['customer_email'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="ex) example@example.com" required>
+                                <label for="customer_email" class="block text-gray-700 text-xs text-left font-semibold mb-2">メールアドレス</label>
+                                <input type="email" name="customer_email" id="customer_email" value="{{ session ('customer_email', $queryData['customer_email'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="例) example@example.com" required>
                             </div>
                         </div>
                         <div>
-                            <label for="customer_phone" class="block text-gray-700 text-xs text-left font-semibold mb-2">TELEPHONE</label>
+                            <label for="customer_phone" class="block text-gray-700 text-xs text-left font-semibold mb-2">電話番号</label>
                             <input type="tel" name="customer_phone" id="customer_phone" value="{{ session ('customer_phone', $queryData['customer_phone'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="ex)090-1234-5678" required>
                         </div>
                         <div>
-                            <label for="zipcode" class="block text-gray-700 font-semibold text-xs text-left mb-2">POST NO.</label>
+                            <label for="zipcode" class="block text-gray-700 font-semibold text-xs text-left mb-2">郵便番号</label>
                             <!-- 좀 더 세분화 해서 입력 받을 수 있도록 수정 -->
                             <div class="flex space-x-2">
-                                <input type="text" name="zipcode" id="zipcode" value="{{ session ('zipcode', $queryData['zipcode'] ?? '' ) }}" class="w-4/5 border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="ex)Input without 1234567(-)" required>
-                                <button type="button" id="zipcodeSearch" class="w-1/5 outline outline-sky-200 text-sky-500 text-sm py-1 rounded-lg">SEARCH</button>
+                                <input type="text" name="zipcode" id="zipcode" value="{{ session ('zipcode', $queryData['zipcode'] ?? '' ) }}" class="w-4/5 border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="例)ハイフン無しで1234567(-)" required>
+                                <button type="button" id="zipcodeSearch" class="w-1/5 outline outline-sky-200 text-sky-500 text-sm py-1 rounded-lg">入力</button>
                             </div>
                         </div>
                         <div class="mt-4">
-                            <label for="city" class="block text-gray-700 font-semibold text-xs text-left mb-2">STATE/CITY</label>
-                            <input type="text" name="city" id="city" value="{{ session ('city', $queryData['city'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="automatically reflected." readonly>
+                            <label for="city" class="block text-gray-700 font-semibold text-xs text-left mb-2">都道府県</label>
+                            <input type="text" name="city" id="city" value="{{ session ('city', $queryData['city'] ?? '') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="自動的に反映されます。" readonly>
                         </div>
                         <div class="mt-4">
-                            <label for="detail_address" class="block text-gray-700 font-semibold text-xs text-left mb-2">DETAIL ADDRESS</label>
-                            <textarea name="detail_address" id="detail_address" ls="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="Please enter your address, building name, etc" required>{{ session('detail_address', $queryData['detail_address'] ?? '') }}</textarea>
+                            <label for="detail_address" class="block text-gray-700 font-semibold text-xs text-left mb-2">詳細住所</label>
+                            <textarea name="detail_address" id="detail_address" ls="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs" placeholder="住所、建物名などを入力をお願いします。" required>{{ session('detail_address', $queryData['detail_address'] ?? '') }}</textarea>
                         </div>
                     </div>
                     @foreach ($carts as $cart)
                         <input type="hidden" name="item_ids[]" value="{{ $cart->item->id }}">
                         <input type="hidden" name="quantities[]" value="{{ $cart->quantity }}">
                     @endforeach
-                    <button type="submit" class="outline outline-sky-200 rounded-xl px-3 py-2 mt-5 inline-block">NEXT</button>
+                    <button type="submit" class="outline outline-sky-200 rounded-xl px-2 py-1 mt-5 inline-block">確定</button>
                 </div>
             </form>
         </div>
