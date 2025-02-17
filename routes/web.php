@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order_list', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order/{id}/tracking/', [OrderController::class, 'orderTracking'])->name('order.tracking');
     Route::post('/order/{id}/update-shipping-status', [OrderController::class, 'updateShippingStatus'])->name('update.shipping.status');
+    Route::get('/order/complete/{id}', [OrderController::class, 'completePayment']);
 
     /**
      * PurchaseController

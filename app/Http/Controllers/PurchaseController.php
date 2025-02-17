@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentConfirmationMail;
 use App\Models\Cart;
 use App\Models\Item;
 use App\Models\Order;
@@ -11,6 +12,7 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * 구매 관련 컨트롤러
@@ -148,6 +150,9 @@ class PurchaseController extends Controller
 
         // 결제 성공 후 주문 상태 업데이트
         $order->update(['status' => 'complete']);
+
+        // 결제완료 이메일 발송
+        Mail::to($order->customer_email)->send(new PaymentConfirmationMail($order));
 
         // Stripe 설정
         Stripe::setApiKey(config('services.stripe.secret'));
@@ -391,6 +396,7 @@ class PurchaseController extends Controller
                 ]);
             }
 
+
             // Stripe 설정
             Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -454,6 +460,7 @@ class PurchaseController extends Controller
 
                 // 주문 상태를 complete로 업데이트
                 $order->update(['status' => 'complete']);
+                Mail::to($order->customer_email)->send(new PaymentConfirmationMail($order));
             }
 
             return view('purchase.thankyou-multiple', compact('orders'));

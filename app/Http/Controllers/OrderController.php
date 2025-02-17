@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Mail\PaymentConfirmationMail;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -58,5 +59,31 @@ class OrderController extends Controller
 
         // route경로의문
         return redirect()->route('order.tracking', ['id' => $order->id])->with('success', 'The shipping status has been updated.');
+    }
+
+    /**
+     * 결제 완료 후 이메일 발송
+     *
+     */
+    public function completePayment($id) {
+
+        // 주문 조회
+        $order = Order::findOrFail($id);
+
+        // 주문 상태를 'completed'로 업데이트
+        $order->status = 'completed';
+        $order->save();
+
+        // 결제완료 이메일 발송
+        Mail::to($order->customer_email)->send(new PaymentConfirmationMail($order));
+
+        if (Mail::failures()) {
+            dd('Mail failed to send');
+        } else {
+            dd('Mail sent successfully');
+        }
+
+        // 이메일 발송 후 응답
+        return response()->json(['message' => 'Payment confirmed and email sent.']);
     }
 }
