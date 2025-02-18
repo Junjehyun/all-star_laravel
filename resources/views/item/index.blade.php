@@ -57,9 +57,9 @@
             @empty
             <div class="col-span-4 text-center text-xl mt-10">
                 @if (!empty($keyword))
-                    <p class="text-gray-700">There are no search results.</p>
+                    <p class="text-gray-700">検索結果がありません。</p>
                 @else
-                    <p class="text-gray-700">There are no registered items.</p>
+                    <p class="text-gray-700">登録された商品がございません。</p>
                 @endif
             </div>
         @endforelse

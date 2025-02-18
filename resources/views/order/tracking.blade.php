@@ -30,11 +30,11 @@
             </span>
         </p>
     </div>
-    <div class="w-[60%] flex justify-between items-stretch mt-20 mx-auto space-x-5">
-        <div class="w-1/2 border rounded-xl py-5">
+    <div class="w-full flex justify-center mt-20 mx-auto">
+        <div class="py-5">
             <!-- 상품 정보 테이블 -->
-            <h2 class="text-2xl font-semibold text-center mt-2 mb-10">注文詳細</h2>
-            <table class="flex justify-center">
+            <h2 class="text-2xl font-semibold text-center mt-2 mb-5">注文詳細</h2>
+            <table class="border flex justify-center">
                 <tbody>
                     <tr class="border-b">
                         <td class="px-4 py-2 font-semibold text-left">注文ID</td>
@@ -60,10 +60,27 @@
                         <td class="px-4 py-2 font-semibold text-left">総計</td>
                         <td>¥{{ number_format($order->amount) }}</td>
                     </tr>
+                    <!-- -->
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">氏名</td>
+                        <td>{{ $order->customer_name }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">電話番号</td>
+                        <td>{{ $order->customer_phone }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">メールアドレス</td>
+                        <td>{{ $order->customer_email }}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="px-4 py-2 font-semibold text-left">発送住所</td>
+                        <td>{{ $order->customer_address }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-        <div class="w-1/2 border rounded-xl py-5">
+        {{-- <div class="w-[50%] py-5">
             <!-- 주문고객 정보 테이블 -->
             <h2 class="text-2xl font-semibold text-center mt-2 mb-10">お客様の情報</h2>
             <table class="flex justify-center">
@@ -86,7 +103,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> --}}
     </div>
     <div class="w-full flex justify-center mt-20 mx-auto">
         @auth

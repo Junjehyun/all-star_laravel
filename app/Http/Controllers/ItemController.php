@@ -237,6 +237,11 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category' => 'required|string|in:nike,adidas,newBalance,others,sale',
+            // 재고
+            'stock_s' => 'nullable|string',
+            'stock_m' => 'nullable|string',
+            'stock_l' => 'nullable|string',
+            'stock_xl' => 'nullable|string',
         ]);
 
         try {
@@ -251,7 +256,6 @@ class ItemController extends Controller
             //$sizeOrder = ['S','M','L','XL'];
             //$sortedSizes = array_intersect($sizeOrder, $validated['size'] ?? []);
 
-
             // item update
             $item->update([
                 'name' => $validated['name'],
@@ -259,10 +263,15 @@ class ItemController extends Controller
                 'size' => $validated['size'],
                 'description' => $validated['description'],
                 'category' => $validated['category'],
+                'stock_s' => $validated['stock_s'],
+                'stock_m' => $validated['stock_m'],
+                'stock_l' => $validated['stock_l'],
+                'stock_xl' => $validated['stock_xl'],
             ]);
 
             return redirect()->route('item.index')->with('success', '修正を完了しました。');
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->withErrors(['error' => '商品更新中にエラーが発生しました。']);
         }
     }
