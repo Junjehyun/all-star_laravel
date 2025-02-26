@@ -38,7 +38,6 @@ Route::middleware(['auth'])->group(function () {
      * 상품 관련 라우트
      *
      */
-    Route::get('/item_index', [ItemController::class, 'itemIndex'])->name('item.index');
     Route::get('/item_regIndex', [ItemController::class, 'itemRegIndex'])->name('item.regIndex');
     Route::post('/item_reg',action: [ItemController::class, 'itemReg'])->name('item.reg');
     Route::get('/item/detail/{id}',[ItemController::class, 'itemDetail'])->name('item.detail');
@@ -128,6 +127,11 @@ Route::middleware(['auth'])->group(function () {
  */
 Route::get('/main_index', [MainController::class, 'mainIndex']);
 
+/**
+ * 쇼핑몰 메인 페이지 라우트
+ *
+ */
+Route::get('/item_index', [ItemController::class, 'itemIndex'])->name('item.index');
 
 /**
  * NoticeController

@@ -132,15 +132,17 @@
             document.querySelector('.page-transition').classList.add('opacity-100');
         });
 
+        const isLoggedIn = @json(Auth::check()); // 로그인 여부 확인
         // 오른쪽 마우스 클릭 금지 (관리자 제외)
-        const userRole = @json(Auth::user()->role); // Admin 또는 다른 역할을 확인
+        const userRole = @json(Auth::user()?->role); // Admin 또는 다른 역할을 확인
 
-        // 만약 role이 Admin이면 오른쪽 클릭 허용
-        if (userRole !== 'admin') {
+
+        // 만약 비로그인 상태거나, role이 Admin이 아니라면 오른쪽 클릭 금지
+        if (!isLoggedIn || userRole !== 'admin') {
             // 일반 user라면 오른쪽 마우스 버튼 클릭 방지
             document.addEventListener('contextmenu', function (e) {
                 e.preventDefault(); // 기본 컨텍스트 메뉴 차단
-                alert("Right click is desabled for non-admin users!");
+                alert("右クリックは禁止です！");
             });
         }
     </script>

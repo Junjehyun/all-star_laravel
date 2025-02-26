@@ -271,7 +271,7 @@ class ItemController extends Controller
 
             return redirect()->route('item.index')->with('success', '修正を完了しました。');
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            //dd($e->getMessage());
             return redirect()->back()->withErrors(['error' => '商品更新中にエラーが発生しました。']);
         }
     }

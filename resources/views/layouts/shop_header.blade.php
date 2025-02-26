@@ -35,12 +35,12 @@
                 @else
                     <div class="flex flex-row items-center justify-center space-x-4 mt-2">
                         <form action="/login" method="GET">
-                            <button type="submit" class="text-xs">
+                            <button type="submit" class="text-md">
                                 サインイン
                             </button>
                         </form>
                         <form action="/register" method="GET">
-                            <button type="submit" class="text-xs">
+                            <button type="submit" class="text-md">
                                 新規登録
                             </button>
                         </form>
@@ -58,21 +58,23 @@
     </div>
 </header>
 <script>
-    function updateCartCount() {
-        $.ajax({
-            url: '/cart_count',
-            method: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                $('#cart-count').text(data.count);
-            },
-            error: function () {
-                alert('?? An error has occurred. Please try again.');
-            }
-        });
-    }
+    @auth
+        function updateCartCount() {
+            $.ajax({
+                url: '/cart_count',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#cart-count').text(data.count);
+                },
+                error: function () {
+                    alert('?? An error has occurred. Please try again.');
+                }
+            });
+        }
 
-    $(document).ready(function () {
-            updateCartCount();
-    });
+        $(document).ready(function () {
+                updateCartCount();
+        });
+    @endauth
 </script>
