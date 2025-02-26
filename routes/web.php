@@ -32,22 +32,14 @@ Route::middleware([
     })->name('dashboard');
 });
 Route::middleware(['auth'])->group(function () {
-    /**
-     * ItemController
-     *
-     * 상품 관련 라우트
-     *
-     */
+    // ItemController
     Route::get('/item_regIndex', [ItemController::class, 'itemRegIndex'])->name('item.regIndex');
     Route::post('/item_reg',action: [ItemController::class, 'itemReg'])->name('item.reg');
-    Route::get('/item/detail/{id}',[ItemController::class, 'itemDetail'])->name('item.detail');
     Route::get('/item_nike', [ItemController::class, 'itemNike'])->name('item.nike');
     Route::get('/item_adidas', [ItemController::class, 'itemAdidas'])->name('item.adidas');
     Route::get('/item_newBalance', [ItemController::class, 'itemNewBalance'])->name('item.newBalance');
     Route::get('/item_others', [ItemController::class, 'itemOthers'])->name('item.others');
     Route::get('/item_sale', [ItemController::class, 'itemSale'])->name('item.sale');
-    Route::get('/item/ajax_category/{category}', [ItemController::class, 'getItemsByAjaxCategory'])->name('item.ajax_category');
-    Route::get('/item_search', [ItemController::class, 'itemSearch'])->name('item.search');
     Route::get('/item_edit/{id}', [ItemController::class, 'itemEdit'])->name('item.edit');
     Route::post('/item_update/{id}', [ItemController::class, 'itemUpdate'])->name('item.update');
     Route::post('/item_delete/{id}',[ItemController::class, 'itemDelete'])->name('item.delete');
@@ -55,33 +47,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/item/review/{id}', [ItemController::class, 'review'])->name('item.review');
     Route::post('/item/{id}/review/store', [ItemController::class, 'storeReview'])->name('review.store');
 
-
-    /**
-     * PaymenController
-     *
-     * 결제 관련 라우트
-     *
-     */
+    // PaymentController
     Route::get('/checkout/{id}', [PaymentController::class, 'checkout'])->name('checkout');
     Route::get('/payment', [PaymentController::class, 'processPayment'])->name('process.payment');
 
-    /**
-     * OrderController
-     *
-     * 주문 내역 관련 라우트트
-     *
-     */
+    // OrderController
     Route::get('/order_list', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order/{id}/tracking/', [OrderController::class, 'orderTracking'])->name('order.tracking');
     Route::post('/order/{id}/update-shipping-status', [OrderController::class, 'updateShippingStatus'])->name('update.shipping.status');
     Route::get('/order/complete/{id}', [OrderController::class, 'completePayment']);
 
-    /**
-     * PurchaseController
-     *
-     * 구매 관련 라우트
-     *
-     */
+    // PurchaseController
     Route::get('/purchase_index/{item_id?}', [PurchaseController::class, 'purchase'])->name('purchase.index');
     Route::post('/purchase/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
     Route::post('/purchase/checkout', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
@@ -91,54 +67,35 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/purchase/cart-checkout', [PurchaseController::class, 'cartCheckout'])->name('purchase.cartCheckout');
     Route::get('/purchase/thankyou-multiple', [PurchaseController::class, 'thankyouMultiple'])->name('purchase.thankyouMultiple');
 
-    /**
-     * CartController
-     *
-     * 장바구니 관련 라우트
-     *
-     */
+    // CartController
     Route::get('/cart_index', [CartController::class, 'cartIndex'])->name('cart.index');
     Route::post('/cart/add',[CartController::class, 'cartAdd'])->name('cart.add');
     Route::post('/cart/delete/{id}',[CartController::class, 'cartDelete'])->name('cart.delete');
     Route::post('/cart/update/{id}',[CartController::class, 'cartUpdate'])->name('cart.update');
     Route::get('/cart_count', [CartController::class, 'cartCount'])->name('cart.count');
 
-    /**
-     * UserController
-     *
-     * 유저관련 컨트롤러
-     */
+    // UserController
     Route::get('/mypage', [UserController::class, 'myPage'])->name('user.mypage')->middleware('auth');
 
-    /**
-     * AdminController
-     *
-     */
+    // KanriController
     Route::get('/kanri/dashboard/', [KanriController::class, 'dashboard'])->name('kanri.dashboard');
     Route::get('/kanri/items', [KanriController::class, 'kanriItems'])->name('kanri.items');
     Route::get('/kanri/users', [KanriController::class, 'kanriUsers'])->name('kanri.users');
 });
 
-/**
- * MainController
- *
- * localhost:8000/index
- *
- */
+// 인증이 필요없는 기능 모음
 Route::get('/main_index', [MainController::class, 'mainIndex']);
-
-/**
- * 쇼핑몰 메인 페이지 라우트
- *
- */
 Route::get('/item_index', [ItemController::class, 'itemIndex'])->name('item.index');
+Route::get('/item_search', [ItemController::class, 'itemSearch'])->name('item.search');
+Route::get('/item/ajax_category/{category}', [ItemController::class, 'getItemsByAjaxCategory'])->name('item.ajax_category');
+Route::get('/item/detail/{id}',[ItemController::class, 'itemDetail'])->name('item.detail');
 
 /**
- * NoticeController
- *
- * 공지사항 관련 라우트
+ * FreeBoard Area
  *
  */
+
+// NoticeController
 Route::get('/notice_index', [NoticeController::class, 'noticeIndex'])->name('notice.index');
 Route::get('/notice_create', [NoticeController::class, 'noticeCreate'])->name('notice.create');
 Route::post('/notice_store', [NoticeController::class, 'noticeStore'])->name('notice.store');
@@ -148,12 +105,7 @@ Route::post('/notice_update/{id}', [NoticeController::class, 'noticeUpdate'])->n
 Route::post('/notice_delete/{id}',[NoticeController::class, 'noticeDelete'])->name('notice.delete');
 Route::post('/notice/like/{id}', [NoticeController::class, 'noticeLike'])->name('notice.like');
 
-/**
- * CommentController
- *
- * 댓글 관련 라우트
- *
- */
+// CommentController
 Route::post('/comment/store',[CommentController::class, 'commentStore'])->name('comment.store');
 Route::post('/comment/delete/{id}', [CommentController::class, 'commentDelete'])->name('comment.delete');
 Route::post('/comment/update/{id}', [CommentController::class, 'commentUpdate'])->name('comment.update');

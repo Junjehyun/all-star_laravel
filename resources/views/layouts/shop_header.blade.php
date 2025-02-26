@@ -33,7 +33,7 @@
                         </button>
                     </form>
                 @else
-                    <div class="flex flex-row items-center justify-center space-x-4 mt-2">
+                    <div class="flex flex-row items-center justify-center space-x-4">
                         <form action="/login" method="GET">
                             <button type="submit" class="text-md">
                                 サインイン

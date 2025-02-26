@@ -1,13 +1,6 @@
 @extends('layouts.shop_common')
 @section('title', 'Shop Index')
 @section('content')
-    {{-- <div class="flex justify-end mt-4 space-x-5">
-        @auth
-            @if(Auth::user()->role === 'admin')
-                <a href="{{ route('item.regIndex') }}" class="underline underline-offset-4 rounded-xl text-sm px-2">Item Regist</a>
-            @endif
-        @endauth
-    </div> --}}
     <div class="flex flex-row items-center justify-center space-x-2 mt-5">
             <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="ALL">・ ALL({{ $categoryCounts['ALL'] }})</a>
             <a href="javascript:void(0)" class="text-center text-sm py-1 px-1 rounded-xl category-btn" data-category="nike">・ Nike({{ $categoryCounts['nike'] }})</a>
@@ -18,7 +11,7 @@
         <div class="flex justify-items-end my-4">
             <form action="{{ route('item.search') }}" method="GET" class="flex items-center space-x-1 ml-52">
                 <input type="text" name="keyword" placeholder="探しましょう!" class="px-3 py-2 border border-gray-800 rounded-md w-64" value="{{ old('keyword', $keyword ?? '') }}">
-                <button type="submit" class="px-3 py-2 underline underline-offset-2 hover:bg-gray-700 hover:text-white rounded-xl">検索</button>
+                <button type="submit" class="px-3 py-2 bg-gray-800 text-white rounded-lg">検索</button>
             </form>
         </div>
     </div>
@@ -27,28 +20,29 @@
         @forelse ($items as $item)
             <div class="overflow-hidden transition-transform hover:scale-105 hover:shadow-lg">
                 <div class="flex justify-center">
-                    <img src="{{ $item->image ? asset('storage/' . $item->image) : 'images/default-image.png' }}" alt="{{ $item->name }}" class="h-56 w-56 object-cover">
+                    <a href="/item/detail/{{ $item->id }}">
+                        <img src="{{ $item->image ? asset('storage/' . $item->image) : 'images/default-image.png' }}" alt="{{ $item->name }}" class="h-56 w-56 object-cover">
+                    </a>
                 </div>
                 <div class="p-4">
-                    <h3 class="text-md font-semibold">{{ $item->name }}</h3>
-                    <p class="text-gray-700 mt-1">{{ number_format($item->price) }}円</p>
-                    <div class="mt-3 flex justify-between items-center">
-                        <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">詳細</a>
-                        <div class="flex justify-between space-x-3">
+                    <h3 class="text-md font-semibold text-center">{{ $item->name }}</h3>
+                    <p class="text-gray-700 mt-1 text-center">{{ number_format($item->price) }}円</p>
+                    <div class="mt-5 flex justify-center items-center">
+                        {{-- <a href="/item/detail/{{ $item->id }}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">詳細</a> --}}
+                        <div class="flex justify-between space-x-2">
                             <div class="mt-1 mr-3" id="like-button-{{ $item->id }}" onclick="likeItem({{ $item->id }})">
                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                 {{ $item->like }}
                             </div>
-                            {{-- <button onclick="addToCart('{{ $item->id }}')" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">CART</button> --}}
                             <button onclick="openModal(
                                 '{{ $item->id }}',
                                 {{ $item->stock_s }},
                                 {{ $item->stock_m }},
                                 {{ $item->stock_l }},
                                 {{ $item->stock_xl }}
-                            )" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">カート</button>
+                            )" class="px-2 py-1 bg-gray-800 text-white rounded-lg">カート</button>
                             <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
-                                <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">今すぐ購入</button>
+                                <button class="px-2 py-1 bg-gray-800 text-white rounded-lg">今すぐ購入</button>
                             </a>
                         </div>
                     </div>
@@ -111,7 +105,6 @@
                     items.forEach(item => {
                         const formattedPrice = Number(item.price).toLocaleString();
                         const itemHtml = `
-
                             <div class="overflow-hidden transition-transform hover:scale-105 hover:shadow-lg">
                                 <div class="flex justify-center">
                                     <img src="${item.image ? `/storage/${item.image}` : 'images/default-image.png'}" alt="${item.name}" class="h-56 w-56 object-cover">
@@ -192,14 +185,14 @@
                 success: function(response) {
                     if (response.success) {
                         updateCartCount();
-                        alert('The item has been added to your cart.');
+                        alert('アイテムがカートに追加されました。');
                         closeModal();
                     } else {
-                        alert('Failed to add. Please try again.');
+                        alert('追加に失敗しました。再試行してください。');
                     }
                 },
                 error: function(xhr) {
-                    alert('An error has occurred. Please try again.');
+                    alert('エラーが発生しました。再試行してください。');
                 }
             });
         }
