@@ -113,7 +113,6 @@
                                     <h3 class="text-md font-semibold">${item.name}</h3>
                                     <p class="text-gray-700 mt-1">${formattedPrice}円</p>
                                     <div class="mt-3 flex justify-between items-center">
-                                        <a href="/item/detail/${item.id}" class="px-2 py-1 outline outline-lime-100 hover:bg-lime-200 hover:text-white rounded-xl">詳細</a>
                                         <div class="flex justify-between space-x-3">
                                             <div class="mt-1 mr-3" id="like-button-${item.id}" onclick="likeItem(${item.id})">
                                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
