@@ -110,16 +110,24 @@
                                     <img src="${item.image ? `/storage/${item.image}` : 'images/default-image.png'}" alt="${item.name}" class="h-56 w-56 object-cover">
                                 </div>
                                 <div class="p-4">
-                                    <h3 class="text-md font-semibold">${item.name}</h3>
-                                    <p class="text-gray-700 mt-1">${formattedPrice}円</p>
-                                    <div class="mt-3 flex justify-between items-center">
-                                        <div class="flex justify-between space-x-3">
+                                    <h3 class="text-md font-semibold text-center">${item.name}</h3>
+                                    <p class="text-gray-700 mt-1 text-center">${formattedPrice}円</p>
+                                    <div class="mt-5 flex justify-center items-center">
+                                        <div class="flex justify-between space-x-2">
                                             <div class="mt-1 mr-3" id="like-button-${item.id}" onclick="likeItem(${item.id})">
                                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                                 ${item.like}
                                             </div>
-                                            <button onclick="addToCart(${item.id})" class="px-3 py-1 outline outline-amber-100 hover:bg-amber-200 hover:text-white rounded-xl">カート</button>
-                                            <button class="px-3 py-1 outline outline-red-100 hover:bg-red-200 hover:text-white rounded-xl">今すぐ購入</button>
+                                            <button onclick="openModal(
+                                                '{{ $item->id }}',
+                                                {{ $item->stock_s }},
+                                                {{ $item->stock_m }},
+                                                {{ $item->stock_l }},
+                                                {{ $item->stock_xl }}
+                                            )" class="px-2 py-1 bg-gray-800 text-white rounded-lg">カート</button>
+                                            <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
+                                                <button class="px-2 py-1 bg-gray-800 text-white rounded-lg">今すぐ購入</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
