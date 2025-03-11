@@ -34,16 +34,21 @@
                                 <i class="fa-sharp fa-solid fa-heart fa-beat" style="color: red;"></i>
                                 {{ $item->like }}
                             </div>
-                            <button onclick="openModal(
-                                '{{ $item->id }}',
-                                {{ $item->stock_s }},
-                                {{ $item->stock_m }},
-                                {{ $item->stock_l }},
-                                {{ $item->stock_xl }}
-                            )" class="px-2 py-1 bg-gray-800 text-white rounded-lg">カート</button>
-                            <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
-                                <button class="px-2 py-1 bg-gray-800 text-white rounded-lg">今すぐ購入</button>
-                            </a>
+                            @guest
+                                <button onclick="alert('ログインした後、ご利用ください。'); window.location.href='{{ route('login') }}'" class="px-2 py-1 bg-gray-800 text-white rounded-lg">カート</button>
+                                <button onclick="alert('ログインした後、ご利用ください。'); window.location.href='{{ route('login') }}'" class="px-2 py-1 bg-gray-800 text-white rounded-lg">今すぐ購入</button>
+                            @else
+                                <button onclick="openModal(
+                                    '{{ $item->id }}',
+                                    {{ $item->stock_s }},
+                                    {{ $item->stock_m }},
+                                    {{ $item->stock_l }},
+                                    {{ $item->stock_xl }}
+                                )" class="px-2 py-1 bg-gray-800 text-white rounded-lg">カート</button>
+                                <a href="{{ route('purchase.index', ['item_id' => $item->id]) }}">
+                                    <button class="px-2 py-1 bg-gray-800 text-white rounded-lg">今すぐ購入</button>
+                                </a>
+                            @endguest
                         </div>
                     </div>
                 </div>
