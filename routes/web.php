@@ -11,6 +11,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\TogyeController;
 use App\Http\Controllers\UserController;
 
 /**
@@ -112,4 +113,5 @@ Route::post('/comment/update/{id}', [CommentController::class, 'commentUpdate'])
 Route::post('/comment/reply', [CommentController::class, 'commentReply'])->name('comment.reply');
 Route::post('/reply/delete/{id}', [CommentController::class, 'deleteReply'])->name('delete.reply');
 
-
+// Togyebu Area
+Route::get('/togyebu', [TogyeController::class, 'togyebu'])->name('togyebu');

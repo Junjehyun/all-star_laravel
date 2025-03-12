@@ -44,9 +44,9 @@
             </a>
         </div>
         <div class="bg-yellow-200 shadow-lg rounded-lg p-6 w-full h-64 flex flex-col justify-between">
-            <h1 class="text-center text-xl font-bold mb-6">TOGYEBU</h1>
+            <h1 class="text-center text-xl font-bold mb-6">TOGYEBU 画面定義</h1>
             <h2 class="text-center">Not Started yet</h2>
-            <a href="">
+            <a href="/togyebu">
                 <h2 class="text-right text-xs mt-10 underline">more</h2>
             </a>
         </div>
